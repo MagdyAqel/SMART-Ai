@@ -3,13 +3,23 @@ import { FieldValue, getFirestore } from "firebase-admin/firestore";
 import { defineInt, defineSecret } from "firebase-functions/params";
 import { HttpsError, onCall } from "firebase-functions/v2/https";
 import { setGlobalOptions } from "firebase-functions/v2";
-import { generateCourse as generateCourseWithClaude, generateQuiz as generateQuizWithClaude, streamTutorReply, toHttpsError } from "./claude.js";
+import {
+  generateCourse as generateCourseWithClaude,
+  generateQuiz as generateQuizWithClaude,
+  gradeWithRubric,
+  runTraineePrompt,
+  streamTutorReply,
+  toHttpsError,
+} from "./claude.js";
 import {
   InputError,
   normalizeCourse,
+  computeGrade,
   normalizeQuestions,
+  normalizeTask,
   parseCourseInput,
   parseQuizInput,
+  parseSubmissionInput,
   parseTutorInput,
   slugify,
 } from "./validate.js";
@@ -43,17 +53,17 @@ function parse(fn, data) {
 }
 
 /** يحسب طلبات الذكاء الاصطناعي لكل متدرب يومياً حتى لا تتجاوز التكلفة الحد. */
-async function consumeQuota(uid) {
+async function consumeQuota(uid, cost = 1) {
   const day = new Date().toISOString().slice(0, 10);
   const ref = db.doc(`usage/${uid}_${day}`);
   const limit = DAILY_AI_LIMIT.value();
   await db.runTransaction(async (tx) => {
     const snap = await tx.get(ref);
     const count = snap.exists ? snap.get("count") : 0;
-    if (count >= limit) {
+    if (count + cost > limit) {
       throw new HttpsError("resource-exhausted", `وصلت إلى الحد اليومي (${limit} طلباً). عُد غداً!`);
     }
-    tx.set(ref, { uid, day, count: count + 1, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
+    tx.set(ref, { uid, day, count: count + cost, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
   });
 }
 
@@ -138,4 +148,67 @@ export const generateCourse = onCall({ ...aiOptions, timeoutSeconds: 540, memory
     createdAt: FieldValue.serverTimestamp(),
   });
   return { id: courseId, title: doc.title, lessons: doc.lessons.length };
+});
+
+/**
+ * التصحيح الذاتي لمهمة تطبيقية: تُقرأ المهمة ومعاييرها من Firestore (لا من المتصفح)،
+ * ويُشغَّل برومبت المتدرب إن كانت المهمة برومبت، ثم يُقيَّم العمل وفق المعايير.
+ */
+export const gradeSubmission = onCall({ ...aiOptions, timeoutSeconds: 300 }, async (request) => {
+  const uid = requireAuth(request);
+  const input = parse(parseSubmissionInput, request.data);
+  const found = await loadLesson(input.courseId, input.lessonId);
+  const rawTask = found?.lesson.tasks?.find((t) => t.id === input.taskId);
+  const task = rawTask ? normalizeTask(rawTask) : null;
+  if (!task) throw new HttpsError("not-found", "لم نجد هذه المهمة.");
+
+  // تشغيل البرومبت ثم تقييمه طلبان للنموذج.
+  await consumeQuota(uid, task.runPrompt ? 2 : 1);
+
+  const apiKey = ANTHROPIC_API_KEY.value();
+  let output = null;
+  let grade;
+  try {
+    if (task.runPrompt) output = (await runTraineePrompt({ apiKey, prompt: input.answer, material: task.material })).text;
+    grade = computeGrade(task.rubric, await gradeWithRubric({ apiKey, task, answer: input.answer, output }), task.passScore);
+  } catch (err) {
+    throw toHttpsError(err);
+  }
+
+  const submission = {
+    courseId: input.courseId,
+    lessonId: input.lessonId,
+    taskId: task.id,
+    taskTitle: task.title,
+    lessonTitle: found.lesson.title,
+    type: task.type,
+    answer: input.answer,
+    output,
+    passScore: task.passScore,
+    ...grade,
+  };
+  const userRef = db.doc(`users/${uid}`);
+  const key = `${input.courseId}__${input.lessonId}__${task.id}`;
+  const subRef = userRef.collection("submissions").doc();
+  await db.runTransaction(async (tx) => {
+    const snap = await tx.get(userRef);
+    const prev = snap.get(`tasks.${key}`) ?? null;
+    tx.set(subRef, { ...submission, createdAt: FieldValue.serverTimestamp() });
+    tx.set(
+      userRef,
+      {
+        tasks: {
+          [key]: {
+            best: Math.max(prev?.best ?? 0, grade.pct),
+            passed: Boolean(prev?.passed) || grade.passed,
+            attempts: (prev?.attempts ?? 0) + 1,
+            lastAt: Date.now(),
+          },
+        },
+      },
+      { merge: true },
+    );
+    submission.firstPass = grade.passed && !prev?.passed;
+  });
+  return { id: subRef.id, ...submission };
 });

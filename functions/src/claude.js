@@ -1,12 +1,15 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import { HttpsError } from "firebase-functions/v2/https";
-import { CourseSchema, QuizSchema } from "./schemas.js";
+import { CourseSchema, GradeSchema, QuizSchema } from "./schemas.js";
 import {
   COURSE_SYSTEM,
+  GRADER_SYSTEM,
+  PROMPT_RUNNER_SYSTEM,
   QUIZ_SYSTEM,
   TUTOR_SYSTEM,
   courseUserPrompt,
+  gradeUserPrompt,
   lessonContextBlock,
   quizUserPrompt,
 } from "./prompts.js";
@@ -131,4 +134,44 @@ export async function generateCourse({ apiKey, input }) {
     throw new HttpsError("internal", "لم يُرجع النموذج دورة بصيغة صحيحة، حاول مرة أخرى.");
   }
   return parsed;
+}
+
+/** يشغّل برومبت المتدرب كما هو ليرى ما ينتجه فعلاً. */
+export async function runTraineePrompt({ apiKey, prompt, material }) {
+  const content = material
+    ? [
+        { type: "text", text: `مادة مرفقة يمكن أن يشير إليها الطلب:\n<material>\n${material}\n</material>` },
+        { type: "text", text: prompt },
+      ]
+    : prompt;
+  const stream = client(apiKey).beta.messages.stream({
+    model: MODEL,
+    max_tokens: 8000, // سقف لتكلفة تشغيل برومبت المتدرب
+    system: PROMPT_RUNNER_SYSTEM,
+    messages: [{ role: "user", content }],
+    output_config: { effort: "low" },
+    ...FALLBACK,
+  });
+  const final = await stream.finalMessage();
+  if (final.stop_reason === "refusal") {
+    return { text: "اعتذر النموذج عن تنفيذ هذا البرومبت.", refused: true };
+  }
+  const text = final.content.filter((b) => b.type === "text").map((b) => b.text).join("");
+  return { text, truncated: final.stop_reason === "max_tokens" };
+}
+
+export async function gradeWithRubric({ apiKey, task, answer, output }) {
+  const response = await client(apiKey).beta.messages.parse({
+    model: MODEL,
+    max_tokens: 16000,
+    system: GRADER_SYSTEM,
+    messages: [{ role: "user", content: gradeUserPrompt(task, answer, output) }],
+    output_config: { effort: "medium", format: betaZodOutputFormat(GradeSchema) },
+    ...FALLBACK,
+  });
+  if (response.stop_reason === "refusal") throw refusalError();
+  if (!response.parsed_output) {
+    throw new HttpsError("internal", "تعذّر إكمال التصحيح، حاول مرة أخرى.");
+  }
+  return response.parsed_output;
 }

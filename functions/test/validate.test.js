@@ -73,3 +73,55 @@ test("slugify falls back for non-latin text", () => {
   assert.equal(slugify("الأمن السيبراني", "course"), "course");
   assert.equal(slugify("Excel Basics 101"), "excel-basics-101");
 });
+
+import { computeGrade, normalizeRubric, normalizeTask, parseSubmissionInput } from "../src/validate.js";
+
+const rubric = normalizeRubric([
+  { criterion: "الدور والسياق", points: 30 },
+  { criterion: "الهدف", points: 40 },
+  { criterion: "", points: 10 },
+  { criterion: "صيغة المخرج", points: 30 },
+]);
+
+test("normalizeRubric assigns ids and drops empty criteria", () => {
+  assert.deepEqual(rubric.map((c) => c.id), ["c1", "c2", "c3"]);
+});
+
+test("computeGrade clamps scores and computes totals server-side", () => {
+  const g = computeGrade(
+    rubric,
+    {
+      criteria: [
+        { id: "c1", score: 999, evidence: "x", feedback: "y" }, // أعلى من الحد
+        { id: "c2", score: -5 }, // سالب
+        // c3 مفقود
+        { id: "c9", score: 50 }, // معيار غير موجود
+      ],
+      strengths: ["قوة"],
+      overall_feedback: "جيد",
+    },
+    70,
+  );
+  assert.deepEqual(g.criteria.map((c) => c.score), [30, 0, 0]);
+  assert.equal(g.total, 30);
+  assert.equal(g.max, 100);
+  assert.equal(g.pct, 30);
+  assert.equal(g.passed, false);
+});
+
+test("normalizeTask requires instructions and rubric; runPrompt only for prompt tasks", () => {
+  assert.equal(normalizeTask({ title: "t", instructions: "", rubric }), null);
+  assert.equal(normalizeTask({ title: "t", instructions: "i", rubric: [] }), null);
+  const w = normalizeTask({ type: "written", title: "t", instructions: "i", rubric, runPrompt: true });
+  assert.equal(w.runPrompt, false);
+  const p = normalizeTask({ type: "prompt", title: "t", instructions: "i", rubric });
+  assert.equal(p.runPrompt, true);
+  assert.equal(p.passScore, 70);
+});
+
+test("parseSubmissionInput validates ids and answer length", () => {
+  const ok = { courseId: "c", lessonId: "l1", taskId: "t1", answer: "اكتب لي خطة درس عن الكسور للصف الخامس" };
+  assert.equal(parseSubmissionInput(ok).taskId, "t1");
+  assert.throws(() => parseSubmissionInput({ ...ok, answer: "قصير" }), InputError);
+  assert.throws(() => parseSubmissionInput({ ...ok, taskId: "../x" }), InputError);
+});

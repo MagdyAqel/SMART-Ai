@@ -7,7 +7,7 @@ export default defineConfig({
     emptyOutDir: true,
     chunkSizeWarningLimit: 800, // حزمة Firebase وحدها ~740KB
     rollupOptions: {
-      output: { manualChunks: { firebase: ["firebase/app", "firebase/auth", "firebase/firestore", "firebase/functions"] } },
+      output: { manualChunks: { firebase: ["firebase/app", "firebase/auth", "firebase/firestore", "firebase/functions", "firebase/storage"] } },
     },
   },
 });

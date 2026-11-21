@@ -5,7 +5,7 @@
   "scripts": {
     "install:all": "npm --prefix functions install && npm --prefix web install",
     "test": "npm --prefix functions test && npm --prefix web test",
-    "emulators": "firebase emulators:start --only auth,firestore,functions --project demo-smart-ai",
+    "emulators": "firebase emulators:start --only auth,firestore,functions,storage --project demo-smart-ai",
     "seed:local": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 npm --prefix functions run seed -- --project demo-smart-ai",
     "dev": "VITE_USE_EMULATORS=true VITE_FIREBASE_PROJECT_ID=demo-smart-ai npm --prefix web run dev",
     "build": "npm --prefix web run build",

@@ -42,7 +42,8 @@ export function saveProgress(progress) {
   state.progress = progress;
   window.dispatchEvent(new Event("progress-changed"));
   const uid = state.user.uid;
-  const { createdAt, updatedAt, ...data } = progress;
+  // tasks يكتبها الخادم فقط (التصحيح الذاتي)، فلا نرسلها من المتصفح.
+  const { createdAt, updatedAt, tasks, ...data } = progress;
   saveChain = saveChain
     .then(() =>
       Promise.all([
@@ -98,3 +99,17 @@ export async function loadLeaderboard() {
   const snap = await getDocs(query(collection(db, "leaderboard"), orderBy("xp", "desc"), limit(10)));
   return snap.docs.map((d) => ({ ...d.data(), uid: d.id }));
 }
+
+export async function loadSubmissions(max = 50) {
+  const snap = await getDocs(
+    query(collection(db, "users", state.user.uid, "submissions"), orderBy("createdAt", "desc"), limit(max)),
+  );
+  return snap.docs.map((d) => ({ ...d.data(), id: d.id }));
+}
+
+export async function loadSubmission(id) {
+  const snap = await getDoc(doc(db, "users", state.user.uid, "submissions", id));
+  return snap.exists() ? { ...snap.data(), id: snap.id } : null;
+}
+
+export const taskKey = (courseId, lessonId, taskId) => `${courseId}__${lessonId}__${taskId}`;

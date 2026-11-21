@@ -126,7 +126,9 @@ export function normalizeCourse(course, { courseId }) {
         skill: `${courseId}-${lessonId}`,
         minutes: Math.min(60, Math.max(3, Math.round(Number(lesson.minutes) || 8))),
         content,
+        media: [],
         questions,
+        tasks: (Array.isArray(lesson.tasks) ? lesson.tasks : []).map(normalizeTask).filter(Boolean),
       };
     })
     .filter(Boolean);
@@ -138,5 +140,89 @@ export function normalizeCourse(course, { courseId }) {
     icon: String(course.icon ?? "📘").trim().slice(0, 4) || "📘",
     level: String(course.level ?? "").trim() || "جميع المستويات",
     lessons,
+  };
+}
+
+// ---------- المهام التطبيقية والتصحيح الذاتي ----------
+
+export const TASK_TYPES = ["prompt", "written"];
+const MAX_ANSWER_CHARS = 8000;
+
+/** يوحّد شكل معايير التقييم: معرّفات ثابتة ودرجات صحيحة موجبة. */
+export function normalizeRubric(list) {
+  if (!Array.isArray(list)) return [];
+  return list
+    .map((c) => ({
+      criterion: String(c?.criterion ?? "").trim(),
+      description: String(c?.description ?? "").trim(),
+      points: Math.min(100, Math.max(1, Math.round(Number(c?.points) || 0))),
+    }))
+    .filter((c) => c.criterion)
+    .slice(0, 10)
+    .map((c, i) => ({ id: `c${i + 1}`, ...c }));
+}
+
+export function normalizeTask(task, index = 0) {
+  if (!task || !String(task.title ?? "").trim() || !String(task.instructions ?? "").trim()) return null;
+  const rubric = normalizeRubric(task.rubric);
+  if (rubric.length === 0) return null;
+  const type = TASK_TYPES.includes(task.type) ? task.type : "written";
+  return {
+    id: task.id && /^[a-z0-9-]{1,40}$/.test(task.id) ? task.id : `t${index + 1}`,
+    type,
+    title: String(task.title).trim(),
+    instructions: String(task.instructions).trim(),
+    material: String(task.material ?? "").trim(),
+    runPrompt: type === "prompt" && task.runPrompt !== false,
+    passScore: Math.min(100, Math.max(1, Math.round(Number(task.passScore) || 70))),
+    rubric,
+  };
+}
+
+export function parseSubmissionInput(data = {}) {
+  const id = (v, name) => {
+    if (typeof v !== "string" || !/^[a-z0-9][a-z0-9-]{0,59}$/.test(v)) throw new InputError(`${name} غير صالح`);
+    return v;
+  };
+  return {
+    courseId: id(data.courseId, "معرّف الدورة"),
+    lessonId: id(data.lessonId, "معرّف الدرس"),
+    taskId: id(data.taskId, "معرّف المهمة"),
+    answer: str(data.answer, { name: "إجابتك", min: 20, max: MAX_ANSWER_CHARS }),
+  };
+}
+
+/**
+ * يجمع درجات المعايير من مخرجات المصحّح. المجموع يُحسب هنا لا من النموذج،
+ * وكل درجة تُحصر بين 0 والحد الأقصى للمعيار.
+ */
+export function computeGrade(rubric, graded, passScore) {
+  const byId = new Map((graded?.criteria ?? []).map((c) => [c.id, c]));
+  const criteria = rubric.map((r) => {
+    const g = byId.get(r.id) ?? {};
+    const score = Math.min(r.points, Math.max(0, Math.round(Number(g.score) || 0)));
+    return {
+      id: r.id,
+      criterion: r.criterion,
+      points: r.points,
+      score,
+      evidence: String(g.evidence ?? "").trim(),
+      feedback: String(g.feedback ?? "").trim(),
+    };
+  });
+  const total = criteria.reduce((s, c) => s + c.score, 0);
+  const max = criteria.reduce((s, c) => s + c.points, 0);
+  const pct = max ? Math.round((total / max) * 100) : 0;
+  const list = (v) => (Array.isArray(v) ? v.map((x) => String(x).trim()).filter(Boolean).slice(0, 5) : []);
+  return {
+    criteria,
+    total,
+    max,
+    pct,
+    passed: pct >= passScore,
+    strengths: list(graded?.strengths),
+    improvements: list(graded?.improvements),
+    overall: String(graded?.overall_feedback ?? "").trim(),
+    improved: String(graded?.improved_version ?? "").trim(),
   };
 }

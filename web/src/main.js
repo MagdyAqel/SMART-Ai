@@ -14,6 +14,9 @@ import * as review from "./views/review.js";
 import * as generate from "./views/generate.js";
 import * as tutor from "./views/tutor.js";
 import * as admin from "./views/admin.js";
+import * as adminCourse from "./views/admin-course.js";
+import * as task from "./views/task.js";
+import * as performance from "./views/performance.js";
 
 const routes = [
   { re: /^\/$/, view: dashboard, nav: "home" },
@@ -24,13 +27,17 @@ const routes = [
   { re: /^\/review$/, view: review, nav: "review" },
   { re: /^\/generate$/, view: generate, nav: "generate" },
   { re: /^\/tutor$/, view: tutor, nav: "tutor" },
+  { re: /^\/task\/([\w-]+)\/([\w-]+)\/([\w-]+)$/, view: task, nav: "courses", keys: ["courseId", "lessonId", "taskId"] },
+  { re: /^\/performance$/, view: performance, nav: "performance" },
   { re: /^\/admin$/, view: admin, nav: "admin", admin: true },
+  { re: /^\/admin\/course\/([\w-]+)$/, view: adminCourse, nav: "admin", admin: true, keys: ["courseId"] },
 ];
 
 const NAV = [
   { id: "home", href: "/", icon: "🏠", label: "الرئيسية" },
   { id: "courses", href: "/courses", icon: "📚", label: "الدورات" },
   { id: "review", href: "/review", icon: "🔁", label: "المراجعة" },
+  { id: "performance", href: "/performance", icon: "📈", label: "أدائي" },
   { id: "generate", href: "/generate", icon: "✨", label: "اختبار ذكي" },
   { id: "tutor", href: "/tutor", icon: "🤖", label: "المدرّب" },
   { id: "admin", href: "/admin", icon: "🛠️", label: "الإدارة", admin: true },
@@ -79,8 +86,10 @@ async function route() {
   if (typeof cleanup === "function") cleanup();
   cleanup = null;
   renderNav(match.r.nav);
-  const view = document.getElementById("view");
-  view.innerHTML = "";
+  // عنصر جديد لكل صفحة حتى لا تبقى مستمعات الأحداث من الصفحة السابقة.
+  const old = document.getElementById("view");
+  const view = old.cloneNode(false);
+  old.replaceWith(view);
   window.scrollTo(0, 0);
   try {
     cleanup = await match.r.view.render(view, params, new URLSearchParams(qs || ""));
