@@ -136,7 +136,7 @@ export async function render(el, { courseId }) {
 
   el.innerHTML = `
     <a class="back" href="#/courses">→ المهارات</a>
-    <header class="skill-hero">
+    <header class="skill-hero ${skill.cover ? "has-cover" : ""}" ${skill.cover ? `style="--cover:url('${esc(skill.cover)}')"` : ""}>
       <span class="hero-icon" aria-hidden="true">${esc(skill.icon || "📘")}</span>
       <div class="grow">
         <p class="hero-kicker">المهارة ${ar(skill.number ?? skill.order)}</p>

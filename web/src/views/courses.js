@@ -49,7 +49,11 @@ export async function render(el) {
         return `<li class="skill-node ${st.status}">
           <${tag} class="skill-card" ${href} ${clickable ? "" : 'aria-disabled="true"'}>
             <span class="skill-num" aria-hidden="true">${st.status === "passed" ? "✓" : ar(s.number ?? s.order)}</span>
-            <span class="skill-icon" aria-hidden="true">${esc(s.icon || "📘")}</span>
+            ${
+              s.cover
+                ? `<span class="skill-cover"><img src="${esc(s.cover)}" alt="" loading="lazy" /></span>`
+                : `<span class="skill-icon" aria-hidden="true">${esc(s.icon || "📘")}</span>`
+            }
             <span class="skill-body">
               <span class="skill-kicker">المهارة ${ar(s.number ?? s.order)}</span>
               <span class="skill-title">${esc(s.title)}</span>

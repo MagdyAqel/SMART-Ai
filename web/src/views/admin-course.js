@@ -262,6 +262,7 @@ export async function render(el, { courseId }) {
             ${isNew ? field("id", "معرّف الرابط (حروف إنجليزية صغيرة وأرقام وشرطات)", { attrs: 'dir="ltr" pattern="[a-z0-9][a-z0-9-]*"', placeholder: "ai-lesson-planning" }) : ""}
           </div>
           ${field("description", "الوصف", { rows: 2 })}
+          ${field("cover", "صورة الغلاف (رابط)", { attrs: 'dir="ltr"' })}
           <div class="grid-2 tight">${field("icon", "رمز تعبيري")}${field("level", "المستوى أو الفئة")}${field("order", "الترتيب", { type: "number" })}</div>
           <label class="check"><input type="checkbox" data-path="comingSoon" ${course.comingSoon ? "checked" : ""} /> «قريباً»: تظهر في المسار دون محتوى</label>
         </section>
@@ -478,6 +479,7 @@ function clean(course) {
     description: course.description.trim(),
     icon: (course.icon || "📘").trim(),
     level: (course.level || "").trim(),
+    cover: (course.cover || "").trim(),
     order: Number(course.order) || Date.now(),
     number: Number(course.number) || null,
     comingSoon: Boolean(course.comingSoon),
