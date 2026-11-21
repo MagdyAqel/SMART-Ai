@@ -489,7 +489,7 @@ details ul { padding-inline-start: 1.2rem; margin-top: 0.5rem; }
 .output, .improved { background: var(--surface-2); padding: 0.75rem 1rem; border-radius: 10px; max-height: 420px; overflow-y: auto; margin-bottom: 0.75rem; }
 pre.answer { white-space: pre-wrap; text-align: start; font-family: inherit; direction: rtl; }
 .spark { display: flex; align-items: flex-end; gap: 6px; height: 120px; padding-top: 0.5rem; }
-.spark span { flex: 1; background: var(--accent); border-radius: 4px 4px 0 0; min-width: 8px; opacity: 0.8; }
+.spark span { flex: 1; max-width: 40px; background: var(--accent); border-radius: 4px 4px 0 0; min-width: 8px; opacity: 0.8; }
 .spark span.ok { background: var(--primary); }
 
 /* ---------- محرّر المشرف ---------- */

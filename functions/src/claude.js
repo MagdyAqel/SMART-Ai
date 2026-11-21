@@ -14,10 +14,20 @@ import {
   quizUserPrompt,
 } from "./prompts.js";
 
-export const MODEL = "claude-opus-5-5";
+// نموذج لكل مهمة، موازنةً بين الجودة والتكلفة:
+// - المدرّب وتشغيل برومبتات المتدربين: Haiku (الأرخص والأسرع، مناسب للحوار والشرح).
+// - التصحيح وتوليد الاختبارات: Sonnet (دقة أعلى، فالدرجات أساس المنصة).
+// - إنشاء الدورات: Opus (نادر الاستخدام، ويحتاج أعلى جودة).
+export const MODELS = {
+  tutor: "claude-haiku-5-5",
+  promptRunner: "claude-haiku-5-5",
+  grader: "claude-sonnet-5-5",
+  quiz: "claude-sonnet-5-5",
+  course: "claude-opus-5-5",
+};
 
-// عند رفض النموذج طلباً لأسباب تتعلق بالسلامة، يعيد الخادم تشغيله تلقائياً
-// على نموذج بديل مناسب داخل الطلب نفسه.
+// عند رفض Sonnet أو Opus طلباً لأسباب تتعلق بالسلامة، يعيد الخادم تشغيله تلقائياً
+// على نموذج بديل مناسب داخل الطلب نفسه. (Haiku لا يدعم هذا الخيار.)
 const FALLBACK = {
   betas: ["server-side-fallback-2026-07-01"],
   fallbacks: "default",
@@ -68,14 +78,13 @@ export async function streamTutorReply({ apiKey, messages, lesson, signal, onTex
   const system = [{ type: "text", text: TUTOR_SYSTEM }];
   if (lesson) system.push({ type: "text", text: lessonContextBlock(lesson.course, lesson.lesson) });
 
-  const stream = client(apiKey).beta.messages.stream(
+  const stream = client(apiKey).messages.stream(
     {
-      model: MODEL,
+      model: MODELS.tutor,
       max_tokens: 16000, // سقف لتكلفة الرد الواحد في المحادثة
       system,
       messages,
       output_config: { effort: "low" }, // محادثة تعليمية: سرعة الرد أهم من التفكير العميق
-      ...FALLBACK,
     },
     { signal },
   );
@@ -94,7 +103,7 @@ export async function streamTutorReply({ apiKey, messages, lesson, signal, onTex
 
 export async function generateQuiz({ apiKey, input }) {
   const response = await client(apiKey).beta.messages.parse({
-    model: MODEL,
+    model: MODELS.quiz,
     max_tokens: 16000,
     system: QUIZ_SYSTEM,
     messages: [{ role: "user", content: quizUserPrompt(input) }],
@@ -111,7 +120,7 @@ export async function generateQuiz({ apiKey, input }) {
 export async function generateCourse({ apiKey, input }) {
   // الدورة الكاملة مخرجات طويلة، لذا نستخدم البث لتجنّب مهلة HTTP ثم نقرأ الرسالة النهائية.
   const stream = client(apiKey).beta.messages.stream({
-    model: MODEL,
+    model: MODELS.course,
     max_tokens: 64000,
     system: COURSE_SYSTEM,
     messages: [{ role: "user", content: courseUserPrompt(input) }],
@@ -144,13 +153,12 @@ export async function runTraineePrompt({ apiKey, prompt, material }) {
         { type: "text", text: prompt },
       ]
     : prompt;
-  const stream = client(apiKey).beta.messages.stream({
-    model: MODEL,
+  const stream = client(apiKey).messages.stream({
+    model: MODELS.promptRunner,
     max_tokens: 8000, // سقف لتكلفة تشغيل برومبت المتدرب
     system: PROMPT_RUNNER_SYSTEM,
     messages: [{ role: "user", content }],
     output_config: { effort: "low" },
-    ...FALLBACK,
   });
   const final = await stream.finalMessage();
   if (final.stop_reason === "refusal") {
@@ -162,7 +170,7 @@ export async function runTraineePrompt({ apiKey, prompt, material }) {
 
 export async function gradeWithRubric({ apiKey, task, answer, output }) {
   const response = await client(apiKey).beta.messages.parse({
-    model: MODEL,
+    model: MODELS.grader,
     max_tokens: 16000,
     system: GRADER_SYSTEM,
     messages: [{ role: "user", content: gradeUserPrompt(task, answer, output) }],
