@@ -1,5 +1,5 @@
 import { courseCompletion, dueReviews, levelProgress, mastery, recommendNext } from "../engine.js";
-import { loadCourses, loadLeaderboard, skillLabels, state } from "../store.js";
+import { loadCourses, loadLeaderboard, loadSettings, skillLabels, skillStatuses, state } from "../store.js";
 import { ar, esc, progressBar, spinner } from "../ui.js";
 
 const REASON = {
@@ -10,7 +10,11 @@ const REASON = {
 
 export async function render(el) {
   el.innerHTML = spinner();
-  const [courses, labels] = await Promise.all([loadCourses(), skillLabels()]);
+  const [allSkills, labels, settings] = await Promise.all([loadCourses(), skillLabels(), loadSettings()]);
+  const statuses = skillStatuses(allSkills, state.progress, settings, state.isAdmin);
+  // نوصي فقط بالمهارات المتاحة للمتدرب، ونعرض تقدّمه في المهارات ذات المحتوى
+  const courses = allSkills.filter((c) => ["open", "passed"].includes(statuses.get(c.id)?.status));
+  const visible = allSkills.filter((c) => !c.comingSoon);
   const p = state.progress;
   const lvl = levelProgress(p.xp);
   const due = dueReviews(p.review, Date.now()).length;
@@ -63,8 +67,8 @@ export async function render(el) {
                 </div>
               </div>`
             : courses.length
-              ? `<p>أتممت جميع الدروس المتاحة 🎉 جرّب <a href="#/generate">اختباراً ذكياً</a> في موضوع جديد.</p>`
-              : `<p class="muted">لا توجد دورات بعد. ${state.isAdmin ? 'أنشئ دورة من <a href="#/admin">صفحة الإدارة</a>.' : "سيضيفها المشرف قريباً."}</p>`
+              ? `<p>أتممت دروس المهارات المتاحة 🎉 اجتز <a href="#/courses">الاختبار البعدي</a> لتنتقل إلى المهارة التالية.</p>`
+              : `<p class="muted">لا توجد مهارات بعد. ${state.isAdmin ? 'أنشئ دورة من <a href="#/admin">صفحة الإدارة</a>.' : "سيضيفها المشرف قريباً."}</p>`
         }
       </section>
 
@@ -82,11 +86,13 @@ export async function render(el) {
       </section>
 
       <section class="card">
-        <h2>تقدّمك في الدورات</h2>
-        <ul class="course-progress">${courses
+        <h2>تقدّمك في المهارات</h2>
+        <ul class="course-progress">${visible
           .map((c) => {
             const cc = courseCompletion(c, p);
-            return `<li><a href="#/course/${esc(c.id)}">${esc(c.icon || "📘")} ${esc(c.title)}</a>${progressBar(cc.pct, c.title)}<span>${ar(cc.done)}/${ar(cc.total)}</span></li>`;
+            const s = statuses.get(c.id)?.status;
+            const label = s === "passed" ? "✓ مجتازة" : s === "locked" ? "🔒" : `${ar(cc.done)}/${ar(cc.total)}`;
+            return `<li><a href="#/course/${esc(c.id)}">${esc(c.icon || "📘")} ${esc(c.title)}</a>${progressBar(s === "passed" ? 100 : cc.pct, c.title)}<span>${label}</span></li>`;
           })
           .join("")}</ul>
       </section>

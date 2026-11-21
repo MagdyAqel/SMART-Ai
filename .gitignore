@@ -7,3 +7,11 @@ web/dist/
 functions/.secret.local
 functions/.runtimeconfig.json
 service-account*.json
+content/tools/node_modules/
+# ملفات الإنتاج الخام الكبيرة أو غير المرخّصة لإعادة التوزيع
+content/*/raw/_build/
+content/*/raw/music.wav
+content/*/raw/whoosh.mp3
+content/*/raw/narration-*.mp3
+content/*/raw/words-raw.json
+*-debug.log

@@ -22,19 +22,37 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // مفاتيح إجابات الاختبار البعدي: لا يقرؤها المتدرب، ويصحّح بها الخادم.
+    match /courseKeys/{courseId} {
+      allow read, write: if isAdmin();
+    }
+
+    // إعدادات المنصة (مثل نسبة النجاح للانتقال): يقرؤها الجميع ويعدّلها المشرف.
+    match /settings/{docId} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
     // ملف تقدّم المتدرب: يخصّ صاحبه فقط.
     match /users/{uid} {
       allow read: if isOwner(uid);
-      // نتائج المهام (tasks) يكتبها التصحيح الذاتي في الخادم فقط.
+      // نتائج المهام (tasks) والاختبارات البعدية (postTests) يكتبها الخادم فقط.
       allow create: if isOwner(uid)
         && request.resource.data.xp is int
         && request.resource.data.xp >= 0
-        && !('tasks' in request.resource.data);
+        && !('tasks' in request.resource.data)
+        && !('postTests' in request.resource.data);
       allow update: if isOwner(uid)
         && request.resource.data.xp is int
         && request.resource.data.xp >= 0
-        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['tasks']);
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['tasks', 'postTests']);
       allow delete: if false;
+
+      // محاولات الاختبار البعدي: يكتبها الخادم، ويقرؤها صاحبها.
+      match /postTestAttempts/{attemptId} {
+        allow read: if isOwner(uid);
+        allow write: if false;
+      }
 
       // تسليمات المهام ودرجاتها: يكتبها الخادم، ويقرؤها صاحبها.
       match /submissions/{submissionId} {

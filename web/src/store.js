@@ -22,6 +22,7 @@ export const state = {
   quiz: null, // جلسة الاختبار الجارية
   tutorPrefill: null, // سؤال جاهز يُرسل عند فتح المدرب
   pendingName: null, // الاسم المكتوب عند إنشاء الحساب
+  settings: null, // إعدادات المنصة (نسبة النجاح…)
 };
 
 export async function loadProgress(user) {
@@ -42,8 +43,8 @@ export function saveProgress(progress) {
   state.progress = progress;
   window.dispatchEvent(new Event("progress-changed"));
   const uid = state.user.uid;
-  // tasks يكتبها الخادم فقط (التصحيح الذاتي)، فلا نرسلها من المتصفح.
-  const { createdAt, updatedAt, tasks, ...data } = progress;
+  // tasks وpostTests يكتبها الخادم فقط، فلا نرسلها من المتصفح.
+  const { createdAt, updatedAt, tasks, postTests, ...data } = progress;
   saveChain = saveChain
     .then(() =>
       Promise.all([
@@ -113,3 +114,59 @@ export async function loadSubmission(id) {
 }
 
 export const taskKey = (courseId, lessonId, taskId) => `${courseId}__${lessonId}__${taskId}`;
+
+// ---------- المهارات والانتقال بينها ----------
+
+export async function loadSettings(force = false) {
+  if (state.settings && !force) return state.settings;
+  const snap = await getDoc(doc(db, "settings", "platform"));
+  state.settings = { passScore: 70, sequential: true, ...(snap.exists() ? snap.data() : {}) };
+  return state.settings;
+}
+
+export const skillPassScore = (skill, settings) => skill?.postTest?.passScore ?? settings?.passScore ?? 70;
+
+/**
+ * حالة كل مهارة للمتدرب الحالي: passed (اجتازها) · open (متاحة) · locked (مقفلة) · soon (قريباً).
+ * القاعدة نفسها يطبّقها الخادم عند تصحيح الاختبار البعدي.
+ */
+export function skillStatuses(skills, progress, settings, isAdmin = false) {
+  const tests = progress?.postTests || {};
+  const ordered = [...skills].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  const out = new Map();
+  let prevPassed = true;
+  let prevSkill = null;
+  for (const s of ordered) {
+    if (s.comingSoon) {
+      out.set(s.id, { status: "soon" });
+      continue;
+    }
+    const passed = Boolean(tests[s.id]?.passed);
+    const open = isAdmin || settings?.sequential === false || prevPassed;
+    out.set(s.id, {
+      status: passed ? "passed" : open ? "open" : "locked",
+      result: tests[s.id] || null,
+      requires: open ? null : prevSkill,
+    });
+    prevPassed = passed;
+    prevSkill = s;
+  }
+  return out;
+}
+
+export async function loadSkillKeys(courseId) {
+  const snap = await getDoc(doc(db, "courseKeys", courseId));
+  return snap.exists() ? snap.data().postTest || {} : {};
+}
+
+/** يسجّل اطّلاع المتدرب على مرحلة من مراحل المهارة (التعريف، الفيديو…). */
+export function markStep(courseId, step) {
+  const steps = state.progress.steps || {};
+  if (steps[courseId]?.[step]) return;
+  saveProgress({ ...state.progress, steps: { ...steps, [courseId]: { ...(steps[courseId] || {}), [step]: Date.now() } } });
+}
+
+export function saveTheme(id) {
+  if (!state.progress || state.progress.theme === id) return;
+  saveProgress({ ...state.progress, theme: id });
+}

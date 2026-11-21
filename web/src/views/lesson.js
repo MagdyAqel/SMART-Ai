@@ -1,5 +1,5 @@
 import { renderMedia } from "../media.js";
-import { findLesson, state, taskKey } from "../store.js";
+import { findLesson, loadCourses, loadSettings, skillStatuses, state, taskKey } from "../store.js";
 import { ar, esc, go, spinner } from "../ui.js";
 import { startLessonQuiz } from "./quiz.js";
 
@@ -10,12 +10,14 @@ export async function render(el, { courseId, lessonId }) {
     el.innerHTML = `<div class="card">لم نجد هذا الدرس. <a href="#/courses">عودة للدورات</a></div>`;
     return;
   }
+  const st = skillStatuses(await loadCourses(), state.progress, await loadSettings(), state.isAdmin).get(course.id);
+  if (st?.status === "locked" || st?.status === "soon") return go(`/course/${course.id}`);
   const idx = course.lessons.indexOf(lesson);
   const next = course.lessons[idx + 1];
   const tasks = lesson.tasks || [];
   const results = state.progress.tasks || {};
   el.innerHTML = `
-    <a class="back" href="#/course/${esc(course.id)}">→ ${esc(course.title)}</a>
+    <a class="back" href="#/course/${esc(course.id)}">→ المهارة: ${esc(course.title)}</a>
     <article class="card lesson">
       <p class="muted">الدرس ${ar(idx + 1)} من ${ar(course.lessons.length)}</p>
       <h1>${esc(lesson.title)}</h1>

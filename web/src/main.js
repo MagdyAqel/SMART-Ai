@@ -1,4 +1,5 @@
 import "./styles.css";
+import { applyTheme, savedThemeId } from "./themes.js";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, isConfigured } from "./firebase.js";
 import { dueReviews } from "./engine.js";
@@ -17,6 +18,8 @@ import * as admin from "./views/admin.js";
 import * as adminCourse from "./views/admin-course.js";
 import * as task from "./views/task.js";
 import * as performance from "./views/performance.js";
+import * as posttest from "./views/posttest.js";
+import * as themes from "./views/themes.js";
 
 const routes = [
   { re: /^\/$/, view: dashboard, nav: "home" },
@@ -29,13 +32,15 @@ const routes = [
   { re: /^\/tutor$/, view: tutor, nav: "tutor" },
   { re: /^\/task\/([\w-]+)\/([\w-]+)\/([\w-]+)$/, view: task, nav: "courses", keys: ["courseId", "lessonId", "taskId"] },
   { re: /^\/performance$/, view: performance, nav: "performance" },
+  { re: /^\/posttest\/([\w-]+)$/, view: posttest, nav: "courses", keys: ["courseId"] },
+  { re: /^\/themes$/, view: themes, nav: null },
   { re: /^\/admin$/, view: admin, nav: "admin", admin: true },
   { re: /^\/admin\/course\/([\w-]+)$/, view: adminCourse, nav: "admin", admin: true, keys: ["courseId"] },
 ];
 
 const NAV = [
   { id: "home", href: "/", icon: "🏠", label: "الرئيسية" },
-  { id: "courses", href: "/courses", icon: "📚", label: "الدورات" },
+  { id: "courses", href: "/courses", icon: "🧭", label: "المهارات" },
   { id: "review", href: "/review", icon: "🔁", label: "المراجعة" },
   { id: "performance", href: "/performance", icon: "📈", label: "أدائي" },
   { id: "generate", href: "/generate", icon: "✨", label: "اختبار ذكي" },
@@ -54,6 +59,7 @@ function shell() {
       <a class="brand" href="#/"><span class="logo" aria-hidden="true">◆</span> منصة التدريب الذكي</a>
       <div class="user">
         <span class="user-name">${esc(state.progress?.name || "")}</span>
+        <a class="btn ghost small" href="#/themes" title="قالب العرض">🎨 القالب</a>
         <button class="btn ghost small" id="sign-out">خروج</button>
       </div>
     </header>
@@ -78,7 +84,8 @@ function renderNav(active) {
 }
 
 async function route() {
-  if (!state.user) return;
+  // ننتظر تحميل تقدّم المتدرب قبل عرض أي صفحة (أثناء تسجيل الدخول)
+  if (!state.user || !state.progress) return;
   const [path, qs] = (location.hash.slice(1) || "/").split("?");
   const match = routes.map((r) => ({ r, m: path.match(r.re) })).find((x) => x.m);
   if (!match || (match.r.admin && !state.isAdmin)) return go("/");
@@ -108,6 +115,8 @@ function notConfigured() {
   </div></main>`;
 }
 
+applyTheme(savedThemeId());
+
 if (!isConfigured) {
   notConfigured();
 } else {
@@ -119,6 +128,7 @@ if (!isConfigured) {
     state.progress = null;
     state.courses = null;
     state.quiz = null;
+    state.settings = null;
     if (!user) {
       state.isAdmin = false;
       cleanup = await authView.render(root);
@@ -129,6 +139,8 @@ if (!isConfigured) {
       const token = await user.getIdTokenResult();
       state.isAdmin = token.claims.admin === true;
       await loadProgress(user);
+      // قالب العرض المحفوظ في الحساب يتبع المتدرب على كل أجهزته
+      if (state.progress.theme) applyTheme(state.progress.theme);
     } catch (err) {
       root.innerHTML = `<main class="center"><div class="card error">تعذّر تحميل حسابك: ${esc(errorMessage(err))}</div></main>`;
       return;

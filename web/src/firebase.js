@@ -37,3 +37,4 @@ export const callTutor = app ? httpsCallable(functions, "tutorChat", { timeout: 
 export const callGenerateQuiz = app ? httpsCallable(functions, "generateQuiz", { timeout: 300_000 }) : null;
 export const callGenerateCourse = app ? httpsCallable(functions, "generateCourse", { timeout: 540_000 }) : null;
 export const callGradeSubmission = app ? httpsCallable(functions, "gradeSubmission", { timeout: 300_000 }) : null;
+export const callSubmitPostTest = app ? httpsCallable(functions, "submitPostTest", { timeout: 60_000 }) : null;

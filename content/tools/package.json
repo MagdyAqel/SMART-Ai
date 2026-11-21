@@ -1,0 +1,14 @@
+{
+  "name": "smart-ai-content-tools",
+  "private": true,
+  "type": "module",
+  "description": "أدوات إنتاج وسائط المهارات: فيديو الإنفوجرافيك المتحرك والإنفوجرافيك الثابت",
+  "scripts": {
+    "video": "node render-video.mjs",
+    "infographic": "node render-infographic.mjs"
+  },
+  "devDependencies": {
+    "@fontsource/ibm-plex-sans-arabic": "^5.3.0",
+    "lucide-static": "^1.77.0"
+  }
+}

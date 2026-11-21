@@ -226,3 +226,51 @@ export function computeGrade(rubric, graded, passScore) {
     improved: String(graded?.improved_version ?? "").trim(),
   };
 }
+
+// ---------- الاختبار البعدي والانتقال بين المهارات ----------
+
+export const DEFAULT_PASS_SCORE = 70;
+
+export function parsePostTestInput(data = {}) {
+  if (typeof data.courseId !== "string" || !/^[a-z0-9][a-z0-9-]{0,59}$/.test(data.courseId)) {
+    throw new InputError("معرّف المهارة غير صالح");
+  }
+  const answers = data.answers;
+  if (!answers || typeof answers !== "object" || Array.isArray(answers)) throw new InputError("الإجابات غير صالحة");
+  const clean = {};
+  for (const [k, v] of Object.entries(answers)) {
+    if (!/^[a-z0-9-]{1,40}$/.test(k)) continue;
+    const n = Number(v);
+    if (Number.isInteger(n) && n >= 0 && n < 10) clean[k] = n;
+  }
+  return { courseId: data.courseId, answers: clean };
+}
+
+/** نسبة النجاح: الخاصة بالمهارة إن حُدّدت، وإلا العامة من لوحة التحكم. */
+export function resolvePassScore(skill, settings) {
+  const v = skill?.postTest?.passScore ?? settings?.passScore ?? DEFAULT_PASS_SCORE;
+  return Math.min(100, Math.max(1, Math.round(Number(v) || DEFAULT_PASS_SCORE)));
+}
+
+/** المهارات مرتّبة؛ المهارة متاحة إن كانت الأولى أو اجتاز المتدرب السابقة لها. */
+export function isUnlocked(skills, skillId, postTests = {}, { sequential = true } = {}) {
+  if (!sequential) return true;
+  const list = [...skills].filter((s) => !s.comingSoon).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  const i = list.findIndex((s) => s.id === skillId);
+  if (i <= 0) return i === 0;
+  return Boolean(postTests[list[i - 1].id]?.passed);
+}
+
+/** يصحّح الاختبار البعدي. كل سؤال بلا إجابة يُحسب خطأ. */
+export function gradePostTest(questions, keys, answers, passScore) {
+  const results = questions.map((q) => {
+    const key = keys?.[q.id];
+    const chosen = answers[q.id];
+    const correct = key != null && chosen === key.answer;
+    return { id: q.id, chosen: chosen ?? null, correct, answer: key?.answer ?? null, explanation: key?.explanation ?? "" };
+  });
+  const score = results.filter((r) => r.correct).length;
+  const total = results.length;
+  const pct = total ? Math.round((score / total) * 100) : 0;
+  return { score, total, pct, passScore, passed: total > 0 && pct >= passScore, results };
+}

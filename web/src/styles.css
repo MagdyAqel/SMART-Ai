@@ -1,4 +1,6 @@
 :root {
+  --font: "IBM Plex Sans Arabic";
+  --radius-btn: 10px;
   --bg: #f6f7f5;
   --surface: #ffffff;
   --surface-2: #f0f2ef;
@@ -45,7 +47,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 16px/1.75 "IBM Plex Sans Arabic", system-ui, "Segoe UI", Tahoma, sans-serif;
+  font: 16px/1.75 var(--font), system-ui, "Segoe UI", Tahoma, sans-serif;
 }
 a { color: var(--primary); }
 h1, h2, h3, h4 { line-height: 1.35; margin: 0 0 0.5rem; }
@@ -165,7 +167,7 @@ main.center { grid-column: 1 / -1; grid-row: 1 / -1; display: grid; place-items:
   justify-content: center;
   gap: 0.4rem;
   padding: 0.6rem 1.1rem;
-  border-radius: 10px;
+  border-radius: var(--radius-btn);
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
@@ -546,3 +548,226 @@ pre.answer { white-space: pre-wrap; text-align: start; font-family: inherit; dir
   .grade-head { flex-direction: column; text-align: center; }
   .task-list li { flex-direction: column; align-items: stretch; }
 }
+
+/* =====================================================================
+   قوالب العرض الستة (يختارها المتدرب من صفحة «القالب»)
+   ===================================================================== */
+:root[data-theme="midnight"] {
+  --font: "IBM Plex Sans Arabic";
+  --bg: #0b1120; --surface: #121a2b; --surface-2: #1b2436; --text: #e8edf6; --muted: #93a1b8; --border: #263149;
+  --primary: #e3b341; --primary-ink: #1a1405; --primary-soft: #3a3016; --accent: #60a5fa;
+  --ok: #4ade80; --ok-soft: #12301d; --bad: #f87171; --bad-soft: #3a1717;
+  --shadow: none; --radius: 6px; --radius-btn: 4px; color-scheme: dark;
+}
+:root[data-theme="sand"] {
+  --font: "Tajawal";
+  --bg: #fbf6ef; --surface: #fffdf9; --surface-2: #f4ebdf; --text: #2f2118; --muted: #7c6655; --border: #eadccb;
+  --primary: #c2410c; --primary-ink: #fff; --primary-soft: #fde7d4; --accent: #0e7490;
+  --ok: #3f7d20; --ok-soft: #e5f3da; --bad: #b42318; --bad-soft: #fde4e1;
+  --shadow: 0 2px 0 #eadccb, 0 10px 30px rgba(120, 72, 30, 0.08); --radius: 22px; --radius-btn: 14px; color-scheme: light;
+}
+:root[data-theme="ocean"] {
+  --font: "Cairo";
+  --bg: #f3f7fd; --surface: #ffffff; --surface-2: #e8f0fb; --text: #0f1f3a; --muted: #5a6b86; --border: #d6e2f3;
+  --primary: #1d4ed8; --primary-ink: #fff; --primary-soft: #dbeafe; --accent: #0891b2;
+  --ok: #15803d; --ok-soft: #dcfce7; --bad: #be123c; --bad-soft: #ffe4e9;
+  --shadow: 0 8px 24px rgba(29, 78, 216, 0.08); --radius: 12px; --radius-btn: 8px; color-scheme: light;
+}
+:root[data-theme="violet"] {
+  --font: "Tajawal";
+  --bg: #f8f5ff; --surface: #ffffff; --surface-2: #f1eaff; --text: #24124a; --muted: #6d5c91; --border: #e5dafb;
+  --primary: #7c3aed; --primary-ink: #fff; --primary-soft: #ede4ff; --accent: #db2777;
+  --ok: #15803d; --ok-soft: #dcfce7; --bad: #be123c; --bad-soft: #ffe4ec;
+  --shadow: 0 10px 30px rgba(124, 58, 237, 0.12); --radius: 28px; --radius-btn: 999px; color-scheme: light;
+}
+:root[data-theme="paper"] {
+  --font: "Noto Naskh Arabic";
+  --bg: #fdfbf7; --surface: #fffefb; --surface-2: #f1ebe1; --text: #1f1a14; --muted: #6b6155; --border: #d9cfbf;
+  --primary: #9f1239; --primary-ink: #fff; --primary-soft: #f8e1e7; --accent: #1e3a8a;
+  --ok: #166534; --ok-soft: #e3f1e4; --bad: #9f1239; --bad-soft: #f8e1e7;
+  --shadow: none; --radius: 2px; --radius-btn: 2px; color-scheme: light;
+}
+:root[data-theme="paper"] body { font-size: 17px; }
+:root[data-theme="paper"] .card, :root[data-theme="paper"] .stat { border-width: 1px; border-color: var(--text); }
+:root[data-theme="paper"] h1, :root[data-theme="paper"] h2 { letter-spacing: 0; }
+:root[data-theme="violet"] .card { border: 0; }
+:root[data-theme="violet"] .bar > span, :root[data-theme="violet"] .btn.primary { background: linear-gradient(135deg, var(--primary), var(--accent)); border-color: transparent; }
+:root[data-theme="sand"] .card { border-width: 0; }
+:root[data-theme="midnight"] .btn.primary { box-shadow: 0 0 0 1px var(--primary), 0 6px 20px rgba(227, 179, 65, 0.25); }
+
+/* ---------- القائمة العلوية (قوالب رمال ومحيط وورق) ---------- */
+:root[data-nav="top"] #app { grid-template-columns: 1fr; grid-template-areas: "top" "nav" "main"; }
+:root[data-nav="top"] .nav {
+  flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 0.25rem;
+  padding: 0.4rem 1rem; border: 0; border-bottom: 1px solid var(--border); position: sticky; top: 3.6rem; z-index: 9;
+}
+:root[data-nav="top"] .nav a { padding: 0.4rem 0.9rem; }
+:root[data-nav="top"] main#view { margin-inline: auto; }
+:root[data-theme="ocean"][data-nav="top"] .nav { background: var(--primary); }
+:root[data-theme="ocean"][data-nav="top"] .nav a { color: #e6efff; }
+:root[data-theme="ocean"][data-nav="top"] .nav a.active, :root[data-theme="ocean"][data-nav="top"] .nav a:hover { background: rgba(255,255,255,.18); color: #fff; }
+@media (max-width: 760px) {
+  :root[data-nav="top"] #app { grid-template-areas: "top" "main" "nav"; }
+  :root[data-nav="top"] .nav { position: sticky; bottom: 0; top: auto; flex-wrap: nowrap; justify-content: space-around; padding: 0.35rem; border-top: 1px solid var(--border); border-bottom: 0; }
+  :root[data-nav="top"] .nav a { padding: 0.3rem 0.4rem; }
+  :root[data-theme="ocean"][data-nav="top"] .nav { background: var(--surface); }
+  :root[data-theme="ocean"][data-nav="top"] .nav a { color: var(--text); }
+}
+
+/* ---------- خريطة المهارات ---------- */
+.skills-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.overall { min-width: 220px; display: grid; gap: 0.3rem; }
+.overall b { font-size: 1.4rem; }
+.skill-map { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.9rem; }
+.skill-card {
+  display: grid; grid-template-columns: auto auto 1fr auto; align-items: center; gap: 1rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.2rem;
+  color: inherit; text-decoration: none; box-shadow: var(--shadow); transition: transform .15s, border-color .15s;
+}
+a.skill-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+.skill-num { width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center; font-weight: 700; background: var(--surface-2); }
+.skill-icon { font-size: 1.8rem; }
+.skill-body { display: grid; gap: 0.1rem; min-width: 0; }
+.skill-kicker { font-size: 0.8rem; color: var(--muted); }
+.skill-title { font-weight: 700; font-size: 1.08rem; }
+.skill-desc { color: var(--muted); font-size: 0.9rem; }
+.skill-note { font-size: 0.82rem; color: var(--primary); margin-top: 0.15rem; }
+.skill-status { font-size: 0.82rem; padding: 0.2rem 0.7rem; border-radius: 99px; background: var(--surface-2); white-space: nowrap; }
+.skill-node.passed .skill-num { background: var(--ok); color: #fff; }
+.skill-node.passed .skill-status { background: var(--ok-soft); color: var(--ok); }
+.skill-node.open .skill-num { background: var(--primary); color: var(--primary-ink); }
+.skill-node.open .skill-status { background: var(--primary-soft); color: var(--primary); }
+.skill-node.open .skill-card { border-color: var(--primary); border-width: 2px; }
+.skill-node.locked .skill-card, .skill-node.soon .skill-card { opacity: 0.62; cursor: not-allowed; }
+.skill-node.locked .skill-note { color: var(--muted); }
+/* خريطة «مسار»: خط واصل بين المهارات */
+:root[data-map="path"] .skill-map { gap: 0; }
+:root[data-map="path"] .skill-node { position: relative; padding: 0.5rem 0; }
+:root[data-map="path"] .skill-node:not(:last-child)::after {
+  content: ""; position: absolute; inset-inline-start: calc(1.2rem + 1.3rem - 2px); top: calc(50% + 1.3rem); height: calc(100% - 2.6rem); width: 4px;
+  background: repeating-linear-gradient(var(--border) 0 8px, transparent 8px 14px); z-index: 0;
+}
+:root[data-map="path"] .skill-node.passed:not(:last-child)::after { background: var(--ok); }
+/* خريطة «شبكة» */
+:root[data-map="grid"] .skill-map { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+:root[data-map="grid"] .skill-card { grid-template-columns: auto 1fr; grid-template-rows: auto auto auto; height: 100%; align-items: start; }
+:root[data-map="grid"] .skill-icon { grid-column: 2; grid-row: 1; justify-self: end; }
+:root[data-map="grid"] .skill-body { grid-column: 1 / -1; }
+:root[data-map="grid"] .skill-status { grid-column: 1 / -1; justify-self: start; }
+/* خريطة «قائمة»: مضغوطة */
+:root[data-map="list"] .skill-map { gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+:root[data-map="list"] .skill-card { border: 0; border-radius: 0; box-shadow: none; border-bottom: 1px solid var(--border); }
+:root[data-map="list"] .skill-node.open .skill-card { border-width: 0 0 1px; background: var(--primary-soft); }
+:root[data-map="list"] .skill-desc { display: none; }
+@media (max-width: 760px) {
+  .skill-card { grid-template-columns: auto 1fr; }
+  .skill-icon { display: none; }
+  .skill-status { grid-column: 1 / -1; justify-self: start; }
+}
+
+/* ---------- صفحة المهارة ---------- */
+.skill-hero { display: flex; gap: 1.2rem; align-items: flex-start; margin-bottom: 1.25rem; }
+.hero-icon { font-size: 3rem; line-height: 1; }
+.hero-kicker { color: var(--primary); font-weight: 700; margin: 0; }
+.skill-hero h1 { font-size: 1.7rem; margin: 0.1rem 0 0.4rem; }
+.skill-hero .row { max-width: 460px; }
+.lock-card { text-align: center; max-width: 620px; margin-inline: auto; }
+.lock-icon { font-size: 3rem; }
+.step-tabs { display: none; }
+.skill-step { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; box-shadow: var(--shadow); margin-bottom: 1rem; }
+.skill-step > h2 { display: flex; align-items: center; gap: 0.55rem; font-size: 1.2rem; }
+.step-num { width: 2rem; height: 2rem; border-radius: 50%; display: grid; place-items: center; background: var(--primary-soft); color: var(--primary); font-size: 0.95rem; flex-shrink: 0; }
+.skill-step.done .step-num { background: var(--ok); color: #fff; }
+.definition { background: var(--primary-soft); border-inline-start: 5px solid var(--primary); border-radius: var(--radius); padding: 1rem 1.2rem; margin-bottom: 1rem; }
+.definition p { margin: 0.2rem 0 0; font-size: 1.08rem; }
+.def-label { font-weight: 700; color: var(--primary); }
+.objectives { padding-inline-start: 1.4rem; }
+.objectives li { margin-bottom: 0.35rem; }
+.objectives li::marker { color: var(--primary); font-weight: 700; }
+.video-player video { width: 100%; border-radius: var(--radius); background: #000; aspect-ratio: 16 / 9; display: block; }
+.video-player figcaption, .infographic figcaption { margin-top: 0.5rem; display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+.video-player, .infographic, .example { margin: 0; }
+.infographic img { width: 100%; max-width: 760px; display: block; margin-inline: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+.examples { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+.example { background: var(--surface-2); border-radius: var(--radius); overflow: hidden; }
+.example img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
+.example figcaption { padding: 0.75rem 1rem; }
+.example figcaption p { margin: 0.25rem 0 0; color: var(--muted); font-size: 0.92rem; }
+.lesson-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; }
+.lesson-steps li { display: flex; align-items: center; gap: 0.9rem; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius); }
+.lesson-steps li.done .num { background: var(--ok-soft); color: var(--ok); }
+.lesson-steps p { margin: 0; }
+.lesson-link { font-weight: 700; color: var(--text); text-decoration: none; }
+.task-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
+.task-chip { font-size: 0.82rem; padding: 0.15rem 0.6rem; border-radius: 99px; background: var(--surface-2); color: var(--text); text-decoration: none; }
+.task-chip.ok { background: var(--ok-soft); color: var(--ok); }
+.posttest-card { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.posttest-card p { margin: 0.2rem 0; }
+.passed-box { display: flex; gap: 0.75rem; align-items: center; font-weight: 700; color: var(--ok); }
+
+/* ترتيب «مسار رأسي»: خط زمني يربط المراحل */
+:root[data-layout="path"] .skill-steps { position: relative; padding-inline-start: 1.25rem; }
+:root[data-layout="path"] .skill-steps::before { content: ""; position: absolute; inset-inline-start: 0.35rem; top: 0.5rem; bottom: 0.5rem; width: 3px; background: var(--border); border-radius: 3px; }
+:root[data-layout="path"] .skill-step { position: relative; }
+:root[data-layout="path"] .skill-step::before { content: ""; position: absolute; inset-inline-start: -1.25rem; top: 1.6rem; width: 0.9rem; height: 0.9rem; border-radius: 50%; background: var(--surface); border: 3px solid var(--primary); transform: translateX(50%); }
+:root[data-layout="path"] .skill-step.done::before { background: var(--ok); border-color: var(--ok); }
+/* ترتيب «بطاقات»: شبكة، والفيديو والدروس بعرض كامل */
+:root[data-layout="cards"] .skill-steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+:root[data-layout="cards"] .skill-step { margin: 0; }
+:root[data-layout="cards"] .step-video, :root[data-layout="cards"] .step-lessons, :root[data-layout="cards"] .step-posttest, :root[data-layout="cards"] .step-examples { grid-column: 1 / -1; }
+@media (max-width: 760px) { :root[data-layout="cards"] .skill-steps { grid-template-columns: 1fr; } }
+/* ترتيب «تبويبات»: مرحلة واحدة في كل مرة */
+:root[data-layout="tabs"] .step-tabs { display: flex; gap: 0.35rem; overflow-x: auto; padding-bottom: 0.25rem; margin-bottom: 0.75rem; scrollbar-width: thin; }
+:root[data-layout="tabs"] .step-tabs button {
+  font: inherit; font-size: 0.92rem; white-space: nowrap; cursor: pointer; padding: 0.5rem 1rem;
+  border-radius: var(--radius-btn); border: 1px solid var(--border); background: var(--surface); color: var(--text);
+}
+:root[data-layout="tabs"] .step-tabs button[aria-selected="true"] { background: var(--primary); color: var(--primary-ink); border-color: var(--primary); }
+:root[data-layout="tabs"] .step-tabs button.done:not([aria-selected="true"]) { color: var(--ok); border-color: var(--ok); }
+:root[data-layout="tabs"] .skill-step[data-inactive] { display: none; }
+
+/* ---------- الاختبار البعدي ---------- */
+.posttest-intro h1 { margin: 0.2rem 0 0.4rem; }
+.pt-form { display: grid; gap: 0.9rem; }
+.pt-q { border: 1px solid var(--border); margin: 0; }
+.pt-q legend { display: flex; gap: 0.6rem; align-items: flex-start; font-weight: 700; font-size: 1.08rem; padding: 0; float: right; width: 100%; margin-bottom: 0.8rem; }
+.pt-q .options { clear: both; }
+.pt-n { min-width: 1.9rem; height: 1.9rem; border-radius: 50%; display: grid; place-items: center; background: var(--primary-soft); color: var(--primary); font-size: 0.9rem; }
+.pt-opt input { position: absolute; opacity: 0; pointer-events: none; }
+.pt-opt:has(input:checked) { border-color: var(--primary); background: var(--primary-soft); }
+.pt-opt:has(input:checked) .letter { background: var(--primary); color: var(--primary-ink); }
+.pt-opt:has(input:focus-visible) { outline: 3px solid color-mix(in srgb, var(--primary) 45%, transparent); }
+.pt-q.right { border-color: var(--ok); }
+.pt-q.wrong { border-color: var(--bad); background: color-mix(in srgb, var(--bad-soft) 45%, var(--surface)); }
+.pt-feedback { margin-top: 0.6rem; padding: 0.6rem 0.9rem; border-radius: var(--radius); background: var(--surface-2); }
+
+/* ---------- صفحة اختيار القالب ---------- */
+.theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.theme-card {
+  font: inherit; color: inherit; text-align: start; cursor: pointer; padding: 0; overflow: hidden;
+  background: var(--surface); border: 2px solid var(--border); border-radius: 16px; transition: transform .15s, border-color .15s;
+}
+.theme-card:hover { transform: translateY(-3px); border-color: var(--primary); }
+.theme-card.selected { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); }
+.theme-info { display: grid; gap: 0.2rem; padding: 0.9rem 1rem 1rem; }
+.swatches { display: flex; gap: 0.3rem; margin-top: 0.3rem; }
+.swatches i { width: 1.3rem; height: 1.3rem; border-radius: 50%; border: 1px solid rgba(0,0,0,.12); }
+.theme-preview { height: 150px; display: flex; gap: 8px; padding: 12px; background: var(--pv-bg); }
+.theme-preview[data-pnav="top"] { flex-direction: column; }
+.pv-nav { background: var(--pv-surface); border-radius: var(--pv-r); flex: 0 0 22%; }
+.theme-preview[data-pnav="top"] .pv-nav { flex: 0 0 16%; }
+.pv-main { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.pv-title { height: 14px; width: 55%; border-radius: 4px; background: var(--pv-text); opacity: .8; }
+.pv-row { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.theme-preview[data-playout="path"] .pv-row { grid-template-columns: 1fr; }
+.theme-preview[data-playout="tabs"] .pv-row { grid-template-columns: 1fr; }
+.pv-row i { background: var(--pv-surface); border-radius: var(--pv-r); box-shadow: var(--pv-shadow); }
+.theme-preview[data-playout="tabs"] .pv-row i:not(:first-child) { display: none; }
+.pv-btn { height: 18px; width: 40%; border-radius: var(--pv-br); background: var(--pv-primary); align-self: flex-start; }
+[data-preview="emerald"] { --pv-bg: #f6f7f5; --pv-surface: #fff; --pv-text: #1b2421; --pv-primary: #0f766e; --pv-r: 8px; --pv-br: 6px; --pv-shadow: 0 1px 3px rgba(0,0,0,.08); }
+[data-preview="midnight"] { --pv-bg: #0b1120; --pv-surface: #1b2436; --pv-text: #e8edf6; --pv-primary: #e3b341; --pv-r: 3px; --pv-br: 2px; --pv-shadow: none; }
+[data-preview="sand"] { --pv-bg: #fbf6ef; --pv-surface: #fff; --pv-text: #2f2118; --pv-primary: #c2410c; --pv-r: 14px; --pv-br: 10px; --pv-shadow: 0 2px 0 #eadccb; }
+[data-preview="ocean"] { --pv-bg: #f3f7fd; --pv-surface: #fff; --pv-text: #0f1f3a; --pv-primary: #1d4ed8; --pv-r: 8px; --pv-br: 6px; --pv-shadow: 0 4px 10px rgba(29,78,216,.1); }
+[data-preview="ocean"] .pv-nav { background: #1d4ed8; }
+[data-preview="violet"] { --pv-bg: #f8f5ff; --pv-surface: #fff; --pv-text: #24124a; --pv-primary: linear-gradient(135deg, #7c3aed, #db2777); --pv-r: 16px; --pv-br: 99px; --pv-shadow: 0 4px 12px rgba(124,58,237,.15); }
+[data-preview="paper"] { --pv-bg: #fdfbf7; --pv-surface: #fffefb; --pv-text: #1f1a14; --pv-primary: #9f1239; --pv-r: 1px; --pv-br: 1px; --pv-shadow: inset 0 0 0 1px #1f1a14; }

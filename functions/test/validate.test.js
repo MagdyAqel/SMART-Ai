@@ -125,3 +125,41 @@ test("parseSubmissionInput validates ids and answer length", () => {
   assert.throws(() => parseSubmissionInput({ ...ok, answer: "قصير" }), InputError);
   assert.throws(() => parseSubmissionInput({ ...ok, taskId: "../x" }), InputError);
 });
+
+import { gradePostTest, isUnlocked, parsePostTestInput, resolvePassScore } from "../src/validate.js";
+
+test("post-test pass score: per-skill override, then platform setting, then default", () => {
+  assert.equal(resolvePassScore({ postTest: { passScore: 85 } }, { passScore: 60 }), 85);
+  assert.equal(resolvePassScore({ postTest: { passScore: null } }, { passScore: 60 }), 60);
+  assert.equal(resolvePassScore({}, {}), 70);
+});
+
+test("skills unlock in order after passing the previous post-test", () => {
+  const skills = [
+    { id: "s2", order: 2 },
+    { id: "s1", order: 1 },
+    { id: "s3", order: 3 },
+    { id: "soon", order: 4, comingSoon: true },
+  ];
+  assert.equal(isUnlocked(skills, "s1", {}), true);
+  assert.equal(isUnlocked(skills, "s2", {}), false);
+  assert.equal(isUnlocked(skills, "s2", { s1: { passed: true } }), true);
+  assert.equal(isUnlocked(skills, "s3", { s1: { passed: true } }), false);
+  assert.equal(isUnlocked(skills, "s3", {}, { sequential: false }), true);
+});
+
+test("gradePostTest scores answers against hidden keys", () => {
+  const qs = [{ id: "q1" }, { id: "q2" }, { id: "q3" }, { id: "q4" }];
+  const keys = { q1: { answer: 1, explanation: "a" }, q2: { answer: 0 }, q3: { answer: 2 }, q4: { answer: 3 } };
+  const g = gradePostTest(qs, keys, { q1: 1, q2: 0, q3: 2, q4: 0 }, 70);
+  assert.equal(g.score, 3);
+  assert.equal(g.pct, 75);
+  assert.equal(g.passed, true);
+  assert.equal(gradePostTest(qs, keys, { q1: 1 }, 70).passed, false); // غير المُجاب خطأ
+});
+
+test("parsePostTestInput drops malformed answers", () => {
+  const p = parsePostTestInput({ courseId: "skill-01", answers: { q1: 2, q2: "x", "../q": 1, q3: 15 } });
+  assert.deepEqual(p.answers, { q1: 2 });
+  assert.throws(() => parsePostTestInput({ courseId: "skill-01", answers: [1] }), InputError);
+});

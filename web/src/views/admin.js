@@ -1,19 +1,32 @@
 import { callGenerateCourse } from "../firebase.js";
-import { loadCourses } from "../store.js";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase.js";
+import { loadCourses, loadSettings } from "../store.js";
 import { ar, errorMessage, esc, go, spinner, toast } from "../ui.js";
 
 export async function render(el) {
   el.innerHTML = spinner();
-  const courses = await loadCourses(true);
+  const [courses, settings] = await Promise.all([loadCourses(true), loadSettings(true)]);
   el.innerHTML = `
-    <h1 class="page-title">🛠️ إدارة المحتوى</h1>
+    <h1 class="page-title">🛠️ لوحة التحكم</h1>
+    <form class="card form" id="settings-form">
+      <h2>⚙️ الانتقال بين المهارات</h2>
+      <div class="grid-2 tight">
+        <label class="field">نسبة النجاح في الاختبار البعدي للانتقال (%)
+          <input type="number" name="passScore" min="1" max="100" required value="${settings.passScore}" />
+        </label>
+        <label class="check"><input type="checkbox" name="sequential" ${settings.sequential !== false ? "checked" : ""} /> الانتقال متسلسل: لا تُفتح المهارة إلا بعد اجتياز السابقة</label>
+      </div>
+      <p class="muted small">تنطبق على كل المهارات، إلا مهارة حدّدت لها نسبة خاصة من محرّرها.</p>
+      <button class="btn primary" type="submit">حفظ الإعدادات</button>
+    </form>
     <section class="card">
-      <div class="row wrap between"><h2>الدورات</h2><a class="btn primary small" href="#/admin/course/new">+ دورة جديدة</a></div>
+      <div class="row wrap between"><h2>المهارات</h2><a class="btn primary small" href="#/admin/course/new">+ مهارة جديدة</a></div>
       ${
         courses.length
           ? `<ul class="review-list">${courses
               .map(
-                (c) => `<li><span>${esc(c.icon || "📘")} ${esc(c.title)}</span><span class="row"><span class="muted small">${ar(c.lessons.length)} دروس · ${ar(
+                (c) => `<li><span>${esc(c.icon || "📘")} ${esc(c.title)}${c.comingSoon ? ' <span class="tag">قريباً</span>' : ""}</span><span class="row"><span class="muted small">${ar(c.lessons.length)} دروس · ${ar(
                   c.lessons.reduce((s, l) => s + (l.tasks?.length || 0), 0),
                 )} مهام</span><a class="btn small" href="#/admin/course/${esc(c.id)}">تعديل</a></span></li>`,
               )
@@ -38,6 +51,19 @@ export async function render(el) {
       <button class="btn primary" type="submit">أنشئ الدورة</button>
       <p class="muted small">قد يستغرق الإنشاء دقيقة أو أكثر، وتُنشر الدورة مباشرة؛ راجعها بعد إنشائها.</p>
     </form>`;
+
+  const sForm = el.querySelector("#settings-form");
+  sForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const passScore = Math.min(100, Math.max(1, Number(sForm.passScore.value) || 70));
+    try {
+      await setDoc(doc(db, "settings", "platform"), { passScore, sequential: sForm.sequential.checked }, { merge: true });
+      await loadSettings(true);
+      toast(`حُفظت الإعدادات: نسبة النجاح ${ar(passScore)}%`, "success");
+    } catch (err) {
+      toast(errorMessage(err));
+    }
+  });
 
   const form = el.querySelector("#course-form");
   const errorEl = form.querySelector(".form-error");

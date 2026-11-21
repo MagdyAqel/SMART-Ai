@@ -15,6 +15,10 @@ import {
   InputError,
   normalizeCourse,
   computeGrade,
+  gradePostTest,
+  isUnlocked,
+  parsePostTestInput,
+  resolvePassScore,
   normalizeQuestions,
   normalizeTask,
   parseCourseInput,
@@ -211,4 +215,65 @@ export const gradeSubmission = onCall({ ...aiOptions, timeoutSeconds: 300 }, asy
     submission.firstPass = grade.passed && !prev?.passed;
   });
   return { id: subRef.id, ...submission };
+});
+
+/**
+ * الاختبار البعدي للمهارة: التصحيح في الخادم من مفاتيح لا يقرؤها المتدرب،
+ * ولا يُقبل إلا لمهارة متاحة (اجتاز المتدرب ما قبلها).
+ * عند الرسوب لا نكشف الإجابات الصحيحة، بل الأسئلة الخاطئة فقط، ليعود إلى المحتوى.
+ */
+export const submitPostTest = onCall({ timeoutSeconds: 60 }, async (request) => {
+  const uid = requireAuth(request);
+  const input = parse(parsePostTestInput, request.data);
+  const [skillSnap, keySnap, settingsSnap, skillsSnap] = await Promise.all([
+    db.doc(`courses/${input.courseId}`).get(),
+    db.doc(`courseKeys/${input.courseId}`).get(),
+    db.doc("settings/platform").get(),
+    db.collection("courses").select("order", "comingSoon").get(),
+  ]);
+  if (!skillSnap.exists) throw new HttpsError("not-found", "لم نجد هذه المهارة.");
+  const skill = skillSnap.data();
+  const questions = skill.postTest?.questions ?? [];
+  if (!questions.length || !keySnap.exists) throw new HttpsError("failed-precondition", "لا يوجد اختبار بعدي لهذه المهارة بعد.");
+  const settings = settingsSnap.exists ? settingsSnap.data() : {};
+  const userRef = db.doc(`users/${uid}`);
+  const userSnap = await userRef.get();
+  const postTests = userSnap.get("postTests") ?? {};
+  const skills = skillsSnap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  const admin = request.auth.token.admin === true;
+  if (!admin && !isUnlocked(skills, input.courseId, postTests, { sequential: settings.sequential !== false })) {
+    throw new HttpsError("failed-precondition", "اجتز الاختبار البعدي للمهارة السابقة أولاً.");
+  }
+
+  const graded = gradePostTest(questions, keySnap.get("postTest"), input.answers, resolvePassScore(skill, settings));
+  const prev = postTests[input.courseId];
+  await db.runTransaction(async (tx) => {
+    tx.set(
+      userRef,
+      {
+        postTests: {
+          [input.courseId]: {
+            best: Math.max(prev?.best ?? 0, graded.pct),
+            passed: Boolean(prev?.passed) || graded.passed,
+            attempts: (prev?.attempts ?? 0) + 1,
+            lastAt: Date.now(),
+          },
+        },
+      },
+      { merge: true },
+    );
+    tx.set(userRef.collection("postTestAttempts").doc(), {
+      courseId: input.courseId,
+      score: graded.score,
+      total: graded.total,
+      pct: graded.pct,
+      passed: graded.passed,
+      answers: input.answers,
+      createdAt: FieldValue.serverTimestamp(),
+    });
+  });
+  const firstPass = graded.passed && !prev?.passed;
+  // عند الرسوب: لا نكشف الإجابة الصحيحة ولا الشرح، فقط هل أصاب أم أخطأ.
+  const results = graded.passed ? graded.results : graded.results.map(({ id, chosen, correct }) => ({ id, chosen, correct }));
+  return { ...graded, results, firstPass };
 });
