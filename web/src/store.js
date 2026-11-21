@@ -11,7 +11,7 @@ import {
   serverTimestamp,
   setDoc,
 } from "firebase/firestore";
-import { db } from "./firebase.js";
+import { FREE_PLAN, db } from "./firebase.js";
 import { emptyProgress, levelProgress } from "./engine.js";
 
 export const state = {
@@ -44,7 +44,9 @@ export function saveProgress(progress) {
   window.dispatchEvent(new Event("progress-changed"));
   const uid = state.user.uid;
   // tasks وpostTests يكتبها الخادم فقط، فلا نرسلها من المتصفح.
-  const { createdAt, updatedAt, tasks, postTests, ...data } = progress;
+  const { createdAt, updatedAt, tasks, postTests, ...rest } = progress;
+  // في الخطة المجانية يحفظ المتصفح نتيجة الاختبار البعدي (لا خادم يصحّحها)
+  const data = FREE_PLAN && postTests ? { ...rest, postTests } : rest;
   saveChain = saveChain
     .then(() =>
       Promise.all([

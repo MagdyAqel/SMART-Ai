@@ -1,6 +1,6 @@
 // الاختبار البعدي: يُصحَّح في الخادم، ويفتح المهارة التالية عند الاجتياز.
-import { callSubmitPostTest } from "../firebase.js";
-import { loadCourses, loadSettings, saveProgress, skillPassScore, skillStatuses, state } from "../store.js";
+import { FREE_PLAN, callSubmitPostTest } from "../firebase.js";
+import { loadCourses, loadSettings, loadSkillKeys, saveProgress, skillPassScore, skillStatuses, state } from "../store.js";
 import { ar, errorMessage, esc, go, spinner, toast } from "../ui.js";
 
 const LETTERS = ["أ", "ب", "ج", "د", "هـ", "و"];
@@ -79,7 +79,7 @@ export async function render(el, { courseId }) {
     btn.disabled = true;
     btn.textContent = "نصحّح…";
     try {
-      const { data } = await callSubmitPostTest({ courseId, answers });
+      const data = FREE_PLAN ? await gradeInBrowser(skill, passScore, answers) : (await callSubmitPostTest({ courseId, answers })).data;
       // نحدّث النسخة المحلية بنتيجة الخادم
       const tests = { ...(state.progress.postTests || {}) };
       const prev = tests[courseId];
@@ -92,6 +92,28 @@ export async function render(el, { courseId }) {
       btn.textContent = "سلّم الاختبار";
     }
   });
+}
+
+/**
+ * الخطة المجانية: التصحيح في المتصفح بالمنطق نفسه الذي يطبّقه الخادم،
+ * ولا تُعرض الإجابات الصحيحة عند الرسوب.
+ */
+async function gradeInBrowser(skill, passScore, answers) {
+  const keys = await loadSkillKeys(skill.id);
+  const results = (skill.postTest?.questions || []).map((q) => {
+    const key = keys[q.id];
+    const chosen = answers[q.id] ?? null;
+    return { id: q.id, chosen, correct: key != null && chosen === key.answer, answer: key?.answer ?? null, explanation: key?.explanation ?? "" };
+  });
+  const score = results.filter((r) => r.correct).length;
+  const total = results.length;
+  const pct = total ? Math.round((score / total) * 100) : 0;
+  const passed = total > 0 && pct >= passScore;
+  const firstPass = passed && !state.progress.postTests?.[skill.id]?.passed;
+  return {
+    score, total, pct, passScore, passed, firstPass,
+    results: passed ? results : results.map(({ id, chosen, correct }) => ({ id, chosen, correct })),
+  };
 }
 
 function progressHtml(n, total) {

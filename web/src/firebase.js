@@ -5,6 +5,8 @@ import { connectFunctionsEmulator, getFunctions, httpsCallable } from "firebase/
 import { connectStorageEmulator, getStorage } from "firebase/storage";
 
 const env = import.meta.env;
+// الخطة المجانية: لا دوال سحابية ولا تخزين ملفات، فتُخفى ميزات الذكاء الاصطناعي والرفع.
+export const FREE_PLAN = env.VITE_FREE_PLAN === "true";
 const useEmulators = env.VITE_USE_EMULATORS === "true";
 
 const config = {
@@ -22,14 +24,14 @@ export const app = isConfigured ? initializeApp(config) : null;
 export const auth = app ? getAuth(app) : null;
 export const db = app ? getFirestore(app) : null;
 export const functions = app ? getFunctions(app, env.VITE_FUNCTIONS_REGION || "us-central1") : null;
-export const storage = app ? getStorage(app) : null;
+export const storage = app && !FREE_PLAN ? getStorage(app) : null;
 
 if (app && useEmulators) {
   const host = window.location.hostname;
   connectAuthEmulator(auth, `http://${host}:9099`, { disableWarnings: true });
   connectFirestoreEmulator(db, host, 8080);
   connectFunctionsEmulator(functions, host, 5001);
-  connectStorageEmulator(storage, host, 9199);
+  if (storage) connectStorageEmulator(storage, host, 9199);
 }
 
 // مهلات العميل: توليد المحتوى قد يستغرق دقائق.

@@ -1,7 +1,7 @@
 // محرّر الدورة للمشرف: البيانات العامة، والدروس، والفيديوهات والصور، والأسئلة، والمهام ومعايير تصحيحها.
 import { deleteDoc, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { db, storage } from "../firebase.js";
+import { FREE_PLAN, db, storage } from "../firebase.js";
 import { renderMedia } from "../media.js";
 import { loadCourses, loadSkillKeys } from "../store.js";
 import { ar, errorMessage, esc, go, spinner, toast } from "../ui.js";
@@ -122,7 +122,7 @@ export async function render(el, { courseId }) {
           ${field("infographic.url", "رابط الإنفوجرافيك", { attrs: 'dir="ltr"' })}
           ${field("infographic.alt", "وصف الإنفوجرافيك (للقارئات الصوتية)")}
         </div>
-        <div class="row wrap">
+        <div class="row wrap" ${FREE_PLAN ? "hidden" : ""}>
           <label class="btn small">⬆ رفع فيديو<input type="file" accept="video/*" data-upload-set="video.url" hidden /></label>
           <label class="btn small">⬆ رفع صورة غلاف<input type="file" accept="image/*" data-upload-set="video.poster" hidden /></label>
           <label class="btn small">⬆ رفع إنفوجرافيك<input type="file" accept="image/*" data-upload-set="infographic.url" hidden /></label>
@@ -146,7 +146,7 @@ export async function render(el, { courseId }) {
           .join("")}
         <div class="row wrap">
           <button type="button" class="btn small" data-add-example>+ مثال برابط</button>
-          <label class="btn small">⬆ رفع صورة مثال<input type="file" accept="image/*" data-upload-push="examples" hidden /></label>
+          <label class="btn small" ${FREE_PLAN ? "hidden" : ""}>⬆ رفع صورة مثال<input type="file" accept="image/*" data-upload-push="examples" hidden /></label>
         </div>
       </section>
       <section class="card">
@@ -190,7 +190,7 @@ export async function render(el, { courseId }) {
           .join("")}
         <div class="row wrap">
           <button type="button" class="btn small" data-add-media="${li}">+ رابط فيديو</button>
-          <label class="btn small">⬆ رفع ملف<input type="file" accept="image/*,video/*" data-upload="${li}" hidden /></label>
+          <label class="btn small" ${FREE_PLAN ? "hidden" : ""}>⬆ رفع ملف<input type="file" accept="image/*,video/*" data-upload="${li}" hidden /></label>
           <span class="muted small" data-upload-status="${li}"></span>
         </div>
       </div>

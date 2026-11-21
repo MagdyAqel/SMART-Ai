@@ -1,6 +1,6 @@
 import { callGenerateCourse } from "../firebase.js";
 import { doc, setDoc } from "firebase/firestore";
-import { db } from "../firebase.js";
+import { FREE_PLAN, db } from "../firebase.js";
 import { loadCourses, loadSettings } from "../store.js";
 import { ar, errorMessage, esc, go, spinner, toast } from "../ui.js";
 
@@ -35,7 +35,7 @@ export async function render(el) {
       }
     </section>
 
-    <form class="card form" id="course-form">
+    <form class="card form" id="course-form" ${FREE_PLAN ? "hidden" : ""}>
       <h2>✨ أنشئ مسودة دورة بالذكاء الاصطناعي</h2>
       <p class="muted">يكتب المدرّب الذكي الدروس والأسئلة والمهام التطبيقية ومعايير تصحيحها، ثم تراجعها وتضيف فيديوهاتك من المحرّر.</p>
       <label class="field">موضوع الدورة

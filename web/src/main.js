@@ -1,7 +1,7 @@
 import "./styles.css";
 import { applyTheme, savedThemeId } from "./themes.js";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth, isConfigured } from "./firebase.js";
+import { FREE_PLAN, auth, isConfigured } from "./firebase.js";
 import { dueReviews } from "./engine.js";
 import { loadProgress, state } from "./store.js";
 import { errorMessage, esc, go } from "./ui.js";
@@ -28,8 +28,8 @@ const routes = [
   { re: /^\/lesson\/([\w-]+)\/([\w-]+)$/, view: lesson, nav: "courses", keys: ["courseId", "lessonId"] },
   { re: /^\/quiz$/, view: quiz, nav: null },
   { re: /^\/review$/, view: review, nav: "review" },
-  { re: /^\/generate$/, view: generate, nav: "generate" },
-  { re: /^\/tutor$/, view: tutor, nav: "tutor" },
+  { re: /^\/generate$/, view: generate, nav: "generate", ai: true },
+  { re: /^\/tutor$/, view: tutor, nav: "tutor", ai: true },
   { re: /^\/task\/([\w-]+)\/([\w-]+)\/([\w-]+)$/, view: task, nav: "courses", keys: ["courseId", "lessonId", "taskId"] },
   { re: /^\/performance$/, view: performance, nav: "performance" },
   { re: /^\/posttest\/([\w-]+)$/, view: posttest, nav: "courses", keys: ["courseId"] },
@@ -43,8 +43,8 @@ const NAV = [
   { id: "courses", href: "/courses", icon: "🧭", label: "المهارات" },
   { id: "review", href: "/review", icon: "🔁", label: "المراجعة" },
   { id: "performance", href: "/performance", icon: "📈", label: "أدائي" },
-  { id: "generate", href: "/generate", icon: "✨", label: "اختبار ذكي" },
-  { id: "tutor", href: "/tutor", icon: "🤖", label: "المدرّب" },
+  { id: "generate", href: "/generate", icon: "✨", label: "اختبار ذكي", ai: true },
+  { id: "tutor", href: "/tutor", icon: "🤖", label: "المدرّب", ai: true },
   { id: "admin", href: "/admin", icon: "🛠️", label: "الإدارة", admin: true },
 ];
 
@@ -73,7 +73,7 @@ function renderNav(active) {
   const nav = root.querySelector(".nav");
   if (!nav) return;
   const due = state.progress ? dueReviews(state.progress.review, Date.now()).length : 0;
-  nav.innerHTML = NAV.filter((n) => !n.admin || state.isAdmin)
+  nav.innerHTML = NAV.filter((n) => (!n.admin || state.isAdmin) && !(n.ai && FREE_PLAN))
     .map(
       (n) => `<a href="#${n.href}" class="${n.id === active ? "active" : ""}" ${n.id === active ? 'aria-current="page"' : ""}>
         <span aria-hidden="true">${n.icon}</span><span>${n.label}</span>${
@@ -88,7 +88,7 @@ async function route() {
   if (!state.user || !state.progress) return;
   const [path, qs] = (location.hash.slice(1) || "/").split("?");
   const match = routes.map((r) => ({ r, m: path.match(r.re) })).find((x) => x.m);
-  if (!match || (match.r.admin && !state.isAdmin)) return go("/");
+  if (!match || (match.r.admin && !state.isAdmin) || (match.r.ai && FREE_PLAN)) return go("/");
   const params = Object.fromEntries((match.r.keys || []).map((k, i) => [k, decodeURIComponent(match.m[i + 1])]));
   if (typeof cleanup === "function") cleanup();
   cleanup = null;

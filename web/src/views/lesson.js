@@ -1,3 +1,4 @@
+import { FREE_PLAN } from "../firebase.js";
 import { renderMedia } from "../media.js";
 import { findLesson, loadCourses, loadSettings, skillStatuses, state, taskKey } from "../store.js";
 import { ar, esc, go, spinner } from "../ui.js";
@@ -45,11 +46,11 @@ export async function render(el, { courseId, lessonId }) {
     }
     <div class="actions">
       ${lesson.questions?.length ? `<button class="btn primary" id="quiz">🎯 ابدأ الاختبار التكيّفي</button>` : ""}
-      <button class="btn" id="ask">🤖 اسأل المدرّب عن هذا الدرس</button>
+      ${FREE_PLAN ? "" : `<button class="btn" id="ask">🤖 اسأل المدرّب عن هذا الدرس</button>`}
       ${next ? `<a class="btn ghost" href="#/lesson/${esc(course.id)}/${esc(next.id)}">الدرس التالي ←</a>` : ""}
     </div>`;
   el.querySelector("#quiz")?.addEventListener("click", () => startLessonQuiz(course, lesson));
-  el.querySelector("#ask").addEventListener("click", () => {
+  el.querySelector("#ask")?.addEventListener("click", () => {
     state.tutorPrefill = null;
     go(`/tutor?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(lesson.id)}`);
   });

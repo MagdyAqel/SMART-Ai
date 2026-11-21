@@ -1,0 +1,75 @@
+# ينشر المنصة على Firebase تلقائياً عند كل تحديث.
+# يحتاج سرّاً واحداً في المستودع: FIREBASE_SERVICE_ACCOUNT (محتوى ملف مفتاح حساب الخدمة JSON)،
+# وملف web/.env.production فيه إعدادات تطبيق الويب (وهي بيانات عامة، ليست سرية).
+name: نشر المنصة
+
+on:
+  push:
+    branches: [main, claude/upbeat-ramanujan-weryd0]
+  workflow_dispatch:
+    inputs:
+      force_content:
+        description: "استبدال محتوى المهارات الموجودة بمحتوى مجلد content"
+        type: boolean
+        default: false
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: التحقق من الإعدادات
+        id: check
+        env:
+          SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          if [ -z "$SA" ] || [ ! -f web/.env.production ]; then
+            echo "::warning::النشر متوقف: أضف السر FIREBASE_SERVICE_ACCOUNT وملف web/.env.production"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          printf '%s' "$SA" > "$RUNNER_TEMP/sa.json"
+          PROJECT=$(grep -E '^VITE_FIREBASE_PROJECT_ID=' web/.env.production | cut -d= -f2-)
+          FREE=$(grep -E '^VITE_FREE_PLAN=' web/.env.production | cut -d= -f2-)
+          echo "project=$PROJECT" >> "$GITHUB_OUTPUT"
+          echo "free=$FREE" >> "$GITHUB_OUTPUT"
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v4
+        if: steps.check.outputs.ready == 'true'
+        with:
+          node-version: 22
+
+      - name: تثبيت الحزم
+        if: steps.check.outputs.ready == 'true'
+        run: |
+          npm ci --prefix web
+          npm ci --prefix functions
+
+      - name: نشر الموقع وقواعد الأمان
+        if: steps.check.outputs.ready == 'true'
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/sa.json
+        run: |
+          ONLY="hosting,firestore"
+          if [ "${{ steps.check.outputs.free }}" != "true" ]; then ONLY="hosting,firestore,functions,storage"; fi
+          npx --yes firebase-tools@15.37.0 deploy --only "$ONLY" --project "${{ steps.check.outputs.project }}" --non-interactive --force
+
+      - name: رفع محتوى المهارات الجديدة
+        if: steps.check.outputs.ready == 'true'
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/sa.json
+        run: |
+          FLAGS=""
+          if [ "${{ steps.check.outputs.free }}" = "true" ]; then FLAGS="--free"; else FLAGS="--server-grading"; fi
+          if [ "${{ inputs.force_content }}" = "true" ]; then FLAGS="$FLAGS --force"; fi
+          node functions/scripts/seed.js --project "${{ steps.check.outputs.project }}" $FLAGS
+
+      - name: رابط المنصة
+        if: steps.check.outputs.ready == 'true'
+        run: echo "::notice::المنصة منشورة على https://${{ steps.check.outputs.project }}.web.app"

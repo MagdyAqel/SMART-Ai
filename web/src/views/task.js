@@ -1,4 +1,4 @@
-import { callGradeSubmission } from "../firebase.js";
+import { FREE_PLAN, callGradeSubmission } from "../firebase.js";
 import { findLesson, saveProgress, state, taskKey } from "../store.js";
 import { ar, errorMessage, esc, spinner, toast } from "../ui.js";
 import { bindCopy, gradeResultHtml } from "./grade-result.js";
@@ -30,7 +30,8 @@ export async function render(el, { courseId, lessonId, taskId }) {
       </details>
       ${prev ? `<p class="muted">محاولاتك: ${ar(prev.attempts)} · أفضل نتيجة ${ar(prev.best)}%${prev.passed ? " · ✓ اجتزت" : ""}</p>` : ""}
     </section>
-    <form class="card" id="submit-form">
+    ${FREE_PLAN ? `<div class="card notice-card">🛠️ نفّذ المهمة وقيّم عملك بنفسك وفق المعايير أعلاه. التصحيح التلقائي بالذكاء الاصطناعي يُفعَّل عند ترقية المنصة.</div>` : ""}
+    <form class="card" id="submit-form" ${FREE_PLAN ? "hidden" : ""}>
       <label class="field">${isPrompt ? "اكتب برومبتك" : "إجابتك"}
         <textarea name="answer" rows="${isPrompt ? 8 : 12}" maxlength="8000" required placeholder="${
           isPrompt ? "أنت معلم... اكتب..." : "اكتب إجابتك هنا"

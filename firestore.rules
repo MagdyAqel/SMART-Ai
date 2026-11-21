@@ -15,6 +15,11 @@ service cloud.firestore {
       return signedIn() && request.auth.token.admin == true;
     }
 
+    // الخطة المجانية (بلا دوال سحابية): يُصحَّح الاختبار البعدي في المتصفح.
+    function freeMode() {
+      return get(/databases/$(database)/documents/settings/platform).data.get('freeMode', false) == true;
+    }
+
     // محتوى الدورات: يقرؤه كل مستخدم مسجّل، ويكتبه المشرف فقط
     // (الدوال السحابية تكتب عبر Admin SDK فتتجاوز هذه القواعد).
     match /courses/{courseId} {
@@ -24,7 +29,8 @@ service cloud.firestore {
 
     // مفاتيح إجابات الاختبار البعدي: لا يقرؤها المتدرب، ويصحّح بها الخادم.
     match /courseKeys/{courseId} {
-      allow read, write: if isAdmin();
+      allow read: if isAdmin() || (signedIn() && freeMode());
+      allow write: if isAdmin();
     }
 
     // إعدادات المنصة (مثل نسبة النجاح للانتقال): يقرؤها الجميع ويعدّلها المشرف.
@@ -45,7 +51,8 @@ service cloud.firestore {
       allow update: if isOwner(uid)
         && request.resource.data.xp is int
         && request.resource.data.xp >= 0
-        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['tasks', 'postTests']);
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['tasks'])
+        && (freeMode() || !request.resource.data.diff(resource.data).affectedKeys().hasAny(['postTests']));
       allow delete: if false;
 
       // محاولات الاختبار البعدي: يكتبها الخادم، ويقرؤها صاحبها.

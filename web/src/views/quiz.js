@@ -1,4 +1,5 @@
 import { applyAnswer, completeLesson, lessonKey, mastery, pickNextQuestion, skillRating } from "../engine.js";
+import { FREE_PLAN } from "../firebase.js";
 import { logAttempt, saveProgress, state } from "../store.js";
 import { ar, esc, go, progressBar } from "../ui.js";
 
@@ -199,7 +200,7 @@ function drawQuestion(el, s) {
             </div>
             <div class="actions">
               <button class="btn primary" id="next">${s.answers.length >= s.length ? "عرض النتيجة" : "السؤال التالي ←"}</button>
-              <button class="btn" id="why">🤖 اشرح لي أكثر</button>
+              ${FREE_PLAN ? "" : '<button class="btn" id="why">🤖 اشرح لي أكثر</button>'}
             </div>`
           : `<p class="hint muted">تلميح: استخدم الأرقام ١–${ar(q.options.length)} في لوحة المفاتيح للإجابة.</p>`
       }
