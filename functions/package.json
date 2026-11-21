@@ -1,0 +1,22 @@
+{
+  "name": "smart-ai-functions",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "node": "22"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.12.0",
+    "firebase-admin": "^14.5.1",
+    "firebase-functions": "^7.4.0",
+    "zod": "^4.6.7"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "seed": "node scripts/seed.js",
+    "set-admin": "node scripts/set-admin.js",
+    "serve": "firebase emulators:start --only functions",
+    "deploy": "firebase deploy --only functions"
+  }
+}
