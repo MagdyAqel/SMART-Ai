@@ -55,6 +55,12 @@ jobs:
           npm ci --prefix web
           npm ci --prefix functions
 
+      - name: تجهيز الصور الجديدة للموقع
+        if: steps.check.outputs.ready == 'true'
+        run: |
+          sudo apt-get install -y -qq ffmpeg > /dev/null 2>&1 || true
+          node content/tools/sync-media.mjs
+
       - name: نشر الموقع وقواعد الأمان
         if: steps.check.outputs.ready == 'true'
         env:

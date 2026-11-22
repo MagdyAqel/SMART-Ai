@@ -63,7 +63,9 @@ function findPhrase(phrase, from = 0) {
 }
 
 let cursor = 0;
-const scenes = spec.scenes.map((s) => {
+const scenes = spec.scenes.map((s0) => {
+  // صورة غير موجودة بعد (مثل صور ChatGPT المنتظرة): يُعرض المشهد بخلفية التصميم
+  const s = s0.image && !existsSync(join(SKILL_DIR, "raw", s0.image)) ? { ...s0, image: null } : s0;
   const idx = findPhrase(s.text, cursor);
   if (idx < 0) throw new Error(`لم أجد بداية المشهد ${s.id} في التفريغ`);
   cursor = idx + 1;
@@ -93,7 +95,8 @@ const icon = (name) =>
   readFileSync(join(HERE, "node_modules/lucide-static/icons", `${name}.svg`), "utf8")
     .replace(/<!--.*?-->/gs, "")
     .replace(/width="24"/, 'width="100%"')
-    .replace(/height="24"/, 'height="100%"');
+    .replace(/height="24"/, 'height="100%"')
+    .replace(/<(path|circle|rect|line|polyline|polygon|ellipse)\b/g, '<$1 pathLength="1"');
 const img = (f) => `file://${join(SKILL_DIR, "raw", f)}`;
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const at = (t) => `style="--d:${t.toFixed(2)}s"`;
@@ -206,6 +209,27 @@ const templates = {
           </div>
         </div>
         <div class="moral in" ${at(cue(s, s.moralAt, 0.85))}>${esc(s.moral)}</div>
+      </div>`;
+  },
+  steps(s) {
+    const items = s.steps.map((st, i) => ({ ...st, t: cue(s, st.at, 0.15 + i * (0.75 / s.steps.length)) }));
+    const first = items[0].t;
+    const last = items.at(-1).t;
+    return `
+      <div class="center col">
+        <h2 class="title in" ${at(s.start + 0.3)}><i class="ti">${icon(s.icon || "list-checks")}</i>${esc(s.title)}</h2>
+        <div class="flow" style="--n:${items.length}">
+          <div class="flow-line"><b style="--d:${first.toFixed(2)}s;--len:${Math.max(0.5, last - first + 0.6).toFixed(2)}s"></b></div>
+          ${items
+            .map(
+              (st, i) => `<div class="fstep pop" style="--d:${st.t.toFixed(2)}s;--c:${st.color || "#2dd4bf"}">
+                <div class="fnum">${i + 1}</div>
+                <div class="ficon">${icon(st.icon)}</div>
+                <h3>${esc(st.title)}</h3><p>${esc(st.text)}</p>
+              </div>`,
+            )
+            .join("")}
+        </div>
       </div>`;
   },
   closing(s) {
@@ -330,6 +354,23 @@ svg{display:block}
 .step i{width:50px;height:50px;color:var(--teal)}
 .arrow{font-size:56px;color:var(--teal)}
 .brand-end{font-size:40px;font-weight:700;color:var(--muted);margin-top:20px} .logo{color:var(--teal)}
+/* رموز متحركة: ترسم نفسها ثم تطفو بهدوء */
+.scene svg [pathLength]{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.1s cubic-bezier(.6,.1,.3,1) calc(var(--d, 0s) + .2s) both}
+@keyframes draw{to{stroke-dashoffset:0}}
+.card-icon,.p-icon,.ficon{animation:floaty 3.2s ease-in-out calc(var(--d, 0s) + 1.3s) infinite both}
+.badge.pop{animation:pop .6s cubic-bezier(.3,1.5,.5,1) var(--d) both,floaty 3.2s ease-in-out calc(var(--d) + 1.3s) infinite}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.ti svg{animation:spinIn .9s cubic-bezier(.3,1.4,.5,1) var(--d, 0s) both}
+@keyframes spinIn{from{transform:rotate(-90deg) scale(.4);opacity:0}to{transform:none;opacity:1}}
+/* steps */
+.flow{position:relative;display:grid;grid-template-columns:repeat(var(--n),1fr);gap:26px;width:1660px;padding-top:30px}
+.flow-line{position:absolute;top:66px;left:calc(100% / (2 * var(--n)));right:calc(100% / (2 * var(--n)));height:6px;border-radius:6px;background:rgba(255,255,255,.12)}
+.flow-line b{display:block;height:100%;border-radius:inherit;background:linear-gradient(270deg,var(--teal),var(--amber));transform-origin:right;animation:growX var(--len) linear var(--d) both}
+.fstep{position:relative;z-index:1;text-align:center;padding:0 10px}
+.fnum{width:72px;height:72px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;font-size:36px;font-weight:700;color:var(--bg1);background:var(--c);box-shadow:0 0 0 10px rgba(6,32,31,.9),0 0 30px color-mix(in srgb,var(--c) 60%,transparent)}
+.ficon{width:76px;height:76px;margin:0 auto 14px;padding:16px;border-radius:22px;color:var(--c);background:color-mix(in srgb,var(--c) 15%,transparent);border:2px solid color-mix(in srgb,var(--c) 45%,transparent)}
+.fstep h3{font-size:40px;margin-bottom:10px;color:var(--c)}
+.fstep p{font-size:28px;line-height:1.5;color:#d4ece7}
 /* chrome */
 .top{position:absolute;top:44px;left:60px;right:60px;display:flex;justify-content:space-between;align-items:center;font-size:28px;z-index:5}
 .top .brand{font-weight:700;color:#d8f3ee} .top .skill{padding:6px 22px;border-radius:99px;border:1.5px solid rgba(255,255,255,.3);color:#d8f3ee}

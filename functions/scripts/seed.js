@@ -22,6 +22,16 @@ initializeApp({ projectId });
 const db = getFirestore();
 
 const CONTENT = new URL("../../content/", import.meta.url);
+const PUBLIC = new URL("../../web/public/", import.meta.url);
+// الوسائط التي لم تُنتج بعد لا تُعرض (تظهر للمتدرب «سيُضاف قريباً»)
+const hasFile = (url) => typeof url === "string" && url.startsWith("/") && existsSync(new URL("." + url, PUBLIC));
+function availableMedia(skill) {
+  const video = skill.video && hasFile(skill.video.url) ? { ...skill.video, poster: hasFile(skill.video.poster) ? skill.video.poster : "" } : null;
+  const infographic = skill.infographic && hasFile(skill.infographic.url) ? skill.infographic : null;
+  const examples = (skill.examples || []).filter((x) => hasFile(x.url));
+  const cover = hasFile(skill.cover) ? skill.cover : "";
+  return { video, infographic, examples, cover };
+}
 const catalog = JSON.parse(readFileSync(new URL("skills.json", CONTENT), "utf8"));
 
 const force = args.includes("--force");
@@ -32,7 +42,22 @@ for (const entry of catalog) {
   const file = new URL(`${entry.id}/skill.json`, CONTENT);
   const prev = existing.get(entry.id);
   const hasContent = existsSync(file);
-  if (prev && !force && !(prev.comingSoon && hasContent)) continue;
+  if (prev && !force && !(prev.comingSoon && hasContent)) {
+    // مهارة منشورة: نضيف فقط الوسائط التي أصبحت متاحة ولم تكن في الوثيقة
+    if (hasContent) {
+      const media = availableMedia(JSON.parse(readFileSync(file, "utf8")));
+      const patch = {};
+      if (!prev.video?.url && media.video) patch.video = media.video;
+      if (!prev.infographic?.url && media.infographic) patch.infographic = media.infographic;
+      if ((prev.examples || []).length < media.examples.length) patch.examples = media.examples;
+      if (!prev.cover && media.cover) patch.cover = media.cover;
+      if (Object.keys(patch).length) {
+        batch.set(db.doc(`courses/${entry.id}`), patch, { merge: true });
+        console.log(`  ${entry.id}: أُضيفت وسائط جديدة (${Object.keys(patch).join("، ")})`);
+      }
+    }
+    continue;
+  }
   written++;
   const base = { ...entry, order: entry.number, updatedAt: FieldValue.serverTimestamp() };
   if (!hasContent) {
@@ -50,6 +75,7 @@ for (const entry of catalog) {
     ...skill,
     order: skill.order ?? entry.number,
     comingSoon: false,
+    ...availableMedia(skill),
     postTest: { passScore: skill.postTest?.passScore ?? null, questions },
     updatedAt: FieldValue.serverTimestamp(),
   });

@@ -16,3 +16,4 @@ content/*/raw/narration-*.mp3
 content/*/raw/words-raw.json
 *-debug.log
 *.bundle
+content/*/raw/cover.jpg
