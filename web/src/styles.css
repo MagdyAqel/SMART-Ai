@@ -688,6 +688,7 @@ a.skill-card:hover { border-color: var(--primary); transform: translateY(-2px); 
 .video-player video { width: 100%; border-radius: var(--radius); background: #000; aspect-ratio: 16 / 9; display: block; }
 .video-player figcaption, .infographic figcaption { margin-top: 0.5rem; display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
 .video-player, .infographic, .example { margin: 0; }
+.video-player + .video-player { margin-top: 1.75rem; }
 .infographic img { width: 100%; max-width: 760px; display: block; margin-inline: auto; border-radius: var(--radius); border: 1px solid var(--border); }
 .examples { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
 .example { background: var(--surface-2); border-radius: var(--radius); overflow: hidden; }

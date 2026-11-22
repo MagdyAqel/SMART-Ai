@@ -357,5 +357,11 @@
         "explanation": "الجدول ييسّر المقارنة المنهجية."
       }
     ]
+  },
+  "tutorial": {
+    "url": "/media/skill-06/tutorial-video.mp4",
+    "poster": "/media/skill-06/tutorial-poster.jpg",
+    "captions": "/media/skill-06/tutorial-video.ar.vtt",
+    "title": "شرح تطبيقي خطوة بخطوة: لخّص الدراسات وتحقّق من مراجعها"
   }
 }

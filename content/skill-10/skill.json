@@ -357,5 +357,11 @@
         "explanation": "مساعد يسرّع، والمعلم يحكم."
       }
     ]
+  },
+  "tutorial": {
+    "url": "/media/skill-10/tutorial-video.mp4",
+    "poster": "/media/skill-10/tutorial-poster.jpg",
+    "captions": "/media/skill-10/tutorial-video.ar.vtt",
+    "title": "شرح تطبيقي خطوة بخطوة: ابنِ روبريك وقدّم تغذية راجعة"
   }
 }

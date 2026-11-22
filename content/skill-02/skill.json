@@ -370,5 +370,11 @@
         "explanation": "المعلم صاحب القرار التربوي والمسؤول عنه."
       }
     ]
+  },
+  "tutorial": {
+    "url": "/media/skill-02/tutorial-video.mp4",
+    "poster": "/media/skill-02/tutorial-poster.jpg",
+    "captions": "/media/skill-02/tutorial-video.ar.vtt",
+    "title": "شرح تطبيقي خطوة بخطوة: أعدّ درساً متمايزاً لثلاثة مستويات"
   }
 }

@@ -357,5 +357,11 @@
         "explanation": "يحدد السياق والبنية والتمايز والتقويم."
       }
     ]
+  },
+  "tutorial": {
+    "url": "/media/skill-08/tutorial-video.mp4",
+    "poster": "/media/skill-08/tutorial-poster.jpg",
+    "captions": "/media/skill-08/tutorial-video.ar.vtt",
+    "title": "شرح تطبيقي خطوة بخطوة: خطّط وحدة دراسية بالتصميم العكسي"
   }
 }

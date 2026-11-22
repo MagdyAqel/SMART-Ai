@@ -352,5 +352,11 @@
         "explanation": "الإنسان يبقى مسؤولاً."
       }
     ]
+  },
+  "tutorial": {
+    "url": "/media/skill-11/tutorial-video.mp4",
+    "poster": "/media/skill-11/tutorial-poster.jpg",
+    "captions": "/media/skill-11/tutorial-video.ar.vtt",
+    "title": "شرح تطبيقي خطوة بخطوة: اتخذ القرار الأخلاقي في موقف حقيقي"
   }
 }

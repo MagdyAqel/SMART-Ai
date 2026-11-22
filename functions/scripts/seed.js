@@ -26,11 +26,13 @@ const PUBLIC = new URL("../../web/public/", import.meta.url);
 // الوسائط التي لم تُنتج بعد لا تُعرض (تظهر للمتدرب «سيُضاف قريباً»)
 const hasFile = (url) => typeof url === "string" && url.startsWith("/") && existsSync(new URL("." + url, PUBLIC));
 function availableMedia(skill) {
-  const video = skill.video && hasFile(skill.video.url) ? { ...skill.video, poster: hasFile(skill.video.poster) ? skill.video.poster : "" } : null;
+  const vid = (v) => (v && hasFile(v.url) ? { ...v, poster: hasFile(v.poster) ? v.poster : "" } : null);
+  const video = vid(skill.video);
+  const tutorial = vid(skill.tutorial);
   const infographic = skill.infographic && hasFile(skill.infographic.url) ? skill.infographic : null;
   const examples = (skill.examples || []).filter((x) => hasFile(x.url));
   const cover = hasFile(skill.cover) ? skill.cover : "";
-  return { video, infographic, examples, cover };
+  return { video, tutorial, infographic, examples, cover };
 }
 const catalog = JSON.parse(readFileSync(new URL("skills.json", CONTENT), "utf8"));
 
@@ -48,6 +50,7 @@ for (const entry of catalog) {
       const media = availableMedia(JSON.parse(readFileSync(file, "utf8")));
       const patch = {};
       if (!prev.video?.url && media.video) patch.video = media.video;
+      if (!prev.tutorial?.url && media.tutorial) patch.tutorial = media.tutorial;
       if (!prev.infographic?.url && media.infographic) patch.infographic = media.infographic;
       if ((prev.examples || []).length < media.examples.length) patch.examples = media.examples;
       if (!prev.cover && media.cover) patch.cover = media.cover;

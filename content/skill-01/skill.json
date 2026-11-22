@@ -465,5 +465,11 @@
       }
     ]
   },
-  "cover": "/media/covers/skill-01.jpg"
+  "cover": "/media/covers/skill-01.jpg",
+  "tutorial": {
+    "url": "/media/skill-01/tutorial-video.mp4",
+    "poster": "/media/skill-01/tutorial-poster.jpg",
+    "captions": "/media/skill-01/tutorial-video.ar.vtt",
+    "title": "شرح تطبيقي خطوة بخطوة: اكتب أمراً فعّالاً بالأركان الخمسة"
+  }
 }

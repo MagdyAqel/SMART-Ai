@@ -6,7 +6,7 @@ import { ar, esc, progressBar, spinner } from "../ui.js";
 
 const STEPS = [
   { id: "intro", icon: "🎯", label: "التعريف والأهداف" },
-  { id: "video", icon: "🎬", label: "الفيديو التعريفي" },
+  { id: "video", icon: "🎬", label: "الفيديو والشرح التطبيقي" },
   { id: "infographic", icon: "🗺️", label: "الإنفوجرافيك" },
   { id: "examples", icon: "🖼️", label: "أمثلة واقعية" },
   { id: "lessons", icon: "📚", label: "الدروس والتطبيق" },
@@ -67,15 +67,21 @@ export async function render(el, { courseId }) {
       <p class="muted small">⏱️ المدة التقديرية: ${ar(intro.minutes || 30)} دقيقة · ${ar(lessons.length)} دروس · اختبار بعدي من ${ar(
         skill.postTest?.questions?.length || 0,
       )} أسئلة</p>`,
-    video: skill.video?.url
-      ? `<figure class="video-player">
-          <video controls preload="metadata" playsinline controlsList="nodownload" ${skill.video.poster ? `poster="${esc(skill.video.poster)}"` : ""}>
-            <source src="${esc(skill.video.url)}" type="video/mp4" />
-            ${skill.video.captions ? `<track kind="captions" srclang="ar" label="العربية" src="${esc(skill.video.captions)}" />` : ""}
+    video:
+      [skill.video, skill.tutorial].some((v) => v?.url)
+        ? [skill.video, skill.tutorial]
+            .filter((v) => v?.url)
+            .map(
+              (v) => `<figure class="video-player">
+          <video controls preload="metadata" playsinline controlsList="nodownload" ${v.poster ? `poster="${esc(v.poster)}"` : ""}>
+            <source src="${esc(v.url)}" type="video/mp4" />
+            ${v.captions ? `<track kind="captions" srclang="ar" label="العربية" src="${esc(v.captions)}" />` : ""}
           </video>
-          <figcaption>${esc(skill.video.title || "")} <span class="muted small">· يمكنك تفعيل الترجمة العربية من زر CC</span></figcaption>
-        </figure>`
-      : `<p class="muted">سيُضاف الفيديو قريباً.</p>`,
+          <figcaption>${esc(v.title || "")} <span class="muted small">· يمكنك تفعيل الترجمة العربية من زر CC</span></figcaption>
+        </figure>`,
+            )
+            .join("")
+        : `<p class="muted">سيُضاف الفيديو قريباً.</p>`,
     infographic: skill.infographic?.url
       ? `<figure class="infographic">
           <a href="${esc(skill.infographic.url)}" target="_blank" rel="noopener"><img src="${esc(skill.infographic.url)}" alt="${esc(
@@ -174,11 +180,12 @@ export async function render(el, { courseId }) {
 
   // تسجيل المراحل التي اطّلع عليها المتدرب
   markStep(skill.id, "intro");
-  const video = el.querySelector("video");
-  video?.addEventListener("timeupdate", () => {
-    if (video.duration && video.currentTime / video.duration > 0.8) markStep(skill.id, "video");
+  el.querySelectorAll("video").forEach((video) => {
+    video.addEventListener("timeupdate", () => {
+      if (video.duration && video.currentTime / video.duration > 0.8) markStep(skill.id, "video");
+    });
+    video.addEventListener("error", () => video.closest("figure").insertAdjacentHTML("beforeend", '<p class="muted">تعذّر تحميل الفيديو.</p>'), true);
   });
-  video?.addEventListener("error", () => video.closest("figure").insertAdjacentHTML("beforeend", '<p class="muted">تعذّر تحميل الفيديو.</p>'), true);
   const io = new IntersectionObserver(
     (entries) =>
       entries.forEach((en) => {

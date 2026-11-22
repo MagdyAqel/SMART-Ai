@@ -23,6 +23,10 @@ const { chromium } = require("playwright");
 const HERE = fileURLToPath(new URL(".", import.meta.url));
 const SKILL_DIR = resolve(process.argv[2] || "../skill-01");
 const SKILL = basename(SKILL_DIR);
+// الفيديو الثاني لكل مهارة (الشرح التطبيقي): node render-video.mjs ../skill-04 tutorial
+const NAME = process.argv[3] || "intro";
+const IS_INTRO = NAME === "intro";
+const RAW = (f) => join(SKILL_DIR, "raw", IS_INTRO ? f : `${NAME}-${f}`);
 const OUT_DIR = resolve(HERE, "../../web/public/media", SKILL);
 const FPS = Number(process.env.FPS || 25);
 const W = 1920;
@@ -31,9 +35,9 @@ const LEAD_IN = 1.4; // ثوانٍ قبل بدء التعليق (افتتاحي�
 const TAIL = 3.0; // ثوانٍ بعد انتهاء التعليق (خاتمة)
 const PREVIEW = process.env.PREVIEW; // "12,40" لعرض صور عند ثوانٍ محددة بدل الفيديو كاملاً
 
-const spec = JSON.parse(readFileSync(join(SKILL_DIR, "video.json"), "utf8"));
-const words = JSON.parse(readFileSync(join(SKILL_DIR, "raw/words.json"), "utf8"));
-const narrationPath = join(SKILL_DIR, "raw/narration.mp3");
+const spec = JSON.parse(readFileSync(join(SKILL_DIR, IS_INTRO ? "video.json" : `${NAME}.json`), "utf8"));
+const words = JSON.parse(readFileSync(RAW("words.json"), "utf8"));
+const narrationPath = RAW("narration.mp3");
 const narrationDur = Number(
   execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", narrationPath]).toString(),
 );
@@ -232,6 +236,63 @@ const templates = {
         </div>
       </div>`;
   },
+  screen(s) {
+    // نافذة مساعد ذكي: يُكتب الأمر حرفاً حرفاً ثم تظهر الإجابة سطراً سطراً
+    const typeAt = s.prompt ? cue(s, s.typeAt ?? 0.18, 0.18) : s.start;
+    const chars = [...(s.prompt || "")];
+    const typeLen = Math.min(chars.length * 0.045, Math.max(2, (s.end - typeAt) * 0.4));
+    const outAt = cue(s, s.outputAt ?? 0.55, 0.55);
+    const outs = s.output || [];
+    const outStep = outs.length ? Math.min(1.6, Math.max(0.5, (s.end - outAt - 1.5) / outs.length)) : 0;
+    return `
+      <div class="tut">
+        <aside class="tut-side">
+          <div class="tut-num pop" ${at(s.start + 0.2)}>${esc(s.stepLabel || s.step)}</div>
+          <div class="tut-icon pop" ${at(s.start + 0.5)}>${icon(s.icon || "sparkles")}</div>
+          <h2 class="in" ${at(s.start + 0.6)}>${esc(s.title)}</h2>
+          ${s.tip ? `<p class="in" ${at(s.start + 1.1)}>${esc(s.tip)}</p>` : ""}
+        </aside>
+        <div class="win in" ${at(s.start + 0.35)}>
+          <div class="win-bar"><span></span><span></span><span></span><em>${esc(s.window || "مساعد الذكاء الاصطناعي")}</em></div>
+          <div class="win-body">
+            ${
+              s.prompt
+                ? `<div class="msg user fade" ${at(typeAt - 0.2)}><i>${icon("user")}</i><p>${chars
+                    .map((c, k) => `<span class="ch" style="--d:${(typeAt + (k / chars.length) * typeLen).toFixed(2)}s">${esc(c)}</span>`)
+                    .join("")}</p></div>`
+                : ""
+            }
+            ${
+              outs.length
+                ? `<div class="msg bot fade" ${at(outAt - 0.3)}><i>${icon(s.botIcon || "sparkles")}</i><div class="out">${outs
+                    .map((o, k) => {
+                      const o2 = typeof o === "string" ? { text: o } : o;
+                      const t = outAt + k * outStep;
+                      const mark = o2.mark
+                        ? `<b class="mark ${o2.mark} pop" ${at(cue(s, o2.markAt ?? 0.85, 0.85) + k * 0.25)}>${icon(o2.mark === "ok" ? "check" : o2.mark === "fix" ? "x" : "pencil")}</b>`
+                        : "";
+                      return `<div class="oline ${o2.head ? "head" : ""} in" ${at(t)}>${mark}<span>${esc(o2.text)}</span></div>`;
+                    })
+                    .join("")}</div></div>`
+                : ""
+            }
+          </div>
+          <div class="win-input"><span>${s.prompt ? "" : esc(s.inputHint || "")}</span><b>${icon("send")}</b></div>
+        </div>
+      </div>`;
+  },
+  checklist(s) {
+    return `
+      <div class="center col">
+        <h2 class="title in" ${at(s.start + 0.3)}><i class="ti">${icon(s.icon || "list-checks")}</i>${esc(s.title)}</h2>
+        <div class="checks">${s.items
+          .map(
+            (it, i) => `<div class="check pop" ${at(cue(s, it.at, 0.15 + i * (0.75 / s.items.length)))}>
+              <b>${icon("check")}</b><span>${esc(it.text)}</span></div>`,
+          )
+          .join("")}</div>
+      </div>`;
+  },
   closing(s) {
     return `
       ${s.image ? `<div class="photo kb dim" style="background-image:url('${img(s.image)}');--d:${s.start}s;--len:${s.end - s.start + 1}s"></div><div class="shade"></div>` : ""}
@@ -371,6 +432,34 @@ svg{display:block}
 .ficon{width:76px;height:76px;margin:0 auto 14px;padding:16px;border-radius:22px;color:var(--c);background:color-mix(in srgb,var(--c) 15%,transparent);border:2px solid color-mix(in srgb,var(--c) 45%,transparent)}
 .fstep h3{font-size:40px;margin-bottom:10px;color:var(--c)}
 .fstep p{font-size:28px;line-height:1.5;color:#d4ece7}
+/* screen: شرح تطبيقي */
+.tut{position:absolute;inset:130px 110px 90px;display:grid;grid-template-columns:520px 1fr;gap:56px;align-items:center}
+.tut-side{text-align:right}
+.tut-num{display:inline-block;font-size:34px;font-weight:700;color:var(--bg1);background:var(--amber);padding:8px 26px;border-radius:99px;margin-bottom:26px}
+.tut-icon{width:96px;height:96px;padding:20px;border-radius:28px;color:var(--teal);background:rgba(45,212,191,.14);border:2px solid rgba(45,212,191,.5);margin-bottom:24px;animation:pop .6s cubic-bezier(.3,1.5,.5,1) var(--d) both,floaty 3.2s ease-in-out calc(var(--d) + 1.3s) infinite}
+.tut-side h2{font-size:58px;font-weight:700;line-height:1.3;margin-bottom:18px}
+.tut-side p{font-size:34px;line-height:1.6;color:#cfe8e3}
+.win{height:100%;max-height:800px;display:flex;flex-direction:column;border-radius:28px;overflow:hidden;background:#f6faf9;color:#13312e;box-shadow:0 30px 80px rgba(0,0,0,.45);border:2px solid rgba(255,255,255,.25)}
+.win-bar{display:flex;align-items:center;gap:10px;padding:16px 24px;background:#e3efec;direction:ltr}
+.win-bar span{width:16px;height:16px;border-radius:50%;background:#f87171} .win-bar span:nth-child(2){background:#fbbf24} .win-bar span:nth-child(3){background:#4ade80}
+.win-bar em{font-style:normal;margin:0 auto;font-size:24px;color:#4b6b66;direction:rtl}
+.win-body{flex:1;padding:30px 34px;display:flex;flex-direction:column;gap:24px;overflow:hidden}
+.msg{display:flex;gap:18px;align-items:flex-start}
+.msg>i{flex:none;width:58px;height:58px;padding:13px;border-radius:50%;color:#fff;background:#0f766e}
+.msg.bot>i{background:linear-gradient(135deg,#0d9488,#f59e0b)}
+.msg.user p{font-size:36px;line-height:1.65;padding:18px 26px;border-radius:22px 6px 22px 22px;background:#d9f2ee;max-width:1000px}
+.ch{opacity:0;animation:fade .05s linear var(--d) both}
+.out{flex:1;padding:18px 26px;border-radius:6px 22px 22px 22px;background:#fff;border:1.5px solid #d6e6e2}
+.oline{display:flex;align-items:center;gap:16px;font-size:35px;line-height:1.55;padding:7px 0}
+.oline.head{font-weight:700;color:#0f766e;font-size:38px}
+.mark{flex:none;width:50px;height:50px;padding:10px;border-radius:50%;color:#fff}
+.mark.ok{background:#16a34a} .mark.fix{background:#dc2626} .mark.edit{background:#d97706}
+.win-input{display:flex;align-items:center;gap:14px;margin:0 30px 26px;padding:14px 20px;border-radius:18px;border:1.5px solid #c9dcd8;background:#fff;font-size:26px;color:#7a948f}
+.win-input span{flex:1} .win-input b{width:44px;height:44px;padding:9px;border-radius:12px;background:#0f766e;color:#fff}
+/* checklist */
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;width:1560px;text-align:right}
+.check{display:flex;align-items:center;gap:22px;font-size:38px;font-weight:500;padding:24px 30px;border-radius:24px;background:rgba(255,255,255,.07);border:2px solid rgba(74,222,128,.45)}
+.check b{flex:none;width:58px;height:58px;padding:12px;border-radius:50%;background:rgba(74,222,128,.2);color:var(--green)}
 /* chrome */
 .top{position:absolute;top:44px;left:60px;right:60px;display:flex;justify-content:space-between;align-items:center;font-size:28px;z-index:5}
 .top .brand{font-weight:700;color:#d8f3ee} .top .skill{padding:6px 22px;border-radius:99px;border:1.5px solid rgba(255,255,255,.3);color:#d8f3ee}
@@ -423,13 +512,14 @@ function vtt() {
 mkdirSync(OUT_DIR, { recursive: true });
 const tmp = join(SKILL_DIR, "raw/_build");
 mkdirSync(tmp, { recursive: true });
-writeFileSync(join(tmp, "video.html"), html);
+const HTML_FILE = join(tmp, `${NAME}.html`);
+writeFileSync(HTML_FILE, html);
 console.log(`المدة: ${TOTAL.toFixed(1)} ث · ${scenes.length} مشاهد`);
 scenes.forEach((s) => console.log(`  ${s.id} ${s.type.padEnd(10)} ${s.start.toFixed(1)} → ${s.end.toFixed(1)}`));
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
-await page.goto(`file://${join(tmp, "video.html")}`);
+await page.goto(`file://${HTML_FILE}`);
 await page.evaluate(() => document.fonts.ready);
 await page.waitForTimeout(300);
 const seek = (t) => page.evaluate((ms) => document.getAnimations().forEach((a) => (a.currentTime = ms)), t * 1000);
@@ -437,7 +527,7 @@ const seek = (t) => page.evaluate((ms) => document.getAnimations().forEach((a) =
 if (PREVIEW) {
   for (const t of PREVIEW.split(",").map(Number)) {
     await seek(t);
-    await page.screenshot({ path: join(tmp, `preview-${t}.jpg`), type: "jpeg", quality: 85 });
+    await page.screenshot({ path: join(tmp, `preview-${NAME}-${t}.jpg`), type: "jpeg", quality: 85 });
   }
   console.log("معاينة:", tmp);
   await browser.close();
@@ -445,7 +535,7 @@ if (PREVIEW) {
 }
 
 // الصور إلى ffmpeg مباشرة
-const silent = join(tmp, "video-silent.mp4");
+const silent = join(tmp, `${NAME}-silent.mp4`);
 const ff = spawn("ffmpeg", ["-y", "-v", "error", "-f", "image2pipe", "-framerate", String(FPS), "-c:v", "mjpeg", "-i", "-",
   "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p", silent], { stdio: ["pipe", "inherit", "inherit"] });
 const frames = Math.ceil(TOTAL * FPS);
@@ -459,7 +549,7 @@ for (let f = 0; f < frames; f++) {
 ff.stdin.end();
 await new Promise((r) => ff.on("close", r));
 await seek(spec.posterAt ?? 4);
-await page.screenshot({ path: join(OUT_DIR, "poster.jpg"), type: "jpeg", quality: 88 });
+await page.screenshot({ path: join(OUT_DIR, IS_INTRO ? "poster.jpg" : `${NAME}-poster.jpg`), type: "jpeg", quality: 88 });
 await browser.close();
 console.log("\n  تم رسم الصورة");
 
@@ -483,6 +573,6 @@ const filter = [
   .join(";");
 execFileSync("ffmpeg", ["-y", "-v", "error", ...inputs, "-filter_complex", filter, "-map", "0:v", "-map", "[a]",
   "-c:v", "copy", "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-t", String(TOTAL), "-movflags", "+faststart",
-  join(OUT_DIR, "intro-video.mp4")], { stdio: "inherit" });
-writeFileSync(join(OUT_DIR, "intro-video.ar.vtt"), vtt());
+  join(OUT_DIR, `${NAME}-video.mp4`)], { stdio: "inherit" });
+writeFileSync(join(OUT_DIR, `${NAME}-video.ar.vtt`), vtt());
 console.log("تم:", OUT_DIR);

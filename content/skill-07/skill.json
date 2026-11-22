@@ -344,5 +344,11 @@
         "explanation": "القياس بعد القرار يغلق الدورة."
       }
     ]
+  },
+  "tutorial": {
+    "url": "/media/skill-07/tutorial-video.mp4",
+    "poster": "/media/skill-07/tutorial-poster.jpg",
+    "captions": "/media/skill-07/tutorial-video.ar.vtt",
+    "title": "شرح تطبيقي خطوة بخطوة: حلّل درجات صفك واتخذ قراراً"
   }
 }

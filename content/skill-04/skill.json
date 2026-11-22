@@ -357,5 +357,11 @@
         "explanation": "المهارة قابلة للنقل بين الأدوات."
       }
     ]
+  },
+  "tutorial": {
+    "url": "/media/skill-04/tutorial-video.mp4",
+    "poster": "/media/skill-04/tutorial-poster.jpg",
+    "captions": "/media/skill-04/tutorial-video.ar.vtt",
+    "title": "شرح تطبيقي خطوة بخطوة: ابنِ اختباراً ذكياً من مصدرك"
   }
 }

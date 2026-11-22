@@ -357,5 +357,11 @@
         "explanation": "النص أولاً، ثم المشاهد، ثم الوسائط، ثم المراجعة."
       }
     ]
+  },
+  "tutorial": {
+    "url": "/media/skill-03/tutorial-video.mp4",
+    "poster": "/media/skill-03/tutorial-poster.jpg",
+    "captions": "/media/skill-03/tutorial-video.ar.vtt",
+    "title": "شرح تطبيقي خطوة بخطوة: صمّم صورة تعليمية واضحة"
   }
 }

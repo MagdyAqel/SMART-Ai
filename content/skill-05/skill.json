@@ -344,5 +344,11 @@
         "explanation": "المشاركة تبني رصيداً مهنياً مشتركاً."
       }
     ]
+  },
+  "tutorial": {
+    "url": "/media/skill-05/tutorial-video.mp4",
+    "poster": "/media/skill-05/tutorial-poster.jpg",
+    "captions": "/media/skill-05/tutorial-video.ar.vtt",
+    "title": "شرح تطبيقي خطوة بخطوة: من مستند الدرس إلى عرض واختبار"
   }
 }

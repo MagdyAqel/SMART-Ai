@@ -344,5 +344,11 @@
         "explanation": "تفاصيل تنفيذية واضحة."
       }
     ]
+  },
+  "tutorial": {
+    "url": "/media/skill-09/tutorial-video.mp4",
+    "poster": "/media/skill-09/tutorial-poster.jpg",
+    "captions": "/media/skill-09/tutorial-video.ar.vtt",
+    "title": "شرح تطبيقي خطوة بخطوة: صمّم نشاط محطات وكيّفه لكل مستوى"
   }
 }
