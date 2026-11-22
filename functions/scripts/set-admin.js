@@ -15,6 +15,15 @@ if (!args.includes("--project") || !projectId || !email) {
 
 initializeApp({ projectId });
 const auth = getAuth();
-const user = await auth.getUserByEmail(email);
+let user;
+try {
+  user = await auth.getUserByEmail(email);
+} catch (err) {
+  if (err.code === "auth/user-not-found") {
+    console.error(`لا يوجد حساب بالبريد ${email} في المنصة بعد. أنشئ الحساب أولاً (أو ادخل بحساب Google) ثم أعد المحاولة.`);
+    process.exit(1);
+  }
+  throw err;
+}
 await auth.setCustomUserClaims(user.uid, { ...(user.customClaims ?? {}), admin: true });
 console.log(`أصبح ${email} مشرفاً. يجب عليه تسجيل الخروج ثم الدخول لتفعيل الصلاحية.`);
