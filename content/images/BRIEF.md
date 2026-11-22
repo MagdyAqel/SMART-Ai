@@ -1,5 +1,19 @@
 # مواصفات الصور المطلوبة (لـ ChatGPT)
 
+## جدول الطلبات
+
+نفّذ فقط ما حالته **مطلوب**، ثم غيّر حالته إلى **مرفوع** بعد الرفع. يضيف Claude الطلبات الجديدة هنا عند إعداد كل مهارة.
+
+| الملف | الوصف | الحالة |
+|---|---|---|
+| `content/skill-01/raw/ex2.jpg` | معلم يقدّم نشاطاً صمّمه بالذكاء الاصطناعي | مرفوع |
+| `content/skill-01/raw/ex3.jpg` | متعلمون في مجموعات على مهمة صاغها المعلم | مرفوع |
+| `content/skill-01/raw/closing.jpg` | ختام فيديو المهارة الأولى | مرفوع |
+| `content/images/covers/skill-01.jpg` … `skill-11.jpg` | أغلفة المهارات الإحدى عشرة | مرفوع |
+
+لا توجد طلبات جديدة حالياً. ستُضاف طلبات المهارة الثانية عند إعدادها.
+
+
 ## تعليمات عامة لكل الصور
 
 - **الأسلوب:** صورة فوتوغرافية واقعية احترافية بجودة تحريرية (editorial photography)، إضاءة طبيعية مشرقة، ألوان طبيعية نابضة، عمق ميدان ضحل، عدسة 35mm.
@@ -14,7 +28,7 @@
 
 ---
 
-## أ) صور المهارة الأولى (أولوية عالية)
+## أ) صور المهارة الأولى (منفّذة، للمرجع)
 
 ### 1. `content/skill-01/raw/ex2.jpg` — معلم يقدّم نشاطاً صمّمه بالذكاء الاصطناعي
 > Photorealistic editorial photo of a modern, bright Arab classroom with large windows, light wood and white furniture, and a large interactive display on the wall showing a colorful plant diagram with no text. A smartly dressed Arab male teacher in his 30s stands beside the display, smiling and engaging 12–13 year old students in neat uniforms who raise their hands enthusiastically. Collaborative desk clusters, vibrant and optimistic atmosphere, natural daylight, 35mm, shallow depth of field. No text, letters, numbers, logos or watermarks anywhere.
@@ -27,7 +41,7 @@
 
 ---
 
-## ب) أغلفة المهارات (للخريطة وصفحات المهارات)
+## ب) أغلفة المهارات (منفّذة، للمرجع)
 
 الاسم: `content/images/covers/skill-XX.jpg` حيث XX رقم المهارة من 01 إلى 11. الأسلوب نفسه أعلاه، وكل غلاف يعبّر عن موضوع المهارة:
 
