@@ -17,3 +17,4 @@ content/*/raw/words-raw.json
 *-debug.log
 *.bundle
 content/*/raw/cover.jpg
+__pycache__/
