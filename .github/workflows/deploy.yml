@@ -12,6 +12,10 @@ on:
         description: "استبدال محتوى المهارات الموجودة بمحتوى مجلد content"
         type: boolean
         default: false
+      admin_email:
+        description: "بريد مستخدم مسجّل في المنصة لمنحه صلاحية المشرف (اختياري)"
+        type: string
+        default: ""
 
 concurrency:
   group: deploy
@@ -69,6 +73,13 @@ jobs:
           if [ "${{ steps.check.outputs.free }}" = "true" ]; then FLAGS="--free"; else FLAGS="--server-grading"; fi
           if [ "${{ inputs.force_content }}" = "true" ]; then FLAGS="$FLAGS --force"; fi
           node functions/scripts/seed.js --project "${{ steps.check.outputs.project }}" $FLAGS
+
+      - name: منح صلاحية المشرف
+        if: steps.check.outputs.ready == 'true' && inputs.admin_email != ''
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/sa.json
+          ADMIN_EMAIL: ${{ inputs.admin_email }}
+        run: node functions/scripts/set-admin.js --project "${{ steps.check.outputs.project }}" "$ADMIN_EMAIL"
 
       - name: رابط المنصة
         if: steps.check.outputs.ready == 'true'
