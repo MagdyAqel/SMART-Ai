@@ -16,32 +16,22 @@
     {
       "id": "l2",
       "text": "يتيح تطبيق Gemini إنشاء",
-      "type": "definition",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "من داخل Gemini",
+      "title": "إنشاء الموسيقى",
+      "tip": "قائمة الأدوات ← «إنشاء موسيقى»",
       "icon": "music",
-      "term": "إنشاء الموسيقى في Gemini",
-      "definition": "تصف المقطع بالكلمات… فيولّد Lyria لحناً بغناء أو بدونه",
-      "chips": [
-        {
-          "label": "وصف نصي",
-          "icon": "file-text",
-          "at": "بالنص"
-        },
-        {
-          "label": "صورة",
-          "icon": "image",
-          "at": "بصورة"
-        },
-        {
-          "label": "بغناء",
-          "icon": "mic",
-          "at": "بغناء"
-        },
-        {
-          "label": "بلا غناء",
-          "icon": "audio-lines",
-          "at": "بدونه"
-        }
-      ]
+      "window": "Gemini",
+      "shot": "gemini-music-menu.png",
+      "focus": {
+        "x": 62,
+        "y": 76,
+        "w": 32,
+        "h": 10
+      },
+      "focusAt": "تختار",
+      "caption": "اختر «إنشاء موسيقى» ثم صِف المقطع: بالنص أو بصورة"
     },
     {
       "id": "l3",
