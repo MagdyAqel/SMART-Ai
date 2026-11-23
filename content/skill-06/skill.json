@@ -96,7 +96,9 @@
         {
           "type": "video",
           "url": "/media/skill-06/research-tools-video.mp4",
-          "caption": "أشهر مواقع البحث العلمي بالذكاء الاصطناعي: Consensus وغيره"
+          "caption": "أشهر مواقع البحث العلمي بالذكاء الاصطناعي: Consensus وغيره",
+          "poster": "/media/skill-06/research-tools-poster.jpg",
+          "captions": "/media/skill-06/research-tools-video.ar.vtt"
         }
       ],
       "content": [

@@ -158,7 +158,9 @@
         {
           "type": "video",
           "url": "/media/skill-03/addie-video.mp4",
-          "caption": "التصميم التعليمي للوسائط وفق نموذج ADDIE (مع مثال)"
+          "caption": "التصميم التعليمي للوسائط وفق نموذج ADDIE (مع مثال)",
+          "poster": "/media/skill-03/addie-poster.jpg",
+          "captions": "/media/skill-03/addie-video.ar.vtt"
         }
       ],
       "content": [
@@ -300,7 +302,15 @@
       "id": "music-lyria",
       "title": "موسيقى تعليمية بـ Gemini",
       "minutes": 20,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-03/lesson-music-lyria-video.mp4",
+          "poster": "/media/skill-03/lesson-music-lyria-poster.jpg",
+          "captions": "/media/skill-03/lesson-music-lyria-video.ar.vtt",
+          "caption": "شرح الدرس: موسيقى تعليمية بـ Gemini"
+        }
+      ],
       "content": [
         "يتيح تطبيق Gemini إنشاء مقاطع موسيقية من وصف نصي أو صورة باستخدام نموذج Lyria من Google: تختار «إنشاء موسيقى»، وتصف المقطع، فيولّد لحناً بغناء أو بدونه. ووصلت أحدث إصداراته في 2026 إلى اختيار النوع الموسيقي وأصوات الغناء والقوالب، ومقاطع أطول في بعض الحسابات.",
         "استخدامات تعليمية: أنشودة تحفظ بها جدول الضرب أو قاعدة نحوية، وموسيقى هادئة لوقت القراءة أو التأمل، ومقدمة موسيقية لفيديو تعليمي أو إذاعة مدرسية، ومؤثرات تشد الانتباه في بداية النشاط.",

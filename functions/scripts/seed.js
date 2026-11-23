@@ -33,7 +33,14 @@ function availableMedia(skill) {
   const infographic = skill.infographic && hasFile(skill.infographic.url) ? skill.infographic : null;
   const examples = (skill.examples || []).filter((x) => hasFile(x.url));
   const cover = hasFile(skill.cover) ? skill.cover : "";
-  return { video, tutorial, videos, infographic, examples, cover };
+  // وسائط الدروس: نُخفي ملفات الموقع التي لم تُنتج بعد، ونُبقي الروابط الخارجية كما هي
+  const lessons = (skill.lessons || []).map((L) => ({
+    ...L,
+    media: (L.media || [])
+      .filter((m) => !String(m.url || "").startsWith("/") || hasFile(m.url))
+      .map((m) => (m.poster && !hasFile(m.poster) ? { ...m, poster: "" } : m)),
+  }));
+  return { video, tutorial, videos, infographic, examples, cover, lessons };
 }
 const catalog = JSON.parse(readFileSync(new URL("skills.json", CONTENT), "utf8"));
 

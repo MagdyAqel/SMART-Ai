@@ -267,7 +267,9 @@
         {
           "type": "video",
           "url": "/media/skill-05/mslearn-video.mp4",
-          "caption": "Microsoft Learn: تعلّم منظّم وشارات مجانية للمعلمين"
+          "caption": "Microsoft Learn: تعلّم منظّم وشارات مجانية للمعلمين",
+          "poster": "/media/skill-05/mslearn-poster.jpg",
+          "captions": "/media/skill-05/mslearn-video.ar.vtt"
         }
       ]
     }

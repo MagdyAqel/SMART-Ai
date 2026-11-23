@@ -173,7 +173,9 @@
         {
           "type": "video",
           "url": "/media/skill-01/types-video.mp4",
-          "caption": "أنواع الذكاء الاصطناعي: من الضيق إلى التوليدي"
+          "caption": "أنواع الذكاء الاصطناعي: من الضيق إلى التوليدي",
+          "poster": "/media/skill-01/types-poster.jpg",
+          "captions": "/media/skill-01/types-video.ar.vtt"
         }
       ]
     },
