@@ -51,6 +51,19 @@
 | `content/skill-11/raw/ex2.jpg` | أخلاقيات التعامل مع الذكاء الاصطناعي: معلم يحاور طالباً حول عمله | مرفوع |
 | `content/skill-11/raw/ex3.jpg` | أخلاقيات التعامل مع الذكاء الاصطناعي: لقاء شفاف مع أولياء الأمور | مرفوع |
 | `content/skill-11/raw/closing.jpg` | أخلاقيات التعامل مع الذكاء الاصطناعي: خلفية مشهد الختام في الفيديو | مرفوع |
+| **دفعة نوفمبر 2026 (مهارتان جديدتان + القصص والموسيقى)** | | |
+| `content/images/covers/skill-12.jpg` | غلاف مهارة «كيف أتعلم بالذكاء الاصطناعي»: مكتبة مدرسية حديثة: معلمة وطلاب يتعلمون بسماعات وأجهزة لوحية وخريطة ذهنية ملوّنة على شاشة | مطلوب |
+| `content/skill-12/raw/ex1.jpg` | كيف أتعلم بالذكاء الاصطناعي: معلمة تبني دفتراً لوحدة جديدة من مصادر موثوقة | مطلوب |
+| `content/skill-12/raw/ex2.jpg` | كيف أتعلم بالذكاء الاصطناعي: معلم يستمع إلى ملخص صوتي لبحث تربوي | مطلوب |
+| `content/skill-12/raw/ex3.jpg` | كيف أتعلم بالذكاء الاصطناعي: طلاب يراجعون ببطاقات تعليمية واختبار قصير | مطلوب |
+| `content/skill-12/raw/closing.jpg` | كيف أتعلم بالذكاء الاصطناعي: خلفية مشهد الختام في الفيديو | مطلوب |
+| `content/images/covers/skill-13.jpg` | غلاف مهارة «الوكيل الذكي»: معلم يعمل مع مساعد ذكي على حاسوبه في مكتب حديث، مع رموز مجردة تطفو بهدوء فوق الشاشة | مطلوب |
+| `content/skill-13/raw/ex1.jpg` | الوكيل الذكي: معلمة تصمّم مساعداً مخصصاً لأوراق العمل | مطلوب |
+| `content/skill-13/raw/ex2.jpg` | الوكيل الذكي: معلم يبني Skill لتصحيح أوراق العمل | مطلوب |
+| `content/skill-13/raw/ex3.jpg` | الوكيل الذكي: فريق معلمين يراجع ما أعدّه وكيل ذكي | مطلوب |
+| `content/skill-13/raw/closing.jpg` | الوكيل الذكي: خلفية مشهد الختام في الفيديو | مطلوب |
+| `content/skill-03/raw/ex4.jpg` | تصميم الوسائط: معلمة تعرض قصة مصوّرة على الشاشة التفاعلية لأطفال الصف الثاني | مطلوب |
+| `content/skill-03/raw/ex5.jpg` | تصميم الوسائط: أطفال يرددون أنشودة تعليمية مع حركات | مطلوب |
 
 
 ## تعليمات عامة لكل الصور
@@ -202,3 +215,35 @@
   > Photorealistic editorial photo: a modern bright school meeting room where Arab teachers present to a group of Arab parents (men and women, some with modern hijabs), attentive and respectful atmosphere, abstract shapes on the screen (no text). No readable text.
 - **`content/skill-11/raw/closing.jpg`** — خلفية مشهد الختام
   > Photorealistic editorial photo, wide shot: a diverse group of Arab teachers standing together confidently in a modern bright school hallway, smiling, sense of shared responsibility, calm space on the right third. No text.
+
+## دفعة نوفمبر 2026
+
+### كيف أتعلم بالذكاء الاصطناعي (`skill-12`)
+- **`content/images/covers/skill-12.jpg`** — غلاف المهارة
+  > Photorealistic editorial photo, wide 3:2: a modern bright Arab school library, an Arab female teacher with a modern hijab and students aged 14 learning with headphones and tablets, a large screen with an abstract colorful mind-map shape (no text), warm natural light. No text, no logos.
+- **`content/skill-12/raw/ex1.jpg`** — معلمة تبني دفتراً لوحدة جديدة من مصادر موثوقة
+  > Photorealistic editorial photo: an Arab female teacher with a modern hijab at a bright modern desk, laptop showing an abstract notebook interface with source cards and colorful blocks (no text), printed chapter pages and a coffee mug beside her, focused. No readable text, no logos.
+- **`content/skill-12/raw/ex2.jpg`** — معلم يستمع إلى ملخص صوتي لبحث تربوي
+  > Photorealistic editorial photo: an Arab male teacher in smart casual clothing walking through a modern school courtyard in the morning, wearing earbuds, holding a smartphone showing an abstract audio waveform (no text), calm and thoughtful. No readable text, no logos.
+- **`content/skill-12/raw/ex3.jpg`** — طلاب يراجعون ببطاقات تعليمية واختبار قصير
+  > Photorealistic editorial photo: Arab students aged 14-15 in neat uniforms in a modern bright study area reviewing on tablets showing abstract flashcard shapes (no text), one girl with modern hijab explaining to a classmate, natural light. No readable text, no logos.
+- **`content/skill-12/raw/closing.jpg`** — خلفية مشهد الختام
+  > Photorealistic editorial photo, wide shot: a modern bright Arab school library with a teacher and students using laptops and headphones, a large screen showing an abstract colorful mind-map shape (no text), calm space on the right third. No text, no logos.
+
+### الوكيل الذكي (`skill-13`)
+- **`content/images/covers/skill-13.jpg`** — غلاف المهارة
+  > Photorealistic editorial photo, wide 3:2: an Arab male teacher in a modern bright office working with an AI assistant on a laptop, subtle abstract glowing assistant icons floating above the screen (no text), calm confident atmosphere. No text, no logos.
+- **`content/skill-13/raw/ex1.jpg`** — معلمة تصمّم مساعداً مخصصاً لأوراق العمل
+  > Photorealistic editorial photo: an Arab female teacher with a modern hijab in a bright modern teachers' office configuring an AI assistant on a laptop (abstract settings panels and colorful blocks, no text), sticky notes with shapes only, focused. No readable text, no logos.
+- **`content/skill-13/raw/ex2.jpg`** — معلم يبني Skill لتصحيح أوراق العمل
+  > Photorealistic editorial photo: an Arab male teacher at a modern desk with two monitors showing abstract structured document layouts and folder icons (no text), a stack of student worksheets beside him, thoughtful. No readable text, no logos.
+- **`content/skill-13/raw/ex3.jpg`** — فريق معلمين يراجع ما أعدّه وكيل ذكي
+  > Photorealistic editorial photo: a small team of Arab teachers (men and women, some women with modern hijab) around a table in a modern bright meeting room reviewing abstract cards on a large screen and tablets (no text), collaborative atmosphere. No readable text, no logos.
+- **`content/skill-13/raw/closing.jpg`** — خلفية مشهد الختام
+  > Photorealistic editorial photo, wide shot: a modern bright Arab school staff room at dusk with a teacher calmly reviewing a laptop while abstract glowing assistant icons float subtly above the screen (no text), calm space on the right third. No text, no logos.
+
+### تصميم الوسائط التعليمية (`skill-03`) — صور إضافية للقصص والموسيقى
+- **`content/skill-03/raw/ex4.jpg`** — تصميم الوسائط: معلمة تعرض قصة مصوّرة على الشاشة التفاعلية لأطفال الصف الثاني
+  > Photorealistic editorial photo: an Arab female teacher with a modern hijab in a bright modern early-grade classroom showing an illustrated storybook page (abstract watercolor illustration of a water droplet character, no text) on an interactive screen to children aged 7 sitting on a colorful carpet, delighted faces. No readable text, no logos.
+- **`content/skill-03/raw/ex5.jpg`** — تصميم الوسائط: أطفال يرددون أنشودة تعليمية مع حركات
+  > Photorealistic editorial photo: Arab children aged 7-8 in neat uniforms in a bright modern classroom singing and doing simple hand movements together, an Arab male teacher leading with a smile, a small speaker on the desk, joyful atmosphere. No readable text, no logos.
