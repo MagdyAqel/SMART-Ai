@@ -73,6 +73,13 @@ jobs:
           fi
           printf '%s' "$KEY" | npx --yes firebase-tools@15.37.0 functions:secrets:set ANTHROPIC_API_KEY --data-file - --project "${{ steps.check.outputs.project }}" --non-interactive
 
+      - name: حذف نسخ الموقع القديمة لتوفير مساحة الاستضافة
+        if: steps.check.outputs.ready == 'true'
+        continue-on-error: true
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/sa.json
+        run: node functions/scripts/prune-hosting.js --project "${{ steps.check.outputs.project }}"
+
       - name: نشر الموقع وقواعد الأمان
         if: steps.check.outputs.ready == 'true'
         env:
