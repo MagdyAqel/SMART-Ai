@@ -92,7 +92,8 @@ export async function render(el) {
             const cc = courseCompletion(c, p);
             const s = statuses.get(c.id)?.status;
             const label = s === "passed" ? "✓ مجتازة" : s === "locked" ? "🔒" : `${ar(cc.done)}/${ar(cc.total)}`;
-            return `<li><a href="#/course/${esc(c.id)}">${esc(c.icon || "📘")} ${esc(c.title)}</a>${progressBar(s === "passed" ? 100 : cc.pct, c.title)}<span>${label}</span></li>`;
+            const num = c.number ?? c.order;
+            return `<li><a href="#/course/${esc(c.id)}" title="${esc(c.title)}"><span class="cp-icon" aria-hidden="true">${esc(c.icon || "📘")}</span><span class="cp-name">${num ? `<b class="cp-num">${ar(num)}.</b> ` : ""}${esc(c.title)}</span></a>${progressBar(s === "passed" ? 100 : cc.pct, c.title)}<span class="cp-count">${label}</span></li>`;
           })
           .join("")}</ul>
       </section>

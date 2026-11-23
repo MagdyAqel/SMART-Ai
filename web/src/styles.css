@@ -295,8 +295,15 @@ textarea { resize: vertical; }
 .rec h3 { font-size: 1.15rem; }
 .skills, .course-progress, .leaders, .review-list, .quiz-list, .lessons { list-style: none; padding: 0; margin: 0; }
 .skills li, .course-progress li { display: grid; grid-template-columns: minmax(0, 1.3fr) 1fr auto; align-items: center; gap: 0.75rem; padding: 0.35rem 0; }
-.skills li span:first-child, .course-progress a { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.course-progress a { color: var(--text); text-decoration: none; }
+.skills li span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* تقدّم المهارات: الاسم كاملاً في سطر، والشريط والعدد تحته */
+.course-progress li { grid-template-columns: 1fr auto; row-gap: 0.35rem; column-gap: 0.75rem; padding: 0.55rem 0; border-bottom: 1px solid var(--border, rgba(127,127,127,0.15)); }
+.course-progress li:last-child { border-bottom: 0; }
+.course-progress a { grid-column: 1 / -1; display: flex; align-items: flex-start; gap: 0.5rem; color: var(--text); text-decoration: none; font-weight: 600; line-height: 1.5; }
+.course-progress a:hover .cp-name { color: var(--primary); }
+.course-progress .cp-icon { flex: none; }
+.course-progress .cp-num { color: var(--muted); font-weight: 600; }
+.course-progress .cp-count { font-size: 0.85rem; color: var(--muted); white-space: nowrap; }
 .leaders li { display: grid; grid-template-columns: 2rem 1fr auto auto; gap: 0.75rem; padding: 0.45rem 0.5rem; border-radius: 8px; align-items: center; }
 .leaders li.me { background: var(--primary-soft); }
 .rank { font-weight: 700; color: var(--muted); }
