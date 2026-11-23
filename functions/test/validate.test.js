@@ -163,3 +163,15 @@ test("parsePostTestInput drops malformed answers", () => {
   assert.deepEqual(p.answers, { q1: 2 });
   assert.throws(() => parsePostTestInput({ courseId: "skill-01", answers: [1] }), InputError);
 });
+
+test("parseSubmissionInput: ملف مرفق يجعل الإجابة النصية اختيارية", async () => {
+  const { parseSubmissionInput } = await import("../src/validate.js");
+  const base = { courseId: "skill-03", lessonId: "storybook", taskId: "t1" };
+  const ok = parseSubmissionInput({ ...base, filePath: "submissions/uid123/skill-03/t1/1700-plan.pdf" });
+  assert.equal(ok.answer, "");
+  assert.equal(ok.filePath, "submissions/uid123/skill-03/t1/1700-plan.pdf");
+  assert.throws(() => parseSubmissionInput({ ...base, filePath: "submissions/uid/../other/x.pdf" }));
+  assert.throws(() => parseSubmissionInput({ ...base, filePath: "media/skill-01/x.pdf" }));
+  assert.throws(() => parseSubmissionInput({ ...base, answer: "قصيرة" }));
+  assert.equal(parseSubmissionInput({ ...base, answer: "إجابة كافية الطول للتصحيح الآلي" }).filePath, null);
+});

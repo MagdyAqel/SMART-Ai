@@ -110,8 +110,8 @@ const at = (t) => `style="--d:${t.toFixed(2)}s"`;
 const templates = {
   hook(s) {
     return `
-      <div class="photo kb" style="background-image:url('${img(s.image)}');--d:${s.start}s;--len:${s.end - s.start + 1}s"></div>
-      <div class="shade"></div>
+      ${s.image ? `<div class="photo kb" style="background-image:url('${img(s.image)}');--d:${s.start}s;--len:${s.end - s.start + 1}s"></div>
+      <div class="shade"></div>` : ""}
       <div class="hook">
         <div class="kicker in" ${at(s.start + 0.5)}>${esc(s.kicker)}</div>
         <h1 class="in" ${at(s.start + 0.9)}>${esc(s.title)}</h1>

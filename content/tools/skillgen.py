@@ -32,8 +32,8 @@ def build(sp):
     """sp: dict with keys n, title, description, icon, intro{definition, why, objectives, minutes},
     lessons, post (10 questions), examples [(caption, note, image_prompt)], closing_prompt,
     video{hook_sub, scenes...}, info{...}"""
-    n = sp["n"]
-    sid = f"skill-{n:02d}"
+    n = sp["n"]  # الرقم الظاهر للمتدرب وترتيب المهارة
+    sid = f"skill-{sp.get('id_num', n):02d}"  # المعرّف الثابت (لا يتغير عند إعادة الترتيب)
     d = os.path.join(ROOT, sid)
     os.makedirs(os.path.join(d, "raw"), exist_ok=True)
     for L in sp["lessons"]:
@@ -58,7 +58,7 @@ def build(sp):
     v = sp["video"]
     scenes = []
     scenes.append({"id": "s1", "type": "hook", "image": "cover.jpg", "text": v["hook"],
-                   "kicker": f"المهارة {['', 'الأولى', 'الثانية', 'الثالثة', 'الرابعة', 'الخامسة', 'السادسة', 'السابعة', 'الثامنة', 'التاسعة', 'العاشرة', 'الحادية عشرة'][n]}",
+                   "kicker": f"المهارة {['', 'الأولى', 'الثانية', 'الثالثة', 'الرابعة', 'الخامسة', 'السادسة', 'السابعة', 'الثامنة', 'التاسعة', 'العاشرة', 'الحادية عشرة', 'الثانية عشرة', 'الثالثة عشرة'][n]}",
                    "title": sp["title"], "subtitle": v["hook_sub"], "subtitleAt": v["hook_sub_at"]})
     scenes.append({"id": "s2", "type": "definition", "icon": v["def_icon"], "text": v["def_text"],
                    "term": v["term"], "definition": v["definition"],

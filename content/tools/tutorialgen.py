@@ -12,7 +12,7 @@ ORD_F = ["الأولى", "الثانية", "الثالثة", "الرابعة", "
 COUNT = {3: "ثلاث", 4: "أربع", 5: "خمس"}
 AR_DIGITS = "٠١٢٣٤٥٦٧٨٩"
 NTH = ["", "الأولى", "الثانية", "الثالثة", "الرابعة", "الخامسة", "السادسة", "السابعة", "الثامنة", "التاسعة",
-       "العاشرة", "الحادية عشرة"]
+       "العاشرة", "الحادية عشرة", "الثانية عشرة", "الثالثة عشرة"]
 
 
 def S(title, tip, icon, say, prompt=None, type_cue=None, output=None, out_cue=None, window=None, short=None):
@@ -29,8 +29,9 @@ def first_words(text, n=4):
     return " ".join(text.split()[:n])
 
 
-def build(n, sp):
-    sid = f"skill-{n:02d}"
+def build(n, sp, name="tutorial", sid=None):
+    """n: الرقم الظاهر للمهارة. name: اسم الفيديو (tutorial أو اسم فيديو إضافي). sid: المعرّف إن اختلف عن الرقم."""
+    sid = sid or f"skill-{n:02d}"
     d = os.path.join(ROOT, sid)
     steps = sp["steps"]
     k = len(steps)
@@ -39,7 +40,7 @@ def build(n, sp):
 
     parts.append(sp["hook_say"])
     scenes.append({"id": "t1", "type": "hook", "image": "ex2.jpg", "text": first_words(sp["hook_say"]),
-                   "kicker": f"المهارة {NTH[n]} · شرح تطبيقي", "title": sp["title"],
+                   "kicker": f"المهارة {NTH[n]} · {sp.get('kicker', 'شرح تطبيقي')}", "title": sp["title"],
                    "subtitle": sp["hook_sub"], "subtitleAt": sp["hook_sub_at"]})
 
     titles = [s["title"] for s in steps]
@@ -77,17 +78,21 @@ def build(n, sp):
                    "title": cl["title"],
                    "steps": [{"label": a, "icon": b, "at": c} for a, b, c in cl["cta"]]})
 
-    spec = {"badge": f"المهارة {n} · شرح تطبيقي", "sting": "شرح تطبيقي خطوة بخطوة", "posterAt": 4.2,
+    spec = {"badge": f"المهارة {n} · {sp.get('kicker', 'شرح تطبيقي')}", "sting": sp.get("sting", "شرح تطبيقي خطوة بخطوة"), "posterAt": 4.2,
             "scenes": scenes}
-    json.dump(spec, open(os.path.join(d, "tutorial.json"), "w"), ensure_ascii=False, indent=2)
+    json.dump(spec, open(os.path.join(d, f"{name}.json"), "w"), ensure_ascii=False, indent=2)
     text = "\n\n".join(parts)
-    open(os.path.join(d, "tutorial-narration.txt"), "w").write(text + "\n")
+    open(os.path.join(d, f"{name}-narration.txt"), "w").write(text + "\n")
 
     skill_path = os.path.join(d, "skill.json")
     skill = json.load(open(skill_path))
-    skill["tutorial"] = {"url": f"/media/{sid}/tutorial-video.mp4", "poster": f"/media/{sid}/tutorial-poster.jpg",
-                         "captions": f"/media/{sid}/tutorial-video.ar.vtt",
-                         "title": f"شرح تطبيقي خطوة بخطوة: {sp['title']}"}
+    entry = {"url": f"/media/{sid}/{name}-video.mp4", "poster": f"/media/{sid}/{name}-poster.jpg",
+             "captions": f"/media/{sid}/{name}-video.ar.vtt",
+             "title": sp.get("video_title", f"شرح تطبيقي خطوة بخطوة: {sp['title']}")}
+    if name == "tutorial":
+        skill["tutorial"] = entry
+    else:  # فيديوهات إضافية بعد الفيديو التطبيقي
+        skill["videos"] = [v for v in skill.get("videos", []) if v["url"] != entry["url"]] + [entry]
     json.dump(skill, open(skill_path, "w"), ensure_ascii=False, indent=2)
     words = len(text.split())
     print(f"{sid}: {len(scenes)} مشاهد · {words} كلمة (≈ {words / 1.75:.0f} ث)")

@@ -188,8 +188,32 @@ export function parseSubmissionInput(data = {}) {
     courseId: id(data.courseId, "معرّف الدورة"),
     lessonId: id(data.lessonId, "معرّف الدرس"),
     taskId: id(data.taskId, "معرّف المهمة"),
-    answer: str(data.answer, { name: "إجابتك", min: 20, max: MAX_ANSWER_CHARS }),
+    ...parseAnswerAndFile(data),
   };
+}
+
+// الملفات المقبولة في المهام الكتابية (يرفعها المتدرب إلى Storage ثم يُرسل مسارها فقط)
+export const UPLOAD_TYPES = {
+  "application/pdf": "pdf",
+  "image/png": "image",
+  "image/jpeg": "image",
+  "image/webp": "image",
+  "text/plain": "text",
+  "text/markdown": "text",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
+};
+export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
+
+function parseAnswerAndFile(data) {
+  const filePath = data.filePath == null || data.filePath === "" ? null : data.filePath;
+  if (filePath !== null && (typeof filePath !== "string" || !/^submissions\/[\w-]{1,128}\/[\w.\/-]{1,300}$/.test(filePath) || filePath.includes(".."))) {
+    throw new InputError("مسار الملف غير صالح");
+  }
+  // مع الملف تصبح الإجابة النصية ملاحظة اختيارية
+  const answer = filePath
+    ? str(data.answer ?? "", { name: "ملاحظتك", min: 0, max: MAX_ANSWER_CHARS })
+    : str(data.answer, { name: "إجابتك", min: 20, max: MAX_ANSWER_CHARS });
+  return { answer, filePath };
 }
 
 /**

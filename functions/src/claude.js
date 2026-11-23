@@ -168,12 +168,21 @@ export async function runTraineePrompt({ apiKey, prompt, material }) {
   return { text, truncated: final.stop_reason === "max_tokens" };
 }
 
-export async function gradeWithRubric({ apiKey, task, answer, output }) {
+/** attachment: ملف المتدرب بعد قراءته في الخادم — { kind: "pdf"|"image"|"text", mediaType, data, name } */
+export async function gradeWithRubric({ apiKey, task, answer, output, attachment = null }) {
+  const prompt = gradeUserPrompt(task, answer, output, attachment);
+  const content = [];
+  if (attachment?.kind === "pdf") {
+    content.push({ type: "document", title: attachment.name, source: { type: "base64", media_type: "application/pdf", data: attachment.data } });
+  } else if (attachment?.kind === "image") {
+    content.push({ type: "image", source: { type: "base64", media_type: attachment.mediaType, data: attachment.data } });
+  }
+  content.push({ type: "text", text: prompt });
   const response = await client(apiKey).beta.messages.parse({
     model: MODELS.grader,
     max_tokens: 16000,
     system: GRADER_SYSTEM,
-    messages: [{ role: "user", content: gradeUserPrompt(task, answer, output) }],
+    messages: [{ role: "user", content }],
     output_config: { effort: "medium", format: betaZodOutputFormat(GradeSchema) },
     ...FALLBACK,
   });

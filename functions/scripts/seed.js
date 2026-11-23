@@ -29,10 +29,11 @@ function availableMedia(skill) {
   const vid = (v) => (v && hasFile(v.url) ? { ...v, poster: hasFile(v.poster) ? v.poster : "" } : null);
   const video = vid(skill.video);
   const tutorial = vid(skill.tutorial);
+  const videos = (skill.videos || []).map(vid).filter(Boolean);
   const infographic = skill.infographic && hasFile(skill.infographic.url) ? skill.infographic : null;
   const examples = (skill.examples || []).filter((x) => hasFile(x.url));
   const cover = hasFile(skill.cover) ? skill.cover : "";
-  return { video, tutorial, infographic, examples, cover };
+  return { video, tutorial, videos, infographic, examples, cover };
 }
 const catalog = JSON.parse(readFileSync(new URL("skills.json", CONTENT), "utf8"));
 
@@ -51,6 +52,7 @@ for (const entry of catalog) {
       const patch = {};
       if (!prev.video?.url && media.video) patch.video = media.video;
       if (!prev.tutorial?.url && media.tutorial) patch.tutorial = media.tutorial;
+      if ((prev.videos || []).length < media.videos.length) patch.videos = media.videos;
       if (!prev.infographic?.url && media.infographic) patch.infographic = media.infographic;
       if ((prev.examples || []).length < media.examples.length) patch.examples = media.examples;
       if (!prev.cover && media.cover) patch.cover = media.cover;

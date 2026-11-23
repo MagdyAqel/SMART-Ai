@@ -2,11 +2,12 @@
 // ترتيب العرض (مسار رأسي، بطاقات، تبويبات) يحدده قالب العرض الذي اختاره المتدرب.
 import { lessonKey } from "../engine.js";
 import { loadCourses, loadSettings, markStep, skillPassScore, skillStatuses, state, taskKey } from "../store.js";
+import { mountPlaylist, playlistHtml, skillVideos } from "../playlist.js";
 import { ar, esc, progressBar, spinner } from "../ui.js";
 
 const STEPS = [
   { id: "intro", icon: "🎯", label: "التعريف والأهداف" },
-  { id: "video", icon: "🎬", label: "الفيديو والشرح التطبيقي" },
+  { id: "video", icon: "🎬", label: "الفيديوهات" },
   { id: "infographic", icon: "🗺️", label: "الإنفوجرافيك" },
   { id: "examples", icon: "🖼️", label: "أمثلة واقعية" },
   { id: "lessons", icon: "📚", label: "الدروس والتطبيق" },
@@ -54,6 +55,7 @@ export async function render(el, { courseId }) {
   const ordered = [...skills].filter((s) => !s.comingSoon).sort((a, b) => a.order - b.order);
   const next = ordered[ordered.indexOf(skill) + 1];
   const intro = skill.intro || {};
+  const videos = skillVideos(skill);
 
   const sections = {
     intro: `
@@ -67,21 +69,7 @@ export async function render(el, { courseId }) {
       <p class="muted small">⏱️ المدة التقديرية: ${ar(intro.minutes || 30)} دقيقة · ${ar(lessons.length)} دروس · اختبار بعدي من ${ar(
         skill.postTest?.questions?.length || 0,
       )} أسئلة</p>`,
-    video:
-      [skill.video, skill.tutorial].some((v) => v?.url)
-        ? [skill.video, skill.tutorial]
-            .filter((v) => v?.url)
-            .map(
-              (v) => `<figure class="video-player">
-          <video controls preload="metadata" playsinline controlsList="nodownload" ${v.poster ? `poster="${esc(v.poster)}"` : ""}>
-            <source src="${esc(v.url)}" type="video/mp4" />
-            ${v.captions ? `<track kind="captions" srclang="ar" label="العربية" src="${esc(v.captions)}" />` : ""}
-          </video>
-          <figcaption>${esc(v.title || "")} <span class="muted small">· يمكنك تفعيل الترجمة العربية من زر CC</span></figcaption>
-        </figure>`,
-            )
-            .join("")
-        : `<p class="muted">سيُضاف الفيديو قريباً.</p>`,
+    video: playlistHtml(videos),
     infographic: skill.infographic?.url
       ? `<figure class="infographic">
           <a href="${esc(skill.infographic.url)}" target="_blank" rel="noopener"><img src="${esc(skill.infographic.url)}" alt="${esc(
@@ -180,12 +168,7 @@ export async function render(el, { courseId }) {
 
   // تسجيل المراحل التي اطّلع عليها المتدرب
   markStep(skill.id, "intro");
-  el.querySelectorAll("video").forEach((video) => {
-    video.addEventListener("timeupdate", () => {
-      if (video.duration && video.currentTime / video.duration > 0.8) markStep(skill.id, "video");
-    });
-    video.addEventListener("error", () => video.closest("figure").insertAdjacentHTML("beforeend", '<p class="muted">تعذّر تحميل الفيديو.</p>'), true);
-  });
+  mountPlaylist(el.querySelector(".step-video"), videos, { onWatched: () => markStep(skill.id, "video") });
   const io = new IntersectionObserver(
     (entries) =>
       entries.forEach((en) => {

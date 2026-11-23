@@ -61,6 +61,18 @@ jobs:
           sudo apt-get install -y -qq ffmpeg > /dev/null 2>&1 || true
           node content/tools/sync-media.mjs
 
+      - name: حفظ مفتاح Claude في خزنة الأسرار
+        if: steps.check.outputs.ready == 'true' && steps.check.outputs.free != 'true'
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/sa.json
+          KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$KEY" ]; then
+            echo "::warning::أضف السر ANTHROPIC_API_KEY في إعدادات المستودع ليعمل التصحيح الآلي"
+            exit 0
+          fi
+          printf '%s' "$KEY" | npx --yes firebase-tools@15.37.0 functions:secrets:set ANTHROPIC_API_KEY --data-file - --project "${{ steps.check.outputs.project }}" --non-interactive
+
       - name: نشر الموقع وقواعد الأمان
         if: steps.check.outputs.ready == 'true'
         env:

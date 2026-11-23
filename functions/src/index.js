@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase-admin/app";
 import { FieldValue, getFirestore } from "firebase-admin/firestore";
+import { getStorage } from "firebase-admin/storage";
 import { defineInt, defineSecret } from "firebase-functions/params";
 import { HttpsError, onCall } from "firebase-functions/v2/https";
 import { setGlobalOptions } from "firebase-functions/v2";
@@ -13,6 +14,8 @@ import {
 } from "./claude.js";
 import {
   InputError,
+  MAX_UPLOAD_BYTES,
+  UPLOAD_TYPES,
   normalizeCourse,
   computeGrade,
   gradePostTest,
@@ -169,12 +172,18 @@ export const gradeSubmission = onCall({ ...aiOptions, timeoutSeconds: 300 }, asy
   // تشغيل البرومبت ثم تقييمه طلبان للنموذج.
   await consumeQuota(uid, task.runPrompt ? 2 : 1);
 
+  let attachment = null;
+  if (input.filePath) {
+    if (task.type === "prompt") throw new HttpsError("invalid-argument", "هذه المهمة تُكتب نصاً ولا تقبل ملفاً.");
+    attachment = await readSubmissionFile(uid, input.filePath);
+  }
+
   const apiKey = ANTHROPIC_API_KEY.value();
   let output = null;
   let grade;
   try {
     if (task.runPrompt) output = (await runTraineePrompt({ apiKey, prompt: input.answer, material: task.material })).text;
-    grade = computeGrade(task.rubric, await gradeWithRubric({ apiKey, task, answer: input.answer, output }), task.passScore);
+    grade = computeGrade(task.rubric, await gradeWithRubric({ apiKey, task, answer: input.answer, output, attachment }), task.passScore);
   } catch (err) {
     throw toHttpsError(err);
   }
@@ -187,6 +196,8 @@ export const gradeSubmission = onCall({ ...aiOptions, timeoutSeconds: 300 }, asy
     lessonTitle: found.lesson.title,
     type: task.type,
     answer: input.answer,
+    filePath: input.filePath ?? null,
+    fileName: attachment?.name ?? null,
     output,
     passScore: task.passScore,
     ...grade,
@@ -216,6 +227,36 @@ export const gradeSubmission = onCall({ ...aiOptions, timeoutSeconds: 300 }, asy
   });
   return { id: subRef.id, ...submission };
 });
+
+/**
+ * يقرأ ملف المتدرب من Storage بعد التحقق من أنه ملفه هو ومن نوعه وحجمه،
+ * ويحوّله إلى صيغة يفهمها المصحّح (PDF وصور كما هي، وWord ونصوص إلى نص).
+ */
+async function readSubmissionFile(uid, path) {
+  if (!path.startsWith(`submissions/${uid}/`)) throw new HttpsError("permission-denied", "لا يمكنك تصحيح ملف لا يخصك.");
+  const file = getStorage().bucket().file(path);
+  const [exists] = await file.exists();
+  if (!exists) throw new HttpsError("not-found", "لم نجد الملف المرفوع، أعد رفعه.");
+  const [meta] = await file.getMetadata();
+  const size = Number(meta.size || 0);
+  const mediaType = String(meta.contentType || "");
+  const kind = UPLOAD_TYPES[mediaType];
+  if (!kind) throw new HttpsError("invalid-argument", "نوع الملف غير مدعوم. المقبول: PDF أو Word أو صورة أو نص.");
+  if (size > MAX_UPLOAD_BYTES) throw new HttpsError("invalid-argument", "حجم الملف أكبر من 10 ميغابايت.");
+  const [buf] = await file.download();
+  const name = String(meta.metadata?.originalName || path.split("/").pop()).slice(0, 120);
+  if (kind === "pdf" || kind === "image") return { kind, mediaType, name, data: buf.toString("base64") };
+  let text;
+  if (kind === "docx") {
+    const mammoth = (await import("mammoth")).default;
+    text = (await mammoth.extractRawText({ buffer: buf })).value;
+  } else {
+    text = buf.toString("utf8");
+  }
+  text = text.trim().slice(0, 40000);
+  if (text.length < 20) throw new HttpsError("invalid-argument", "الملف شبه فارغ، تأكد من رفع العمل الصحيح.");
+  return { kind: "text", mediaType, name, data: text };
+}
 
 /**
  * الاختبار البعدي للمهارة: التصحيح في الخادم من مفاتيح لا يقرؤها المتدرب،

@@ -12,5 +12,14 @@ service firebase.storage {
             || request.resource.contentType.matches('image/.*'));
       allow delete: if request.auth != null && request.auth.token.admin == true;
     }
+    // أعمال المتدربين المرفوعة للتصحيح: كل متدرب يرفع ويقرأ ملفاته فقط، والمشرف يقرأ الجميع.
+    match /submissions/{uid}/{allPaths=**} {
+      allow read: if request.auth != null && (request.auth.uid == uid || request.auth.token.admin == true);
+      allow create: if request.auth != null && request.auth.uid == uid
+        && request.resource.size < 10 * 1024 * 1024
+        && (request.resource.contentType.matches('image/(png|jpeg|webp)')
+            || request.resource.contentType in ['application/pdf', 'text/plain', 'text/markdown',
+                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']);
+    }
   }
 }
