@@ -1,0 +1,164 @@
+{
+  "badge": "المهارة 7 · مواقع البحث العلمي",
+  "sting": "أشهر مواقع البحث العلمي بالذكاء الاصطناعي",
+  "posterAt": 4.2,
+  "scenes": [
+    {
+      "id": "e1",
+      "text": "أين تبحث عن الدراسات",
+      "type": "hook",
+      "image": "ex1.jpg",
+      "kicker": "المهارة السابعة · درس مرئي",
+      "title": "مواقع البحث العلمي الذكية",
+      "subtitle": "دراسات حقيقية… بإشارات موثّقة",
+      "subtitleAt": "هناك مواقع"
+    },
+    {
+      "id": "e2",
+      "text": "وأشهرها ستة. Consensus يعطيك",
+      "type": "cards",
+      "title": "ستة مواقع للباحث",
+      "icon": "search",
+      "cards": [
+        {
+          "title": "Consensus",
+          "text": "إجابة مبنية على اتفاق الدراسات.",
+          "icon": "scale",
+          "at": "Consensus يعطيك",
+          "tone": "teal"
+        },
+        {
+          "title": "Elicit",
+          "text": "مراجعة الأدبيات واستخراج البيانات.",
+          "icon": "table",
+          "at": "وElicit يساعد",
+          "tone": "amber"
+        },
+        {
+          "title": "SciSpace",
+          "text": "شرح الأوراق والسؤال عنها.",
+          "icon": "book-open",
+          "at": "وSciSpace يشرح",
+          "tone": ""
+        },
+        {
+          "title": "Semantic Scholar",
+          "text": "بحث مجاني بملخصات ذكية.",
+          "icon": "search",
+          "at": "وSemantic Scholar",
+          "tone": "teal"
+        },
+        {
+          "title": "Scite",
+          "text": "هل تدعم الاستشهادات الادعاء؟",
+          "icon": "quote",
+          "at": "وScite يبين",
+          "tone": "amber"
+        },
+        {
+          "title": "Google Scholar",
+          "text": "الفهرس الأوسع للبحث التقليدي.",
+          "icon": "library",
+          "at": "وGoogle Scholar",
+          "tone": ""
+        }
+      ]
+    },
+    {
+      "id": "e3",
+      "text": "لنجرّب Consensus. نكتب سؤالاً",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "مثال تطبيقي",
+      "title": "سؤال بحثي في Consensus",
+      "tip": "مثال توضيحي",
+      "icon": "scale",
+      "window": "Consensus · بحث",
+      "prompt": "هل يحسّن التعلّم المقلوب تحصيل طلاب المرحلة المتوسطة في العلوم؟",
+      "typeAt": "نكتب سؤالاً",
+      "outputAt": "فيعرض ملخصاً",
+      "botIcon": "scale",
+      "output": [
+        {
+          "text": "ملخص الدراسات",
+          "head": true
+        },
+        "أغلب الدراسات تشير إلى أثر إيجابي على التحصيل",
+        "مقياس الاتفاق: أغلبية «نعم»",
+        "قائمة الدراسات: العنوان، والسنة، والمجلة، ورابط المصدر",
+        {
+          "text": "افتح الدراسة الأصلية قبل الاستشهاد بها",
+          "mark": "edit"
+        }
+      ]
+    },
+    {
+      "id": "e4",
+      "text": "ولتعمل كالباحثين، اتّبع خمس",
+      "type": "steps",
+      "title": "سير عمل البحث الذكي",
+      "icon": "route",
+      "steps": [
+        {
+          "title": "اسأل",
+          "text": "سؤال محدد في Consensus",
+          "icon": "message-circle-question",
+          "at": "أولًا",
+          "color": "#2dd4bf"
+        },
+        {
+          "title": "وسّع",
+          "text": "Elicit أو Semantic Scholar",
+          "icon": "search",
+          "at": "ثانيًا",
+          "color": "#60a5fa"
+        },
+        {
+          "title": "اقرأ",
+          "text": "الدراسة الأصلية",
+          "icon": "book-open",
+          "at": "ثالثًا",
+          "color": "#fbbf24"
+        },
+        {
+          "title": "تحقّق",
+          "text": "الاستشهادات في Scite",
+          "icon": "shield-check",
+          "at": "رابعًا",
+          "color": "#c084fc"
+        },
+        {
+          "title": "وثّق",
+          "text": "المراجع بنفسك",
+          "icon": "file-text",
+          "at": "خامسًا",
+          "color": "#f87171"
+        }
+      ]
+    },
+    {
+      "id": "e5",
+      "text": "تذكّر: هذه المواقع تختصر",
+      "type": "closing",
+      "image": "closing.jpg",
+      "title": "المواقع تختصر الطريق… والتحقق عملك",
+      "steps": [
+        {
+          "label": "ابحث",
+          "icon": "search",
+          "at": "تختصر طريق"
+        },
+        {
+          "label": "اقرأ وتحقق",
+          "icon": "shield-check",
+          "at": "القراءة والتحقق"
+        },
+        {
+          "label": "وثّق",
+          "icon": "file-text",
+          "at": "والتوثيق عملك"
+        }
+      ]
+    }
+  ]
+}

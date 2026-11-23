@@ -1,0 +1,146 @@
+{
+  "badge": "المهارة 3 · التصميم التعليمي",
+  "sting": "التصميم التعليمي وفق ADDIE",
+  "posterAt": 4.2,
+  "scenes": [
+    {
+      "id": "e1",
+      "text": "قبل أن تطلب من",
+      "type": "hook",
+      "image": "ex1.jpg",
+      "kicker": "المهارة الثالثة · درس مرئي",
+      "title": "التصميم التعليمي وفق ADDIE",
+      "subtitle": "خمس مراحل… من المشكلة إلى الأثر",
+      "subtitleAt": "هنا يأتي"
+    },
+    {
+      "id": "e2",
+      "text": "نموذج ADDIE إطار من",
+      "type": "definition",
+      "icon": "refresh-cw",
+      "term": "نموذج ADDIE",
+      "definition": "Analysis · Design · Development · Implementation · Evaluation",
+      "chips": [
+        {
+          "label": "التحليل",
+          "icon": "search",
+          "at": "التحليل،"
+        },
+        {
+          "label": "التصميم",
+          "icon": "pencil-ruler",
+          "at": "والتصميم،"
+        },
+        {
+          "label": "التطوير",
+          "icon": "hammer",
+          "at": "والتطوير،"
+        },
+        {
+          "label": "التنفيذ",
+          "icon": "presentation",
+          "at": "والتنفيذ،"
+        },
+        {
+          "label": "التقويم",
+          "icon": "chart-column",
+          "at": "والتقويم"
+        }
+      ]
+    },
+    {
+      "id": "e3",
+      "text": "ولكل مرحلة سؤال يقودها.",
+      "type": "steps",
+      "title": "مراحل ADDIE",
+      "icon": "route",
+      "steps": [
+        {
+          "title": "التحليل",
+          "text": "من طلابي؟ وما الذي لا يفهمونه؟",
+          "icon": "search",
+          "at": "أولًا",
+          "color": "#2dd4bf"
+        },
+        {
+          "title": "التصميم",
+          "text": "الهدف ونوع الوسيلة وتسلسلها",
+          "icon": "pencil-ruler",
+          "at": "ثانيًا",
+          "color": "#60a5fa"
+        },
+        {
+          "title": "التطوير",
+          "text": "أنتج بالذكاء الاصطناعي وراجع",
+          "icon": "hammer",
+          "at": "ثالثًا",
+          "color": "#fbbf24"
+        },
+        {
+          "title": "التنفيذ",
+          "text": "أستخدمها في الحصة",
+          "icon": "presentation",
+          "at": "رابعًا",
+          "color": "#c084fc"
+        },
+        {
+          "title": "التقويم",
+          "text": "أقيس الأثر وأحسّن",
+          "icon": "chart-column",
+          "at": "خامسًا",
+          "color": "#f87171"
+        }
+      ]
+    },
+    {
+      "id": "e4",
+      "text": "لنطبّق ذلك على مثال.",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "مثال تطبيقي",
+      "title": "درس الكسور للصف الرابع",
+      "tip": "ADDIE من المشكلة إلى الأثر",
+      "icon": "lightbulb",
+      "window": "خطة التصميم وفق ADDIE",
+      "outputAt": "في التحليل",
+      "output": [
+        {
+          "text": "التحليل: ٤٠٪ يخلطون بين البسط والمقام",
+          "head": true
+        },
+        "التصميم: يميّز الطالب البسط من المقام · إنفوجرافيك",
+        "التطوير: رسم بيتزا مقسّمة بالذكاء الاصطناعي ← مراجعة",
+        "التنفيذ: عرضه في بداية الحصة مع سؤالين",
+        {
+          "text": "التقويم: اختبار قصير ← ٨٥٪ أتقنوا الهدف",
+          "mark": "ok",
+          "markAt": "فارتفعت النتائج"
+        }
+      ]
+    },
+    {
+      "id": "e5",
+      "text": "تذكّر: الذكاء الاصطناعي يسرّع",
+      "type": "closing",
+      "image": "closing.jpg",
+      "title": "الأداة تسرّع التطوير… والجودة تبدأ من التحليل",
+      "steps": [
+        {
+          "label": "حلّل",
+          "icon": "search",
+          "at": "تبدأ من التحليل"
+        },
+        {
+          "label": "طوّر",
+          "icon": "hammer",
+          "at": "مرحلة التطوير"
+        },
+        {
+          "label": "قوّم",
+          "icon": "chart-column",
+          "at": "وتكتمل بالتقويم"
+        }
+      ]
+    }
+  ]
+}

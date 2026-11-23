@@ -170,7 +170,7 @@ const templates = {
     return `
       <div class="center col">
         <h2 class="title in" ${at(s.start + 0.3)}><i class="ti">${icon(s.icon)}</i>${esc(s.title)}</h2>
-        <div class="cards">${s.cards
+        <div class="cards ${s.cards.length > 3 ? "many" : ""}">${s.cards
           .map(
             (c) => `<div class="card pop ${c.tone || ""}" ${at(cue(s, c.at, 0.3))}>
               <div class="card-icon">${icon(c.icon)}</div><h3>${esc(c.title)}</h3><p>${esc(c.text)}</p></div>`,
@@ -278,6 +278,23 @@ const templates = {
             }
           </div>
           <div class="win-input"><span>${s.prompt ? "" : esc(s.inputHint || "")}</span><b>${icon("send")}</b></div>
+        </div>
+      </div>`;
+  },
+  nested(s) {
+    // دوائر متداخلة: الأكبر في الخارج، وكل طبقة تظهر عند نطق اسمها، مع شرح قصير بجانبها
+    const L = s.layers.map((l, i) => ({ ...l, t: cue(s, l.at, 0.15 + i * 0.18) }));
+    const n = L.length;
+    return `
+      <div class="nest-wrap">
+        <div class="nest-stage">${L.map(
+          (l, i) => `<div class="nest pop" style="--d:${l.t.toFixed(2)}s;--c:${l.color};--k:${i};--n:${n}"><span>${esc(l.name)}</span></div>`,
+        ).join("")}</div>
+        <div class="nest-side">
+          <h2 class="title in" ${at(s.start + 0.3)}><i class="ti">${icon(s.icon || "layers")}</i>${esc(s.title)}</h2>
+          ${L.map(
+            (l) => `<div class="nest-note in" style="--d:${(l.t + 0.2).toFixed(2)}s;--c:${l.color}"><b>${esc(l.name)}</b><span>${esc(l.text)}</span></div>`,
+          ).join("")}
         </div>
       </div>`;
   },
@@ -456,6 +473,27 @@ svg{display:block}
 .mark.ok{background:#16a34a} .mark.fix{background:#dc2626} .mark.edit{background:#d97706}
 .win-input{display:flex;align-items:center;gap:14px;margin:0 30px 26px;padding:14px 20px;border-radius:18px;border:1.5px solid #c9dcd8;background:#fff;font-size:26px;color:#7a948f}
 .win-input span{flex:1} .win-input b{width:44px;height:44px;padding:9px;border-radius:12px;background:#0f766e;color:#fff}
+/* cards: عدد كبير */
+.cards.many{gap:28px 32px}
+.cards.many .card{padding:26px 28px}
+.cards.many .card-icon{width:64px;height:64px;padding:14px;margin-bottom:14px}
+.cards.many .card h3{font-size:38px;margin-bottom:6px}
+.cards.many .card p{font-size:28px;line-height:1.45}
+/* nested: دوائر متداخلة */
+.nest-wrap{position:absolute;inset:120px 110px 100px;display:grid;grid-template-columns:1fr 820px;gap:50px;align-items:center}
+.nest-stage{position:relative;height:820px}
+.nest{position:absolute;left:50%;top:50%;width:calc(820px - var(--k) * 190px);height:calc(820px - var(--k) * 190px);
+  margin-left:calc((820px - var(--k) * 190px) / -2);margin-top:calc((820px - var(--k) * 190px) / -2 + var(--k) * 30px);
+  border-radius:50%;border:4px solid var(--c);background:color-mix(in srgb,var(--c) 16%,transparent);
+  display:flex;justify-content:center;padding-top:34px;box-shadow:0 0 40px color-mix(in srgb,var(--c) 35%,transparent)}
+.nest span{font-size:36px;font-weight:700;color:var(--c);text-align:center;max-width:80%}
+.nest:last-child{align-items:center;padding-top:0}
+.nest:last-child span{color:var(--ink);font-size:34px}
+.nest-side{display:grid;gap:22px;text-align:right}
+.nest-side .title{font-size:56px;margin-bottom:8px}
+.nest-note{display:grid;gap:4px;padding:16px 24px;border-radius:20px;background:rgba(255,255,255,.06);border-inline-start:8px solid var(--c)}
+.nest-note b{font-size:36px;color:var(--c)}
+.nest-note span{font-size:29px;line-height:1.5;color:#d4ece7}
 /* checklist */
 .checks{display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;width:1560px;text-align:right}
 .check{display:flex;align-items:center;gap:22px;font-size:38px;font-weight:500;padding:24px 30px;border-radius:24px;background:rgba(255,255,255,.07);border:2px solid rgba(74,222,128,.45)}

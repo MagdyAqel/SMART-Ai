@@ -1,0 +1,167 @@
+{
+  "badge": "المهارة 6 · Microsoft Learn",
+  "sting": "تعلّم مع Microsoft Learn",
+  "posterAt": 4.2,
+  "scenes": [
+    {
+      "id": "e1",
+      "text": "تريد أن تتعلّم أدوات",
+      "type": "hook",
+      "image": "ex1.jpg",
+      "kicker": "المهارة السادسة · درس مرئي",
+      "title": "Microsoft Learn للمعلمين",
+      "subtitle": "تعلّم منظّم… وشارات مجانية",
+      "subtitleAt": "منصة Microsoft Learn"
+    },
+    {
+      "id": "e2",
+      "text": "Microsoft Learn منصة تعلّم",
+      "type": "definition",
+      "icon": "graduation-cap",
+      "term": "Microsoft Learn",
+      "definition": "منصة مجانية: مسارات قصيرة، ووحدات تفاعلية، واختبارات، ومركز خاص بالمعلمين",
+      "chips": [
+        {
+          "label": "مسارات",
+          "icon": "route",
+          "at": "مسارات تعليمية"
+        },
+        {
+          "label": "وحدات تفاعلية",
+          "icon": "mouse-pointer-click",
+          "at": "ووحدات تفاعلية"
+        },
+        {
+          "label": "مركز المعلمين",
+          "icon": "school",
+          "at": "مركز المعلمين"
+        }
+      ]
+    },
+    {
+      "id": "e3",
+      "text": "وأهم ما يفيدك فيها",
+      "type": "cards",
+      "title": "ثلاثة أشياء تبدأ بها",
+      "icon": "star",
+      "cards": [
+        {
+          "title": "AI for educators",
+          "text": "مسار مجاني قصير عن الذكاء الاصطناعي في التعليم.",
+          "icon": "sparkles",
+          "at": "مسار الذكاء",
+          "tone": "teal"
+        },
+        {
+          "title": "مركز المعلمين",
+          "text": "دورات ذاتية عن Copilot وأدوات الصف.",
+          "icon": "school",
+          "at": "ومركز المعلمين",
+          "tone": "amber"
+        },
+        {
+          "title": "شارات وشهادات",
+          "text": "شارة لكل مسار، وشهادة مجانية للمعلمين (2026).",
+          "icon": "award",
+          "at": "والشارات والشهادات",
+          "tone": ""
+        }
+      ]
+    },
+    {
+      "id": "e4",
+      "text": "لنجرّب معاً. ندخل الموقع",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "جرّب الآن",
+      "title": "ابدأ أول مسار",
+      "tip": "learn.microsoft.com",
+      "icon": "search",
+      "window": "Microsoft Learn · البحث",
+      "prompt": "AI for educators",
+      "typeAt": "ونكتب في",
+      "outputAt": "فيظهر المسار",
+      "botIcon": "graduation-cap",
+      "output": [
+        {
+          "text": "مسار تعليمي: AI for educators",
+          "head": true
+        },
+        "مجاني · نحو أربع ساعات · بلا متطلبات سابقة",
+        "وحدات قصيرة لكل منها اختبار فهم",
+        {
+          "text": "تقدّمك يُحفظ تلقائياً في ملفك",
+          "mark": "ok"
+        }
+      ]
+    },
+    {
+      "id": "e5",
+      "text": "وخطة البدء خمس خطوات.",
+      "type": "steps",
+      "title": "خطتك على Microsoft Learn",
+      "icon": "route",
+      "steps": [
+        {
+          "title": "سجّل",
+          "text": "بحساب Microsoft",
+          "icon": "user-round",
+          "at": "أولًا",
+          "color": "#2dd4bf"
+        },
+        {
+          "title": "اختر مساراً",
+          "text": "مركز المعلمين",
+          "icon": "route",
+          "at": "ثانيًا",
+          "color": "#60a5fa"
+        },
+        {
+          "title": "تعلّم",
+          "text": "وحدات واختبارات",
+          "icon": "book-open",
+          "at": "ثالثًا",
+          "color": "#fbbf24"
+        },
+        {
+          "title": "احصل على الشارة",
+          "text": "توثيق التعلّم",
+          "icon": "award",
+          "at": "رابعًا",
+          "color": "#c084fc"
+        },
+        {
+          "title": "طبّق",
+          "text": "في صفك",
+          "icon": "presentation",
+          "at": "خامسًا",
+          "color": "#f87171"
+        }
+      ]
+    },
+    {
+      "id": "e6",
+      "text": "ابدأ اليوم بمسار واحد",
+      "type": "closing",
+      "image": "closing.jpg",
+      "title": "مسار واحد اليوم… وخبرة تبقى",
+      "steps": [
+        {
+          "label": "سجّل",
+          "icon": "user-round",
+          "at": "ابدأ اليوم"
+        },
+        {
+          "label": "تعلّم",
+          "icon": "book-open",
+          "at": "فالتعلم المنظم"
+        },
+        {
+          "label": "احصل على الشارة",
+          "icon": "award",
+          "at": "وشارة تثبتها"
+        }
+      ]
+    }
+  ]
+}
