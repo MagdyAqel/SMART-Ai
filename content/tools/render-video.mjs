@@ -102,6 +102,8 @@ const icon = (name) =>
     .replace(/height="24"/, 'height="100%"')
     .replace(/<(path|circle|rect|line|polyline|polygon|ellipse)\b/g, '<$1 pathLength="1"');
 const img = (f) => `file://${join(SKILL_DIR, "raw", f)}`;
+// لقطات الشاشة الحقيقية: raw/shots/<اسم>؛ إن لم تُرفع بعد يُرسم المشهد التوضيحي المعتاد
+const shotFile = (s) => (s.shot && existsSync(join(SKILL_DIR, "raw", "shots", s.shot)) ? `file://${join(SKILL_DIR, "raw", "shots", s.shot)}` : "");
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const at = (t) => `style="--d:${t.toFixed(2)}s"`;
 
@@ -254,6 +256,18 @@ const templates = {
         </aside>
         <div class="win in" ${at(s.start + 0.35)}>
           <div class="win-bar"><span></span><span></span><span></span><em>${esc(s.window || "مساعد الذكاء الاصطناعي")}</em></div>
+          ${
+            shotFile(s)
+              ? // لقطة شاشة حقيقية من الأداة: تقريب بطيء، وإطار يبرز الجزء المهم عند ذكره
+                `<div class="shot"><div class="shot-inner" style="--d:${(s.start + 0.35).toFixed(2)}s;--len:${(s.end - s.start).toFixed(2)}s;--ox:${s.focus ? s.focus.x + s.focus.w / 2 : 50}%;--oy:${s.focus ? s.focus.y + s.focus.h / 2 : 50}%"><img class="shot-img" src="${shotFile(s)}" />${
+                  s.focus
+                    ? `<div class="shot-focus" style="--d:${cue(s, s.focusAt ?? 0.4, 0.4).toFixed(2)}s;left:${s.focus.x}%;top:${s.focus.y}%;width:${s.focus.w}%;height:${s.focus.h}%"></div>`
+                    : ""
+                }</div>${s.caption ? `<div class="shot-cap in" ${at(cue(s, s.focusAt ?? 0.4, 0.4) + 0.3)}>${esc(s.caption)}</div>` : ""}</div>
+        </div>
+      </div>`
+              : ""
+          }${shotFile(s) ? "" : `
           <div class="win-body">
             ${
               s.prompt
@@ -279,7 +293,7 @@ const templates = {
           </div>
           <div class="win-input"><span>${s.prompt ? "" : esc(s.inputHint || "")}</span><b>${icon("send")}</b></div>
         </div>
-      </div>`;
+      </div>`}`;
   },
   nested(s) {
     // دوائر متداخلة: الأكبر في الخارج، وكل طبقة تظهر عند نطق اسمها، مع شرح قصير بجانبها
@@ -460,6 +474,12 @@ svg{display:block}
 .win-bar{display:flex;align-items:center;gap:10px;padding:16px 24px;background:#e3efec;direction:ltr}
 .win-bar span{width:16px;height:16px;border-radius:50%;background:#f87171} .win-bar span:nth-child(2){background:#fbbf24} .win-bar span:nth-child(3){background:#4ade80}
 .win-bar em{font-style:normal;margin:0 auto;font-size:24px;color:#4b6b66;direction:rtl}
+.shot{position:relative;flex:1;overflow:hidden;background:#fff}
+.shot-inner{position:absolute;inset:0;transform-origin:var(--ox) var(--oy);animation:shotZoom var(--len) ease-in-out var(--d) both}
+.shot-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
+@keyframes shotZoom{0%{transform:scale(1)}30%{transform:scale(1)}100%{transform:scale(1.22)}}
+.shot-focus{position:absolute;border:4px solid #fbbf24;border-radius:14px;box-shadow:0 0 0 2000px rgba(8,20,18,.38),0 0 28px rgba(251,191,36,.7);opacity:0;animation:fade .6s ease var(--d) both}
+.shot-cap{position:absolute;bottom:18px;inset-inline:18px;background:rgba(8,20,18,.86);color:#fff;font-size:26px;font-weight:600;padding:12px 18px;border-radius:12px;text-align:center}
 .win-body{flex:1;padding:30px 34px;display:flex;flex-direction:column;gap:24px;overflow:hidden}
 .msg{display:flex;gap:18px;align-items:flex-start}
 .msg>i{flex:none;width:58px;height:58px;padding:13px;border-radius:50%;color:#fff;background:#0f766e}

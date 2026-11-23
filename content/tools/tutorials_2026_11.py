@@ -51,6 +51,13 @@ T12 = dict(
 )
 
 T13 = dict(
+    # لقطات شاشة حقيقية يرفعها صاحب المشروع إلى content/skill-13/raw/shots/
+    shots={
+        "اكتب التعليمات": {"shot": "gemini-instructions.png", "caption": "تعليمات المساعد المخصص في Gemini"},
+        "أضف المعرفة": {"shot": "gemini-knowledge.png", "caption": "ملفات المعرفة في المساعد المخصص"},
+        "حوّلها إلى Skill": {"shot": "claude-skill.png", "caption": "المهارة (Skill) في إعدادات Claude"},
+        "اختبر وأشرف": {"shot": "gemini-test.png", "caption": "تجربة المساعد قبل مشاركته"},
+    },
     title="صمّم مساعدك المخصص وأول Skill",
     hook_say="في هذا الشرح سنحوّل مهمة متكررة، هي تجهيز أوراق العمل، إلى مساعد مخصص في Gemini، ثم إلى Skill في Claude، خطوة بخطوة.",
     hook_sub="اكتب تعليماتك مرة… واستفد منها كل يوم", hook_sub_at="ثم إلى Skill",

@@ -93,7 +93,9 @@
       "output": [],
       "prompt": "أنت مساعد لمعلمي العلوم للصف السابع. تكتب ورقة عمل من ثلاثة أقسام متدرجة، مع مفتاح إجابة، دون بيانات للطلاب، وتسألني إن نقص هدف الدرس.",
       "typeAt": "نكتب: أنت",
-      "window": "Gemini · مساعد مخصص جديد"
+      "window": "Gemini · مساعد مخصص جديد",
+      "shot": "gemini-instructions.png",
+      "caption": "تعليمات المساعد المخصص في Gemini"
     },
     {
       "id": "t5",
@@ -123,7 +125,9 @@
         }
       ],
       "outputAt": "معايير المدرسة",
-      "window": "Gemini · المعرفة"
+      "window": "Gemini · المعرفة",
+      "shot": "gemini-knowledge.png",
+      "caption": "ملفات المعرفة في المساعد المخصص"
     },
     {
       "id": "t6",
@@ -144,7 +148,9 @@
         "التعليمات · المعايير · مثال"
       ],
       "outputAt": "ننشئ مجلداً",
-      "window": "Claude · المهارات"
+      "window": "Claude · المهارات",
+      "shot": "claude-skill.png",
+      "caption": "المهارة (Skill) في إعدادات Claude"
     },
     {
       "id": "t7",
@@ -174,7 +180,9 @@
         }
       ],
       "outputAt": "ونلاحظ أين",
-      "window": "المراجعة"
+      "window": "المراجعة",
+      "shot": "gemini-test.png",
+      "caption": "تجربة المساعد قبل مشاركته"
     },
     {
       "id": "t8",

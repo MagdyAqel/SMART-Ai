@@ -64,6 +64,8 @@ def build(n, sp, name="tutorial", sid=None):
             sc["outputAt"] = s["out_cue"]
         if s["window"]:
             sc["window"] = s["window"]
+        # لقطة شاشة حقيقية اختيارية (raw/shots/<الملف>) تحل محل النافذة التوضيحية متى رُفعت
+        sc.update(sp.get("shots", {}).get(s["title"], {}))
         scenes.append(sc)
 
     ck = sp["checklist"]
