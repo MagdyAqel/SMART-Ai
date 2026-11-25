@@ -1,0 +1,134 @@
+{
+  "badge": "المهارة 4 · Forms وClassroom",
+  "sting": "Forms وClassroom",
+  "posterAt": 4.2,
+  "scenes": [
+    {
+      "id": "l1",
+      "text": "من أسئلة يولّدها الذكاء",
+      "type": "hook",
+      "image": "ex3.jpg",
+      "kicker": "المهارة الرابعة · شرح الدرس",
+      "title": "من الأسئلة إلى الصف",
+      "subtitle": "تولّد الأداة… وتقرر أنت",
+      "subtitleAt": "هذا الدرس"
+    },
+    {
+      "id": "l2",
+      "text": "وسير العمل خمس خطوات.",
+      "type": "steps",
+      "title": "سير العمل",
+      "icon": "route",
+      "steps": [
+        {
+          "title": "مصدر موثوق",
+          "text": "الكتاب أو الفصل",
+          "icon": "book-open",
+          "at": "أولًا",
+          "color": "#2dd4bf"
+        },
+        {
+          "title": "ولّد الأسئلة",
+          "text": "Gemini أو الدفتر",
+          "icon": "sparkles",
+          "at": "ثانيًا",
+          "color": "#60a5fa"
+        },
+        {
+          "title": "راجعها",
+          "text": "خطوة إلزامية",
+          "icon": "shield-check",
+          "at": "ثالثًا",
+          "color": "#fbbf24"
+        },
+        {
+          "title": "انشرها",
+          "text": "Forms ثم Classroom",
+          "icon": "send",
+          "at": "رابعًا",
+          "color": "#c084fc"
+        },
+        {
+          "title": "حلّل",
+          "text": "ماذا أعيد شرحه؟",
+          "icon": "chart-column",
+          "at": "خامسًا",
+          "color": "#f87171"
+        }
+      ]
+    },
+    {
+      "id": "l3",
+      "text": "في Google Forms نطلب",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "من داخل Forms",
+      "title": "اختبار الخلية",
+      "tip": "ذاتي التصحيح",
+      "icon": "clipboard-check",
+      "window": "Google Forms · Gemini",
+      "shot": "google-forms-gemini.png",
+      "caption": "Gemini داخل Google Forms",
+      "prompt": "اختبار قصير من خمسة أسئلة عن الخلية للصف السابع",
+      "typeAt": "نطلب من",
+      "outputAt": "ثم نحدد",
+      "output": [
+        {
+          "text": "اختبار: الخلية · الصف السابع",
+          "head": true
+        },
+        "س١: أيّ العضيات في الخلية النباتية فقط؟",
+        "الإجابة: البلاستيدات الخضراء · درجة واحدة",
+        {
+          "text": "تغذية راجعة لكل إجابة",
+          "mark": "ok"
+        }
+      ]
+    },
+    {
+      "id": "l4",
+      "text": "ومراجعتك إلزامية. هل الإجابات",
+      "type": "checklist",
+      "icon": "shield-check",
+      "title": "مراجعة المعلم",
+      "items": [
+        {
+          "text": "الإجابات صحيحة",
+          "at": "هل الإجابات صحيحة؟"
+        },
+        {
+          "text": "بلا غموض",
+          "at": "هل الأسئلة خالية من الغموض؟"
+        },
+        {
+          "text": "مستويات تفكير متنوعة",
+          "at": "وهل تتنوع مستويات التفكير؟"
+        }
+      ]
+    },
+    {
+      "id": "l5",
+      "text": "وفي Classroom أدوات ذكية",
+      "type": "closing",
+      "image": "closing.jpg",
+      "title": "تولّد الأداة… وتقرر أنت",
+      "steps": [
+        {
+          "label": "ولّد",
+          "icon": "sparkles",
+          "at": "الأداة تولد"
+        },
+        {
+          "label": "راجع",
+          "icon": "shield-check",
+          "at": "وأنت تراجع"
+        },
+        {
+          "label": "قرّر",
+          "icon": "user-round",
+          "at": "وتقرر"
+        }
+      ]
+    }
+  ]
+}

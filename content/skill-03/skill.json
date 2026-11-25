@@ -62,7 +62,15 @@
       "id": "image-prompts",
       "title": "كتابة أوامر الصور التعليمية",
       "minutes": 20,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-03/lesson-image-prompts-video.mp4",
+          "poster": "/media/skill-03/lesson-image-prompts-poster.jpg",
+          "captions": "/media/skill-03/lesson-image-prompts-video.ar.vtt",
+          "caption": "شرح الدرس: كتابة أوامر الصور التعليمية"
+        }
+      ],
       "content": [
         "أمر الصورة يختلف عن أمر النص: الأداة تحتاج وصفاً بصرياً دقيقاً. ابدأ بالموضوع (ما الذي يظهر؟)، ثم الأسلوب (صورة واقعية، رسم مسطح، رسم توضيحي علمي)، ثم التكوين (زاوية التصوير، الخلفية، الألوان).",
         "أضف القيود التعليمية: «بلا نصوص داخل الصورة» لأن الأدوات تكتب الحروف العربية بشكل خاطئ غالباً، و«خلفية بسيطة» لتقليل التشتت، و«مناسب لأطفال في التاسعة».",
@@ -205,7 +213,15 @@
       "id": "video",
       "title": "التخطيط لفيديو تعليمي قصير",
       "minutes": 20,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-03/lesson-video-video.mp4",
+          "poster": "/media/skill-03/lesson-video-poster.jpg",
+          "captions": "/media/skill-03/lesson-video-video.ar.vtt",
+          "caption": "شرح الدرس: التخطيط لفيديو تعليمي قصير"
+        }
+      ],
       "content": [
         "الفيديو التعليمي الفعّال قصير (من دقيقتين إلى ست دقائق)، يركّز على فكرة واحدة، ويبدأ بسؤال أو موقف يشدّ الانتباه.",
         "خطّط قبل أن تولّد: اكتب النص المنطوق أولاً، ثم قسّمه إلى مشاهد، وحدّد لكل مشهد صورة أو رسماً يدعم الكلام لا يكرره.",
@@ -247,7 +263,15 @@
       "id": "storybook",
       "title": "قصص مصوّرة بـ Gemini Storybook",
       "minutes": 20,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-03/lesson-storybook-video.mp4",
+          "poster": "/media/skill-03/lesson-storybook-poster.jpg",
+          "captions": "/media/skill-03/lesson-storybook-video.ar.vtt",
+          "caption": "شرح الدرس: قصص مصوّرة بـ Gemini Storybook"
+        }
+      ],
       "content": [
         "Gemini Storybook ميزة في تطبيق Gemini تحوّل وصفك إلى كتاب قصة مصوّر من نحو عشر صفحات، برسوم بأسلوب تختاره (كرتوني، مائي، طين، قصص مصورة…) وقراءة صوتية للنص. ويمكنك إرفاق صور أو ملفات ليبني القصة عليها، وتعديلها بالحوار.",
         "استخدامات تعليمية: قصة تشرح مفهوماً علمياً بشخصية محببة (قطرة ماء تحكي رحلتها)، وقصة اجتماعية تعالج سلوكاً في الصف، وقصص قراءة بمستوى لغوي يناسب كل مجموعة، وقصة تمهيدية لدرس جديد.",

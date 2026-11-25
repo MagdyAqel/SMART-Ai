@@ -50,7 +50,15 @@
       "id": "gemini",
       "title": "Gemini: مساعدك للتحضير",
       "minutes": 20,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-04/lesson-gemini-video.mp4",
+          "poster": "/media/skill-04/lesson-gemini-poster.jpg",
+          "captions": "/media/skill-04/lesson-gemini-video.ar.vtt",
+          "caption": "شرح الدرس: Gemini مساعدك للتحضير"
+        }
+      ],
       "content": [
         "Gemini هو المساعد الذكي من Google، ويمكن استخدامه من موقعه أو من داخل مستندات Google وعروضها التقديمية. يفيد في صياغة الخطط والأنشطة والأمثلة، وفي تحويل الأفكار إلى جداول ومسودات.",
         "اكتب له بالأركان الخمسة التي تعلّمتها: الدور، والسياق، والمهمة، والصيغة، والقيود. ثم حسّن المخرج بالحوار: «اجعل النشاط الثاني جماعياً» أو «أضف سؤال تفكير ناقد».",
@@ -92,7 +100,15 @@
       "id": "notebooklm",
       "title": "NotebookLM (Gemini Notebook): اسأل مصادرك أنت",
       "minutes": 25,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-04/lesson-notebooklm-video.mp4",
+          "poster": "/media/skill-04/lesson-notebooklm-poster.jpg",
+          "captions": "/media/skill-04/lesson-notebooklm-video.ar.vtt",
+          "caption": "شرح الدرس: NotebookLM (Gemini Notebook): اسأل مصادرك أنت"
+        }
+      ],
       "content": [
         "تحديث: صار اسم NotebookLM منذ يوليو 2026 هو Gemini Notebook، وخصّصنا له مهارة كاملة بعد هذه المهارة: «كيف أتعلم بالذكاء الاصطناعي».",
         "NotebookLM أداة من Google تعمل على المصادر التي ترفعها أنت: ملفات PDF، أو مستندات، أو روابط. تجيب عن أسئلتك من هذه المصادر وتشير إلى موضعها، فتقلّ احتمالية الهلوسة.",
@@ -148,7 +164,15 @@
       "id": "forms-classroom",
       "title": "Google Forms وClassroom: من الأسئلة إلى الصف",
       "minutes": 25,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-04/lesson-forms-classroom-video.mp4",
+          "poster": "/media/skill-04/lesson-forms-classroom-poster.jpg",
+          "captions": "/media/skill-04/lesson-forms-classroom-video.ar.vtt",
+          "caption": "شرح الدرس: Google Forms وClassroom: من الأسئلة إلى الصف"
+        }
+      ],
       "content": [
         "في Google Forms يمكنك بناء اختبار ذاتي التصحيح. استخدم Gemini أو NotebookLM لتوليد الأسئلة، ثم انقلها إلى النموذج وحدّد الإجابة الصحيحة والدرجة والتغذية الراجعة لكل سؤال.",
         "في الحسابات التعليمية، توفّر Google أدوات ذكية داخل Classroom تساعد المعلم في توليد أفكار الدروس والأسئلة ومعايير التصحيح. تختلف المتاحة منها حسب نوع الاشتراك.",

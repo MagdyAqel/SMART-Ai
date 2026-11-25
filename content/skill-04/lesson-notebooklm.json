@@ -1,0 +1,131 @@
+{
+  "badge": "المهارة 4 · Gemini Notebook",
+  "sting": "Gemini Notebook",
+  "posterAt": 4.2,
+  "scenes": [
+    {
+      "id": "l1",
+      "text": "ماذا لو أجابك الذكاء",
+      "type": "hook",
+      "image": "ex2.jpg",
+      "kicker": "المهارة الرابعة · شرح الدرس",
+      "title": "اسأل مصادرك أنت",
+      "subtitle": "إجابات من مصادرك… موثّقة",
+      "subtitleAt": "هذا ما"
+    },
+    {
+      "id": "l2",
+      "text": "ترفع إليه مصادرك: ملفات،",
+      "type": "definition",
+      "icon": "notebook-pen",
+      "term": "Gemini Notebook",
+      "definition": "يجيب من مصادرك أنت… ويشير إلى موضع كل معلومة",
+      "chips": [
+        {
+          "label": "ملفات",
+          "icon": "file-text",
+          "at": "ملفات"
+        },
+        {
+          "label": "مستندات",
+          "icon": "file",
+          "at": "أو مستندات"
+        },
+        {
+          "label": "روابط",
+          "icon": "link",
+          "at": "أو روابط"
+        }
+      ]
+    },
+    {
+      "id": "l3",
+      "text": "ومن استخداماته: ملخص لنقاط",
+      "type": "cards",
+      "title": "استخدامات تعليمية",
+      "icon": "lightbulb",
+      "cards": [
+        {
+          "title": "ملخص الفصل",
+          "text": "النقاط الأساسية.",
+          "icon": "file-text",
+          "at": "ملخص",
+          "tone": "teal"
+        },
+        {
+          "title": "أسئلة فهم",
+          "text": "مبنية على المصدر فقط.",
+          "icon": "circle-help",
+          "at": "وأسئلة فهم",
+          "tone": "amber"
+        },
+        {
+          "title": "خريطة مفاهيم",
+          "text": "العلاقات بين الأفكار.",
+          "icon": "network",
+          "at": "وخريطة",
+          "tone": ""
+        },
+        {
+          "title": "دليل مراجعة",
+          "text": "جاهز للطلاب.",
+          "icon": "book-open",
+          "at": "ودليل مراجعة",
+          "tone": "teal"
+        }
+      ]
+    },
+    {
+      "id": "l4",
+      "text": "مثال: نرفع فصل الخلية،",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "مثال تطبيقي",
+      "title": "اسأل فصل الخلية",
+      "tip": "إجابة بإحالات إلى المصدر",
+      "icon": "notebook-pen",
+      "window": "Gemini Notebook",
+      "shot": "notebook-sources.png",
+      "caption": "الإجابة مع أرقام تحيل إلى المصدر",
+      "prompt": "ما الفرق بين الخلية النباتية والخلية الحيوانية؟",
+      "typeAt": "ونسأل",
+      "outputAt": "فتأتي الإجابة",
+      "output": [
+        {
+          "text": "من مصدرك: فصل الخلية",
+          "head": true
+        },
+        "للخلية النباتية جدار خلوي وبلاستيدات خضراء [١]",
+        "والخلية الحيوانية بلا جدار خلوي [٢]",
+        {
+          "text": "كل معلومة بإحالة إلى المصدر",
+          "mark": "ok"
+        }
+      ]
+    },
+    {
+      "id": "l5",
+      "text": "ارفع مصادر موثوقة تسمح",
+      "type": "closing",
+      "image": "closing.jpg",
+      "title": "مصادرك أنت… وإجابات موثّقة",
+      "steps": [
+        {
+          "label": "ارفع مصادرك",
+          "icon": "upload",
+          "at": "ارفع مصادر"
+        },
+        {
+          "label": "اسأل",
+          "icon": "message-circle",
+          "at": "تسمح حقوقها"
+        },
+        {
+          "label": "لا بيانات طلاب",
+          "icon": "lock",
+          "at": "ولا ترفع"
+        }
+      ]
+    }
+  ]
+}
