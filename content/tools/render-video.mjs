@@ -103,7 +103,24 @@ const icon = (name) =>
     .replace(/<(path|circle|rect|line|polyline|polygon|ellipse)\b/g, '<$1 pathLength="1"');
 const img = (f) => `file://${join(SKILL_DIR, "raw", f)}`;
 // لقطات الشاشة الحقيقية: raw/shots/<اسم>؛ إن لم تُرفع بعد يُرسم المشهد التوضيحي المعتاد
-const shotFile = (s) => (s.shot && existsSync(join(SKILL_DIR, "raw", "shots", s.shot)) ? `file://${join(SKILL_DIR, "raw", "shots", s.shot)}` : "");
+// تُحسَّن اللقطة قبل الإدراج: دقة مضاعفة بخوارزمية lanczos وزيادة حدة الحروف، فتبقى النصوص واضحة عند التكبير
+const shotFile = (s) => {
+  const src = s.shot && join(SKILL_DIR, "raw", "shots", s.shot);
+  if (!src || !existsSync(src)) return "";
+  const dir = join(SKILL_DIR, "raw", "_build", "shots");
+  const out = join(dir, s.shot.replace(/\.\w+$/, "") + "@2x.png");
+  if (!existsSync(out)) {
+    mkdirSync(dir, { recursive: true });
+    execFileSync("ffmpeg", ["-v", "error", "-y", "-i", src, "-vf", "scale=iw*2:ih*2:flags=lanczos,unsharp=5:5:0.9:5:5:0", out]);
+  }
+  return `file://${out}`;
+};
+// نسبة عرض اللقطة إلى ارتفاعها، لتُعرض كاملة دون قص ويقع إطار الإبراز على موضعه بدقة
+const shotRatio = (s) => {
+  const out = execFileSync("ffprobe", ["-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "csv=p=0",
+    join(SKILL_DIR, "raw", "shots", s.shot)], { encoding: "utf8" }).trim().split(",").map(Number);
+  return (out[0] / out[1]).toFixed(4);
+};
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const at = (t) => `style="--d:${t.toFixed(2)}s"`;
 
@@ -259,7 +276,7 @@ const templates = {
           ${
             shotFile(s)
               ? // لقطة شاشة حقيقية من الأداة: تقريب بطيء، وإطار يبرز الجزء المهم عند ذكره
-                `<div class="shot"><div class="shot-inner" style="--d:${(s.start + 0.35).toFixed(2)}s;--len:${(s.end - s.start).toFixed(2)}s;--ox:${s.focus ? s.focus.x + s.focus.w / 2 : 50}%;--oy:${s.focus ? s.focus.y + s.focus.h / 2 : 50}%"><img class="shot-img" src="${shotFile(s)}" />${
+                `<div class="shot"><div class="shot-inner" style="--z:${s.focus ? Math.max(1.06, Math.min(1.6, 80 / s.focus.w)).toFixed(2) : 1.12};--ar:${shotRatio(s)};--d:${(s.start + 0.35).toFixed(2)}s;--len:${(s.end - s.start).toFixed(2)}s;--fx:${((s.focus ? s.focus.x + s.focus.w / 2 : 50) / 100).toFixed(3)};--fy:${((s.focus ? s.focus.y + s.focus.h / 2 : 50) / 100).toFixed(3)}"><img class="shot-img" src="${shotFile(s)}" />${
                   s.focus
                     ? `<div class="shot-focus" style="--d:${cue(s, s.focusAt ?? 0.4, 0.4).toFixed(2)}s;left:${s.focus.x}%;top:${s.focus.y}%;width:${s.focus.w}%;height:${s.focus.h}%"></div>`
                     : ""
@@ -474,10 +491,16 @@ svg{display:block}
 .win-bar{display:flex;align-items:center;gap:10px;padding:16px 24px;background:#e3efec;direction:ltr}
 .win-bar span{width:16px;height:16px;border-radius:50%;background:#f87171} .win-bar span:nth-child(2){background:#fbbf24} .win-bar span:nth-child(3){background:#4ade80}
 .win-bar em{font-style:normal;margin:0 auto;font-size:24px;color:#4b6b66;direction:rtl}
-.shot{position:relative;flex:1;overflow:hidden;background:#fff}
-.shot-inner{position:absolute;inset:0;transform-origin:var(--ox) var(--oy);animation:shotZoom var(--len) ease-in-out var(--d) both}
-.shot-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
-@keyframes shotZoom{0%{transform:scale(1)}30%{transform:scale(1)}100%{transform:scale(1.22)}}
+.shot{position:relative;flex:1;overflow:hidden;background:#e9eeec;container-type:size}
+/* تكبير حقيقي (لا تحجيم صورة مسطّحة): يتغير حجم اللقطة فعلاً في كل إطار، مع بقاء الجزء المُبرز في مكانه */
+@property --zz{syntax:"<number>";inherits:false;initial-value:1}
+.shot-inner{position:absolute;--w0:min(100cqw,calc(100cqh * var(--ar)));--h0:calc(var(--w0) / var(--ar));
+  width:calc(var(--w0) * var(--zz));height:calc(var(--h0) * var(--zz));
+  left:calc((100cqw - var(--w0)) / 2 + var(--fx) * var(--w0) * (1 - var(--zz)));
+  top:calc((100cqh - var(--h0)) / 2 + var(--fy) * var(--h0) * (1 - var(--zz)));
+  animation:shotZoom var(--len) ease-in-out var(--d) both}
+.shot-img{position:absolute;inset:0;width:100%;height:100%;display:block}
+@keyframes shotZoom{0%,35%{--zz:1}70%,100%{--zz:var(--z)}}
 .shot-focus{position:absolute;border:4px solid #fbbf24;border-radius:14px;box-shadow:0 0 0 2000px rgba(8,20,18,.38),0 0 28px rgba(251,191,36,.7);opacity:0;animation:fade .6s ease var(--d) both}
 .shot-cap{position:absolute;bottom:18px;inset-inline:18px;background:rgba(8,20,18,.86);color:#fff;font-size:26px;font-weight:600;padding:12px 18px;border-radius:12px;text-align:center}
 .win-body{flex:1;padding:30px 34px;display:flex;flex-direction:column;gap:24px;overflow:hidden}

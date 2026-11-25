@@ -53,10 +53,18 @@ T12 = dict(
 T13 = dict(
     # لقطات شاشة حقيقية يرفعها صاحب المشروع إلى content/skill-13/raw/shots/
     shots={
-        "اكتب التعليمات": {"shot": "gemini-instructions.png", "caption": "تعليمات المساعد المخصص في Gemini"},
-        "أضف المعرفة": {"shot": "gemini-knowledge.png", "caption": "ملفات المعرفة في المساعد المخصص"},
-        "حوّلها إلى Skill": {"shot": "claude-skill.png", "caption": "المهارة (Skill) في إعدادات Claude"},
-        "اختبر وأشرف": {"shot": "gemini-test.png", "caption": "تجربة المساعد قبل مشاركته"},
+        "اكتب التعليمات": {"shot": "gemini-instructions.png", "window": "Gemini · مهارة جديدة",
+                           "focus": {"x": 27.5, "y": 37.5, "w": 43, "h": 10}, "focusAt": "نكتب: أنت",
+                           "caption": "التعليمات: الدور، والمهمة، والقيود"},
+        "أضف المعرفة": {"shot": "gemini-knowledge.png", "window": "Gemini · تعديل المساعد",
+                        "focus": {"x": 47, "y": 76, "w": 39.5, "h": 15.5}, "focusAt": "نضيف ملفات المعرفة",
+                        "caption": "قاعدة المعرفة: ارفع المعايير ونموذج ورقة العمل"},
+        "حوّلها إلى Skill": {"shot": "claude-skill.png", "window": "Claude · الإعدادات",
+                             "focus": {"x": 21.5, "y": 38.5, "w": 77.5, "h": 10.5}, "focusAt": "ونرفعه من",
+                             "caption": "القدرات: فعّل «إنشاء الملفات» فالمهارات تحتاجه"},
+        "اختبر وأشرف": {"shot": "gemini-test.png", "window": "Gemini · تجربة",
+                        "focus": {"x": 1, "y": 32, "w": 94, "h": 28}, "focusAt": "نختبر المساعد",
+                        "caption": "جرّب على طلب حقيقي، وراجع الناتج قبل اعتماده"},
     },
     title="صمّم مساعدك المخصص وأول Skill",
     hook_say="في هذا الشرح سنحوّل مهمة متكررة، هي تجهيز أوراق العمل، إلى مساعد مخصص في Gemini، ثم إلى Skill في Claude، خطوة بخطوة.",
