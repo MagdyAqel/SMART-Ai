@@ -52,7 +52,10 @@ for (const entry of catalog) {
   const file = new URL(`${entry.id}/skill.json`, CONTENT);
   const prev = existing.get(entry.id);
   const hasContent = existsSync(file);
-  if (prev && !force && !(prev.comingSoon && hasContent)) {
+  // رفع contentVersion في skill.json يستبدل المهارة كاملة في النشر العادي (دون حاجة إلى --force)
+  const repoVersion = hasContent ? JSON.parse(readFileSync(file, "utf8")).contentVersion || 0 : 0;
+  const newer = repoVersion > (prev?.contentVersion || 0);
+  if (prev && !force && !newer && !(prev.comingSoon && hasContent)) {
     // مهارة منشورة: نضيف فقط الوسائط التي أصبحت متاحة ولم تكن في الوثيقة
     if (hasContent) {
       const media = availableMedia(JSON.parse(readFileSync(file, "utf8")));
@@ -63,6 +66,19 @@ for (const entry of catalog) {
       if (!prev.infographic?.url && media.infographic) patch.infographic = media.infographic;
       if ((prev.examples || []).length < media.examples.length) patch.examples = media.examples;
       if (!prev.cover && media.cover) patch.cover = media.cover;
+      // فيديوهات الدروس الجديدة: تُضاف إلى وسائط الدرس المطابق دون المساس بنصه أو أسئلته
+      if (Array.isArray(prev.lessons)) {
+        const repo = new Map(media.lessons.map((L) => [L.id, L.media || []]));
+        let changed = false;
+        const lessons = prev.lessons.map((L) => {
+          const have = new Set((L.media || []).map((m) => m.url));
+          const add = (repo.get(L.id) || []).filter((m) => !have.has(m.url));
+          if (!add.length) return L;
+          changed = true;
+          return { ...L, media: [...add, ...(L.media || [])] };
+        });
+        if (changed) patch.lessons = lessons;
+      }
       if (Object.keys(patch).length) {
         batch.set(db.doc(`courses/${entry.id}`), patch, { merge: true });
         console.log(`  ${entry.id}: أُضيفت وسائط جديدة (${Object.keys(patch).join("، ")})`);
