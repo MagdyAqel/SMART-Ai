@@ -264,7 +264,7 @@ const templates = {
     const outs = s.output || [];
     const outStep = outs.length ? Math.min(1.6, Math.max(0.5, (s.end - outAt - 1.5) / outs.length)) : 0;
     return `
-      <div class="tut">
+      <div class="tut${shotFile(s) ? " has-shot" : ""}">
         <aside class="tut-side">
           <div class="tut-num pop" ${at(s.start + 0.2)}>${esc(s.stepLabel || s.step)}</div>
           <div class="tut-icon pop" ${at(s.start + 0.5)}>${icon(s.icon || "sparkles")}</div>
@@ -483,6 +483,10 @@ svg{display:block}
 /* screen: شرح تطبيقي */
 .tut{position:absolute;inset:130px 110px 90px;display:grid;grid-template-columns:520px 1fr;gap:56px;align-items:center}
 .tut-side{text-align:right}
+/* مع لقطة شاشة حقيقية: نافذة أوسع وعمود جانبي أضيق ليكبر نص اللقطة */
+.tut.has-shot{inset:118px 64px 64px;grid-template-columns:330px 1fr;gap:40px}
+.tut.has-shot .tut-side h2{font-size:46px}.tut.has-shot .tut-side p{font-size:28px}
+.tut.has-shot .win{max-height:none}
 .tut-num{display:inline-block;font-size:34px;font-weight:700;color:var(--bg1);background:var(--amber);padding:8px 26px;border-radius:99px;margin-bottom:26px}
 .tut-icon{width:96px;height:96px;padding:20px;border-radius:28px;color:var(--teal);background:rgba(45,212,191,.14);border:2px solid rgba(45,212,191,.5);margin-bottom:24px;animation:pop .6s cubic-bezier(.3,1.5,.5,1) var(--d) both,floaty 3.2s ease-in-out calc(var(--d) + 1.3s) infinite}
 .tut-side h2{font-size:58px;font-weight:700;line-height:1.3;margin-bottom:18px}
