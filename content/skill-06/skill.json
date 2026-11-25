@@ -50,7 +50,15 @@
       "id": "research-question",
       "title": "من الفكرة إلى السؤال البحثي",
       "minutes": 20,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-06/lesson-research-question-video.mp4",
+          "poster": "/media/skill-06/lesson-research-question-poster.jpg",
+          "captions": "/media/skill-06/lesson-research-question-video.ar.vtt",
+          "caption": "شرح الدرس: من الفكرة إلى السؤال البحثي"
+        }
+      ],
       "content": [
         "يساعدك الذكاء الاصطناعي في تحويل اهتمام عام إلى سؤال بحثي محدد: من «أثر التقنية على الطلاب» إلى «ما أثر استخدام الاختبارات القصيرة الرقمية على تحصيل طلاب الصف الثامن في الرياضيات؟».",
         "اطلب منه اقتراح عدة صياغات، ثم قيّمها بمعايير السؤال الجيد: محدد، وقابل للقياس، وقابل للتنفيذ بالوقت والموارد المتاحة، ومهم للميدان.",
@@ -156,7 +164,15 @@
       "id": "verification-integrity",
       "title": "التحقق والنزاهة البحثية",
       "minutes": 25,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-06/lesson-verification-integrity-video.mp4",
+          "poster": "/media/skill-06/lesson-verification-integrity-poster.jpg",
+          "captions": "/media/skill-06/lesson-verification-integrity-video.ar.vtt",
+          "caption": "شرح الدرس: التحقق والنزاهة البحثية"
+        }
+      ],
       "content": [
         "تحقق من كل مرجع بثلاث خطوات: هل المرجع موجود فعلاً (ابحث بعنوانه ومعرّفه الرقمي DOI)؟ هل المؤلفون والسنة والمجلة صحيحة؟ هل الاقتباس أو النتيجة موجودة فعلاً في النص؟",
         "الاستخدام المقبول غالباً: العصف الذهني، وتحسين الصياغة اللغوية، والتلخيص للفهم، وتنظيم الأفكار. وغير المقبول: كتابة أجزاء البحث ونسبتها لنفسك، واختلاق بيانات أو مراجع.",

@@ -50,7 +50,15 @@
       "id": "prepare-data",
       "title": "تجهيز البيانات وحماية الخصوصية",
       "minutes": 20,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-07/lesson-prepare-data-video.mp4",
+          "poster": "/media/skill-07/lesson-prepare-data-poster.jpg",
+          "captions": "/media/skill-07/lesson-prepare-data-video.ar.vtt",
+          "caption": "شرح الدرس: تجهيز البيانات وحماية الخصوصية"
+        }
+      ],
       "content": [
         "ابدأ بجدول منظم: صف لكل طالب، وعمود لكل متغير (درجة الاختبار الأول، والثاني، والحضور، ومستوى القراءة). الجدول المنظم يعطي تحليلاً أدق.",
         "قبل رفع أي بيانات: احذف الأسماء وأرقام الهويات واستبدلها برموز (ط1، ط2...). احتفظ بملف الربط بين الرموز والأسماء عندك فقط.",
@@ -92,7 +100,15 @@
       "id": "analyze",
       "title": "طلب التحليل والرسم البياني",
       "minutes": 25,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-07/lesson-analyze-video.mp4",
+          "poster": "/media/skill-07/lesson-analyze-poster.jpg",
+          "captions": "/media/skill-07/lesson-analyze-video.ar.vtt",
+          "caption": "شرح الدرس: طلب التحليل والرسم البياني"
+        }
+      ],
       "content": [
         "اطلب تحليلاً محدداً: «احسب متوسط كل اختبار والانحراف المعياري، وحدد الطلاب الذين انخفضت درجاتهم أكثر من 15 نقطة بين الاختبارين، واعرض ذلك في جدول».",
         "اختر الرسم المناسب للسؤال: الأعمدة للمقارنة بين مجموعات، والخط لتتبّع التغيّر عبر الزمن، والنقاط للعلاقة بين متغيرين.",
@@ -171,7 +187,15 @@
       "id": "decisions",
       "title": "من النتائج إلى القرار التربوي",
       "minutes": 20,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-07/lesson-decisions-video.mp4",
+          "poster": "/media/skill-07/lesson-decisions-poster.jpg",
+          "captions": "/media/skill-07/lesson-decisions-video.ar.vtt",
+          "caption": "شرح الدرس: من النتائج إلى القرار التربوي"
+        }
+      ],
       "content": [
         "اقرأ النتائج بحذر: الارتباط لا يعني السببية. إذا تزامن انخفاض الحضور مع انخفاض الدرجات، فقد يكون هناك سبب ثالث، كظرف أسري أو مرض.",
         "انتبه لصغر العينة: في صف من عشرين طالباً قد يغيّر طالب واحد المتوسط كثيراً. استخدم البيانات لطرح الأسئلة لا لإصدار الأحكام.",
