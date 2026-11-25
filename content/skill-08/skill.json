@@ -50,7 +50,15 @@
       "id": "objectives",
       "title": "صياغة الأهداف التعليمية",
       "minutes": 20,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-08/lesson-objectives-video.mp4",
+          "poster": "/media/skill-08/lesson-objectives-poster.jpg",
+          "captions": "/media/skill-08/lesson-objectives-video.ar.vtt",
+          "caption": "شرح الدرس: صياغة الأهداف التعليمية"
+        }
+      ],
       "content": [
         "الهدف التعليمي الجيد يصف ما سيقدر عليه الطالب بعد التعلّم بفعل قابل للقياس: «أن يميّز الطالب بين الفاعل والمفعول به في جمل جديدة» أفضل من «أن يفهم الطالب الفاعل».",
         "استخدم مستويات بلوم لتنويع الأهداف: التذكّر، والفهم، والتطبيق، والتحليل، والتقويم، والإبداع. واطلب من الأداة أهدافاً موزعة على هذه المستويات.",
@@ -92,7 +100,15 @@
       "id": "backward-design",
       "title": "تخطيط الوحدة بالتصميم العكسي",
       "minutes": 25,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-08/lesson-backward-design-video.mp4",
+          "poster": "/media/skill-08/lesson-backward-design-poster.jpg",
+          "captions": "/media/skill-08/lesson-backward-design-video.ar.vtt",
+          "caption": "شرح الدرس: تخطيط الوحدة بالتصميم العكسي"
+        }
+      ],
       "content": [
         "التصميم العكسي يبدأ من النهاية: ماذا أريد أن يتعلّم الطلاب؟ كيف سأعرف أنهم تعلّموا؟ ثم: ما الأنشطة التي توصلهم إلى ذلك؟",
         "اطلب من الأداة خطة وحدة بهذه البنية: الأفكار الكبرى والأهداف، ثم أدوات التقويم (القبلي والتكويني والختامي)، ثم تسلسل الدروس والأنشطة، ثم التوزيع الزمني على الأسابيع.",
@@ -147,7 +163,15 @@
       "id": "lesson-plan",
       "title": "خطة الدرس اليومية",
       "minutes": 25,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-08/lesson-lesson-plan-video.mp4",
+          "poster": "/media/skill-08/lesson-lesson-plan-poster.jpg",
+          "captions": "/media/skill-08/lesson-lesson-plan-video.ar.vtt",
+          "caption": "شرح الدرس: خطة الدرس اليومية"
+        }
+      ],
       "content": [
         "خطة الدرس اليومية تتضمن عادة: الهدف، والتمهيد، والعرض والأنشطة، والتقويم الختامي، والواجب، مع الزمن لكل مرحلة.",
         "اكتب أمراً يحدد هذه المكونات وصيغتها: «في جدول من أربعة أعمدة: المرحلة، وما يفعله المعلم، وما يفعله الطلاب، والزمن».",
