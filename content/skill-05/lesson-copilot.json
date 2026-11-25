@@ -1,0 +1,126 @@
+{
+  "badge": "المهارة 6 · Copilot",
+  "sting": "Copilot",
+  "posterAt": 4.2,
+  "scenes": [
+    {
+      "id": "l1",
+      "text": "Copilot مساعد Microsoft الذكي:",
+      "type": "hook",
+      "image": "ex1.jpg",
+      "kicker": "المهارة السادسة · شرح الدرس",
+      "title": "Copilot: المساعد داخل برامجك",
+      "subtitle": "أمر واضح… ومراجعة دقيقة",
+      "subtitleAt": "في هذا الدرس"
+    },
+    {
+      "id": "l2",
+      "text": "في نافذة Copilot نكتب:",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "مثال تطبيقي",
+      "title": "أسئلة لقياس الفهم",
+      "tip": "دورة الماء · الصف السابع",
+      "icon": "sparkles",
+      "window": "Microsoft Copilot",
+      "shot": "copilot-chat.png",
+      "caption": "رد Copilot بالأسئلة وإجاباتها",
+      "prompt": "اقترح ثلاثة أسئلة قصيرة لقياس فهم طلاب الصف السابع لدورة الماء، مع الإجابة المتوقعة لكل سؤال",
+      "typeAt": "نكتب",
+      "outputAt": "فيعود بالأسئلة",
+      "output": [
+        {
+          "text": "ثلاثة أسئلة: دورة الماء",
+          "head": true
+        },
+        "١. تحوّل الماء إلى بخار؟ ← التبخر",
+        "٢. تحوّل البخار إلى قطرات؟ ← التكاثف",
+        {
+          "text": "٣. عودة الماء إلى الأرض؟ ← الهطول",
+          "mark": "ok"
+        }
+      ]
+    },
+    {
+      "id": "l3",
+      "text": "وداخل البرامج: في Word",
+      "type": "cards",
+      "title": "داخل البرامج",
+      "icon": "layout-grid",
+      "cards": [
+        {
+          "title": "Word",
+          "text": "ورقة عمل، أو رسالة لأولياء الأمور.",
+          "icon": "file-text",
+          "at": "في Word",
+          "tone": "teal"
+        },
+        {
+          "title": "PowerPoint",
+          "text": "عرض من مستند، أو شرائح بعدد محدد.",
+          "icon": "presentation",
+          "at": "وفي PowerPoint",
+          "tone": "amber"
+        }
+      ]
+    },
+    {
+      "id": "l4",
+      "text": "وأضف ما يخص البرنامج.",
+      "type": "compare",
+      "title": "أضف ما يخص البرنامج",
+      "weak": {
+        "label": "أمر عام",
+        "text": "اعمل عرضاً عن الطاقة",
+        "at": "بدلا من"
+      },
+      "strong": {
+        "label": "أمر للبرنامج",
+        "at": "اكتب",
+        "parts": [
+          {
+            "text": "في ست شرائح،",
+            "color": "#2dd4bf",
+            "tag": "العدد"
+          },
+          {
+            "text": "كل شريحة فكرة واحدة،",
+            "color": "#fbbf24",
+            "tag": "البنية"
+          },
+          {
+            "text": "مع ملاحظات للمعلم أسفل كل شريحة.",
+            "color": "#60a5fa",
+            "tag": "الملاحظات"
+          }
+        ]
+      },
+      "moral": "التفاصيل توفّر عليك التعديل",
+      "moralAt": "فالتفاصيل"
+    },
+    {
+      "id": "l5",
+      "text": "تتغير الواجهات حسب الاشتراك،",
+      "type": "closing",
+      "image": "closing.jpg",
+      "title": "أمر واضح… ومراجعة دقيقة",
+      "steps": [
+        {
+          "label": "اطلب",
+          "icon": "message-circle",
+          "at": "أمر واضح"
+        },
+        {
+          "label": "حدّد البرنامج",
+          "icon": "layout-grid",
+          "at": "تتغير الواجهات"
+        },
+        {
+          "label": "راجع",
+          "icon": "shield-check",
+          "at": "ومراجعة دقيقة"
+        }
+      ]
+    }
+  ]
+}

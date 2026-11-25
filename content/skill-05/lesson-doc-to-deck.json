@@ -1,0 +1,118 @@
+{
+  "badge": "المهارة 6 · من المستند إلى العرض",
+  "sting": "من المستند إلى العرض",
+  "posterAt": 4.2,
+  "scenes": [
+    {
+      "id": "l1",
+      "text": "درس واحد، وثلاثة منتجات:",
+      "type": "hook",
+      "image": "ex2.jpg",
+      "kicker": "المهارة السادسة · شرح الدرس",
+      "title": "من المستند إلى العرض والاختبار",
+      "subtitle": "مستند… عرض… اختبار",
+      "subtitleAt": "في هذا الدرس"
+    },
+    {
+      "id": "l2",
+      "text": "وسير العمل ثلاث خطوات.",
+      "type": "steps",
+      "title": "سير العمل",
+      "icon": "route",
+      "steps": [
+        {
+          "title": "المستند",
+          "text": "محتوى الدرس في Word",
+          "icon": "file-text",
+          "at": "أولًا",
+          "color": "#2dd4bf"
+        },
+        {
+          "title": "العرض",
+          "text": "Copilot في PowerPoint",
+          "icon": "presentation",
+          "at": "ثانيًا",
+          "color": "#60a5fa"
+        },
+        {
+          "title": "الاختبار",
+          "text": "أسئلة ← Forms",
+          "icon": "clipboard-check",
+          "at": "ثالثًا",
+          "color": "#fbbf24"
+        }
+      ]
+    },
+    {
+      "id": "l3",
+      "text": "في PowerPoint نفتح Copilot،",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "داخل PowerPoint",
+      "title": "عرض من ملف",
+      "tip": "Copilot ← إنشاء عرض من ملف",
+      "icon": "presentation",
+      "window": "PowerPoint · Copilot",
+      "shot": "powerpoint-copilot.png",
+      "caption": "Copilot في PowerPoint: إنشاء عرض من ملف",
+      "outputAt": "فتأتي الشرائح",
+      "output": [
+        {
+          "text": "عرض: دورة الماء · ست شرائح",
+          "head": true
+        },
+        "١. من أين يأتي المطر؟",
+        "٢. التبخر · ٣. التكاثف · ٤. الهطول",
+        {
+          "text": "ملاحظات للمعلم أسفل كل شريحة",
+          "mark": "ok"
+        }
+      ]
+    },
+    {
+      "id": "l4",
+      "text": "ثم راجعه تربوياً. هل",
+      "type": "checklist",
+      "icon": "shield-check",
+      "title": "مراجعة العرض",
+      "items": [
+        {
+          "text": "كل شريحة تخدم هدفاً",
+          "at": "هل كل شريحة تخدم هدفاً؟"
+        },
+        {
+          "text": "نص قليل وصور معبّرة",
+          "at": "هل النص قليل والصور معبّرة؟"
+        },
+        {
+          "text": "ترتيب منطقي",
+          "at": "وهل الترتيب منطقي؟"
+        }
+      ]
+    },
+    {
+      "id": "l5",
+      "text": "وفي Forms اجعل الاختبار",
+      "type": "closing",
+      "image": "closing.jpg",
+      "title": "مستند… عرض… اختبار",
+      "steps": [
+        {
+          "label": "اختبار ذاتي التصحيح",
+          "icon": "clipboard-check",
+          "at": "ذاتي التصحيح"
+        },
+        {
+          "label": "مساحة مشتركة",
+          "icon": "users",
+          "at": "مساحة مشتركة"
+        },
+        {
+          "label": "طوّروا معاً",
+          "icon": "refresh-cw",
+          "at": "ليطورها"
+        }
+      ]
+    }
+  ]
+}

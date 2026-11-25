@@ -1,0 +1,174 @@
+{
+  "badge": "المهارة 12 · المساعد المخصص في Gemini",
+  "sting": "المساعد المخصص في Gemini",
+  "posterAt": 4.2,
+  "scenes": [
+    {
+      "id": "l1",
+      "text": "مساعد يعرف طريقتك، فلا",
+      "type": "hook",
+      "image": "ex1.jpg",
+      "kicker": "المهارة الثانية عشرة · شرح الدرس",
+      "title": "مساعدك المخصص في Gemini",
+      "subtitle": "المهارات… Gems سابقاً",
+      "subtitleAt": "في هذا الدرس"
+    },
+    {
+      "id": "l2",
+      "text": "أولاً، تنبيه مهم. ظهرت",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "تنبيه مهم",
+      "title": "أصبحت Gems الآن مهارات",
+      "tip": "راجع ملفاتك",
+      "icon": "triangle-alert",
+      "window": "Gemini · إدارة المهارات",
+      "shot": "gemini-skills-manage.png",
+      "caption": "رسالة التحويل في Gemini",
+      "outputAt": "ظهرت",
+      "output": [
+        {
+          "text": "أصبحت Gems الآن مهارات",
+          "head": true
+        },
+        "نُقلت التعليمات تلقائياً",
+        {
+          "text": "راجع الملفات قبل ٢٤ ديسمبر ٢٠٢٦",
+          "mark": "edit",
+          "markAt": "فراجعها"
+        }
+      ]
+    },
+    {
+      "id": "l3",
+      "text": "والتعليمات الجيدة تحدد: الدور،",
+      "type": "cards",
+      "title": "تعليمات جيدة تحدد",
+      "icon": "file-text",
+      "cards": [
+        {
+          "title": "الدور",
+          "text": "أنت مساعد لمعلمي…",
+          "icon": "user-round",
+          "at": "الدور",
+          "tone": "teal"
+        },
+        {
+          "title": "المهمة",
+          "text": "ماذا يفعل بالضبط؟",
+          "icon": "target",
+          "at": "والمهمة",
+          "tone": "teal"
+        },
+        {
+          "title": "الجمهور",
+          "text": "لمن يكتب؟",
+          "icon": "users",
+          "at": "والجمهور",
+          "tone": "amber"
+        },
+        {
+          "title": "شكل المخرج",
+          "text": "جدول، أقسام، مفتاح.",
+          "icon": "layout-list",
+          "at": "وشكل المخرج",
+          "tone": "amber"
+        },
+        {
+          "title": "القيود",
+          "text": "بلا بيانات طلاب.",
+          "icon": "sliders-horizontal",
+          "at": "والقيود",
+          "tone": ""
+        }
+      ]
+    },
+    {
+      "id": "l4",
+      "text": "مثال: مساعد لمعلمي العلوم",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "مثال حقيقي",
+      "title": "مساعد معلمي العلوم",
+      "tip": "الاسم · الوصف · التعليمات",
+      "icon": "file-text",
+      "window": "Gemini · مهارة جديدة",
+      "shot": "gemini-instructions.png",
+      "focus": {
+        "x": 27.5,
+        "y": 37.5,
+        "w": 43,
+        "h": 10
+      },
+      "focusAt": "نكتب تعليماته",
+      "caption": "التعليمات: الدور، والمهمة، والقيود",
+      "prompt": "أنت مساعد لمعلمي العلوم للصف السابع. تكتب ورقة عمل من ثلاثة أقسام متدرجة، مع مفتاح إجابة، دون بيانات للطلاب، وتسألني إن نقص هدف الدرس.",
+      "typeAt": "نكتب تعليماته",
+      "outputAt": "وتسألني",
+      "output": [
+        {
+          "text": "حُفظت التعليمات",
+          "head": true,
+          "mark": "ok"
+        }
+      ]
+    },
+    {
+      "id": "l5",
+      "text": "ثم نختبره بثلاث حالات",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "اختبر وحسّن",
+      "title": "تجربة المساعد",
+      "tip": "ثلاث حالات مختلفة",
+      "icon": "shield-check",
+      "window": "Gemini · تجربة",
+      "shot": "gemini-test.png",
+      "focus": {
+        "x": 1,
+        "y": 32,
+        "w": 94,
+        "h": 28
+      },
+      "focusAt": "ثم نختبره",
+      "caption": "جرّب على طلب حقيقي، وراجع الناتج",
+      "outputAt": "ثم نختبره",
+      "output": [
+        {
+          "text": "نتائج الاختبار",
+          "head": true
+        },
+        "درس الخلية: ممتاز",
+        {
+          "text": "درس المادة: المستوى الثالث صعب ← نعدّل",
+          "mark": "edit",
+          "markAt": "فنعدل"
+        }
+      ]
+    },
+    {
+      "id": "l6",
+      "text": "تعليمات ثابتة، ومعرفة ثابتة،",
+      "type": "closing",
+      "image": "closing.jpg",
+      "title": "مساعد واحد… ساعات توفّرها",
+      "steps": [
+        {
+          "label": "تعليمات",
+          "icon": "file-text",
+          "at": "تعليمات ثابتة"
+        },
+        {
+          "label": "معرفة",
+          "icon": "folder-open",
+          "at": "ومعرفة ثابتة"
+        },
+        {
+          "label": "اختبار",
+          "icon": "shield-check",
+          "at": "واختبار وتحسين"
+        }
+      ]
+    }
+  ]
+}

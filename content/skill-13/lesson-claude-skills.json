@@ -1,0 +1,145 @@
+{
+  "badge": "المهارة 12 · Skills في Claude",
+  "sting": "Skills في Claude",
+  "posterAt": 4.2,
+  "scenes": [
+    {
+      "id": "l1",
+      "text": "علّم Claude طريقتك مرة",
+      "type": "hook",
+      "image": "ex2.jpg",
+      "kicker": "المهارة الثانية عشرة · شرح الدرس",
+      "title": "Skills في Claude",
+      "subtitle": "علّمه مرة… واستفد كل مرة",
+      "subtitleAt": "هذا ما"
+    },
+    {
+      "id": "l2",
+      "text": "الـ Skill مجلد صغير",
+      "type": "definition",
+      "icon": "file-code-2",
+      "term": "Skill في Claude",
+      "definition": "مجلد وملف SKILL.md… يستخدمه Claude تلقائياً عند الحاجة",
+      "chips": [
+        {
+          "label": "SKILL.md",
+          "icon": "file-code-2",
+          "at": "اسمه"
+        },
+        {
+          "label": "نماذج",
+          "icon": "file",
+          "at": "نماذج"
+        },
+        {
+          "label": "ملفات مرجعية",
+          "icon": "folder-open",
+          "at": "وملفات مرجعية"
+        }
+      ]
+    },
+    {
+      "id": "l3",
+      "text": "في أعلى الملف اسم،",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "محتوى الملف",
+      "title": "ملف SKILL.md",
+      "tip": "اسم · وصف · تعليمات",
+      "icon": "file-code-2",
+      "window": "SKILL.md",
+      "outputAt": "في أعلى",
+      "output": [
+        {
+          "text": "SKILL.md",
+          "head": true
+        },
+        "name: worksheet-science-7",
+        "description: استخدمها عند تجهيز أوراق عمل العلوم للصف السابع",
+        {
+          "text": "التعليمات · المعايير · شكل المخرج · مثال",
+          "mark": "ok",
+          "markAt": "ثم التعليمات"
+        }
+      ]
+    },
+    {
+      "id": "l4",
+      "text": "ثم نضغط المجلد ملف",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "الرفع والتفعيل",
+      "title": "إعدادات Claude",
+      "tip": "ZIP ← المهارات",
+      "icon": "upload",
+      "window": "Claude · الإعدادات",
+      "shot": "claude-skill.png",
+      "focus": {
+        "x": 21.5,
+        "y": 38.5,
+        "w": 77.5,
+        "h": 10.5
+      },
+      "focusAt": "وتأكد",
+      "caption": "القدرات: فعّل «إنشاء الملفات» فالمهارات تحتاجه",
+      "outputAt": "ثم نضغط",
+      "output": [
+        {
+          "text": "الإعدادات ← المهارات",
+          "head": true
+        },
+        "رفع: worksheet-science-7.zip",
+        {
+          "text": "إنشاء الملفات: مفعّل",
+          "mark": "ok",
+          "markAt": "وتأكد"
+        }
+      ]
+    },
+    {
+      "id": "l5",
+      "text": "ونصائح ثلاث. اجعل كل",
+      "type": "checklist",
+      "icon": "shield-check",
+      "title": "Skill ناجحة",
+      "items": [
+        {
+          "text": "مهمة واحدة لكل Skill",
+          "at": "اجعل كل Skill لمهمة واحدة."
+        },
+        {
+          "text": "اختبرها على حالات مختلفة",
+          "at": "واختبرها على حالات مختلفة."
+        },
+        {
+          "text": "حدّثها وشاركها",
+          "at": "وحدّثها حين تتغير معاييرك، وشاركها مع فريقك."
+        }
+      ]
+    },
+    {
+      "id": "l6",
+      "text": "علّم Claude طريقتك مرة،",
+      "type": "closing",
+      "image": "closing.jpg",
+      "title": "علّمه مرة… واستفد كل مرة",
+      "steps": [
+        {
+          "label": "اكتب",
+          "icon": "file-code-2",
+          "at": "علم Claude"
+        },
+        {
+          "label": "ارفع",
+          "icon": "upload",
+          "at": "طريقتك مرة"
+        },
+        {
+          "label": "استفد",
+          "icon": "sparkles",
+          "at": "واستفد منها"
+        }
+      ]
+    }
+  ]
+}

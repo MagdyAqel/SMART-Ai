@@ -51,7 +51,15 @@
       "id": "notebook-sources",
       "title": "Gemini Notebook: دفتر مصادرك الذكي",
       "minutes": 20,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-12/lesson-notebook-sources-video.mp4",
+          "poster": "/media/skill-12/lesson-notebook-sources-poster.jpg",
+          "captions": "/media/skill-12/lesson-notebook-sources-video.ar.vtt",
+          "caption": "شرح الدرس: Gemini Notebook: دفتر مصادرك الذكي"
+        }
+      ],
       "content": [
         "Gemini Notebook هو الاسم الجديد لأداة NotebookLM من Google منذ يوليو 2026. فكرتها بسيطة: تنشئ «دفتراً» لكل موضوع، وتضيف إليه مصادرك (ملفات PDF، مستندات Google، روابط مواقع، مقاطع يوتيوب، نصوص منسوخة)، ثم تتعامل معها بالذكاء الاصطناعي.",
         "الدردشة مع المصادر: تسأل فتأتيك الإجابة مع أرقام صغيرة تشير إلى الموضع الدقيق في المصدر. اضغط الرقم لترى النص الأصلي. هذا ما يجعل الأداة أدق من المساعد العام: إنها تجيب مما أعطيتها، لا من ذاكرتها العامة.",
@@ -107,7 +115,15 @@
       "id": "audio-video",
       "title": "اسمع وشاهد: الملخص الصوتي والملخص المرئي",
       "minutes": 20,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-12/lesson-audio-video-video.mp4",
+          "poster": "/media/skill-12/lesson-audio-video-poster.jpg",
+          "captions": "/media/skill-12/lesson-audio-video-video.ar.vtt",
+          "caption": "شرح الدرس: اسمع وشاهد: الملخص الصوتي والملخص المرئي"
+        }
+      ],
       "content": [
         "الملخص الصوتي (Audio Overview): يحوّل مصادرك إلى حوار صوتي بين مقدّمَين يناقشان أهم الأفكار، كأنه حلقة بودكاست. يمكنك توجيهه: «ركّز على المفاهيم التي يخطئ فيها الطلاب» أو «اشرح لمبتدئ»، واختيار طوله، والاستماع إليه في الطريق.",
         "الملخص المرئي (Video Overview): يحوّل المصادر إلى فيديو قصير بشرائح وصور ورسوم وتعليق صوتي، مع إمكانية توجيه موضوعه وجمهوره. وتتوفر في بعض الحسابات «الملخصات السينمائية» بإخراج أغنى.",
@@ -162,7 +178,15 @@
       "id": "mindmap-reports",
       "title": "نظّم فهمك: الخرائط الذهنية والتقارير",
       "minutes": 20,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-12/lesson-mindmap-reports-video.mp4",
+          "poster": "/media/skill-12/lesson-mindmap-reports-poster.jpg",
+          "captions": "/media/skill-12/lesson-mindmap-reports-video.ar.vtt",
+          "caption": "شرح الدرس: نظّم فهمك: الخرائط الذهنية والتقارير"
+        }
+      ],
       "content": [
         "الخريطة الذهنية (Mind Map): تعرض الموضوع الرئيسي وفروعه بشكل تفاعلي؛ تضغط على أي فرع فيتوسع، أو يتحول إلى سؤال في الدردشة. مفيدة لرؤية الصورة الكاملة قبل التفاصيل.",
         "التقارير (Reports): يولّد الدفتر مستندات منظّمة من مصادرك، مثل: دليل دراسة بأسئلة وإجابات ومصطلحات، وملخص تنفيذي (Briefing)، وأسئلة شائعة، وخطاً زمنياً. ويمكنك طلب تقرير مخصص بوصف ما تريده.",
@@ -204,7 +228,15 @@
       "id": "flashcards-quizzes",
       "title": "اختبر نفسك: البطاقات التعليمية والاختبارات القصيرة",
       "minutes": 25,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-12/lesson-flashcards-quizzes-video.mp4",
+          "poster": "/media/skill-12/lesson-flashcards-quizzes-poster.jpg",
+          "captions": "/media/skill-12/lesson-flashcards-quizzes-video.ar.vtt",
+          "caption": "شرح الدرس: اختبر نفسك: البطاقات التعليمية والاختبارات القصيرة"
+        }
+      ],
       "content": [
         "البطاقات التعليمية (Flashcards): يولّد الدفتر بطاقات وجهها سؤال أو مصطلح وظهرها الإجابة. تقلبها، وتحدد ما عرفته وما لم تعرفه، ويحفظ الدفتر تقدّمك. وزر «اشرح» يوضح لك البطاقة التي أخطأت فيها.",
         "الاختبارات القصيرة (Quizzes): أسئلة اختيار من متعدد مبنية على مصادرك، مع تلميحات وشرح لسبب خطأ إجابتك. يمكنك تحديد عدد الأسئلة وصعوبتها وموضوعها.",

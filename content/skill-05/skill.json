@@ -51,7 +51,15 @@
       "id": "copilot",
       "title": "Copilot: المساعد داخل برامجك",
       "minutes": 20,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-05/lesson-copilot-video.mp4",
+          "poster": "/media/skill-05/lesson-copilot-poster.jpg",
+          "captions": "/media/skill-05/lesson-copilot-video.ar.vtt",
+          "caption": "شرح الدرس: Copilot: المساعد داخل برامجك"
+        }
+      ],
       "content": [
         "Copilot هو المساعد الذكي من Microsoft. يمكن استخدامه في نافذة دردشة مستقلة، أو داخل Word وPowerPoint وExcel حسب نوع الاشتراك.",
         "في Word: اطلب مسودة ورقة عمل أو رسالة لأولياء الأمور، ثم عدّلها. وفي PowerPoint: اطلب عرضاً من مستند موجود، أو شرائح عن موضوع محدد بعدد معين.",
@@ -93,7 +101,15 @@
       "id": "doc-to-deck",
       "title": "من المستند إلى العرض والاختبار",
       "minutes": 25,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-05/lesson-doc-to-deck-video.mp4",
+          "poster": "/media/skill-05/lesson-doc-to-deck-poster.jpg",
+          "captions": "/media/skill-05/lesson-doc-to-deck-video.ar.vtt",
+          "caption": "شرح الدرس: من المستند إلى العرض والاختبار"
+        }
+      ],
       "content": [
         "سير عمل موفّر للوقت: اكتب أو اجمع محتوى الدرس في مستند Word، ثم اطلب من Copilot في PowerPoint إنشاء عرض منه، ثم اطلب أسئلة مراجعة لبناء اختبار في Forms.",
         "راجع العرض تربوياً: هل كل شريحة تخدم هدفاً؟ هل النص قليل والصور معبّرة؟ هل الترتيب منطقي؟ احذف المكرر وأضف سؤالاً تفاعلياً كل بضع شرائح.",
@@ -172,7 +188,15 @@
       "id": "reading",
       "title": "أدوات دعم القراءة والتقدّم",
       "minutes": 20,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-05/lesson-reading-video.mp4",
+          "poster": "/media/skill-05/lesson-reading-poster.jpg",
+          "captions": "/media/skill-05/lesson-reading-video.ar.vtt",
+          "caption": "شرح الدرس: أدوات دعم القراءة والتقدّم"
+        }
+      ],
       "content": [
         "توفّر Microsoft في بيئتها التعليمية أدوات تساعد الطلاب على القراءة والتعلّم، مثل «القارئ الشامل» الذي يقرأ النص بصوت مسموع ويقسّم الكلمات ويترجمها، ويفيد الطلاب ذوي صعوبات القراءة.",
         "وفي Teams للتعليم أدوات لمتابعة التقدّم، مثل تسجيل الطالب قراءته وتحليلها لتحديد الكلمات الصعبة، واقتراح تدريبات مخصصة له.",

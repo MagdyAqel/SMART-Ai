@@ -115,7 +115,15 @@
       "id": "gemini-gems",
       "title": "صمّم مساعدك المخصص في Gemini (المهارات، Gems سابقاً)",
       "minutes": 25,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-13/lesson-gemini-gems-video.mp4",
+          "poster": "/media/skill-13/lesson-gemini-gems-poster.jpg",
+          "captions": "/media/skill-13/lesson-gemini-gems-video.ar.vtt",
+          "caption": "شرح الدرس: صمّم مساعدك المخصص في Gemini"
+        }
+      ],
       "content": [
         "المساعدات المخصصة في Gemini، التي كان اسمها Gems وصار اسمها «المهارات»: تكتب لها اسماً وتعليمات ثابتة، وتضيف ملفات معرفة (دليل المدرسة، معايير التصحيح، نماذج أوراق العمل)، فتعمل بها في كل محادثة. ويمكن مشاركتها مع الزملاء كما تُشارك ملفات Drive.",
         "تحديث مهم: تظهر الآن في Gemini رسالة «أصبحت Gems الآن مهارات»؛ فقد نقلت Google ما أنشأته من Gems إلى «المهارات» مع تعليماتها. لكن بعض الملفات المرفقة قد لا تُنقل تلقائياً، فراجع مهاراتك وتأكد من ملفاتها، ويمكنك الاطلاع على Gems القديمة وحفظ ما تبقّى من ملفاتها حتى 24 ديسمبر 2026. الفكرة نفسها باقية: تعليمات وملفات ثابتة لمهمة متكررة.",
@@ -170,7 +178,15 @@
       "id": "claude-skills",
       "title": "Skills في Claude: علّم Claude طريقتك",
       "minutes": 25,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-13/lesson-claude-skills-video.mp4",
+          "poster": "/media/skill-13/lesson-claude-skills-poster.jpg",
+          "captions": "/media/skill-13/lesson-claude-skills-video.ar.vtt",
+          "caption": "شرح الدرس: Skills في Claude: علّم Claude طريقتك"
+        }
+      ],
       "content": [
         "Skill في Claude حزمة صغيرة تعلّمه طريقة عمل محددة: مجلد فيه ملف تعليمات اسمه SKILL.md، ويمكن أن يضم نماذج وملفات مرجعية. يقرأ Claude وصف الـ Skill، فإذا جاءت مهمة تناسبه استخدمه تلقائياً.",
         "مكوّنات SKILL.md: في أعلاه اسم ووصف قصير يحدد متى تُستخدم المهارة («استخدمها عند تصحيح أوراق العمل بمعايير المدرسة»)، ثم التعليمات خطوة بخطوة، والمعايير، وشكل المخرج، ومثال.",
@@ -225,7 +241,15 @@
       "id": "openai-dots",
       "title": "Dots من OpenAI: الوكيل الاستباقي",
       "minutes": 20,
-      "media": [],
+      "media": [
+        {
+          "type": "video",
+          "url": "/media/skill-13/lesson-openai-dots-video.mp4",
+          "poster": "/media/skill-13/lesson-openai-dots-poster.jpg",
+          "captions": "/media/skill-13/lesson-openai-dots-video.ar.vtt",
+          "caption": "شرح الدرس: Dots من OpenAI: الوكيل الاستباقي"
+        }
+      ],
       "content": [
         "أطلقت OpenAI في سبتمبر 2026 ما سمّته dots: مساعدات استباقية داخل ChatGPT تواصل العمل على المشاريع والمهام اليومية، ولكلٍّ منها حاسوب سحابي ومتصفح خاص، ويمكن ربطها بآلاف التطبيقات. أي إنها لا تنتظر سؤالك دائماً، بل تبحث وتجهّز وتقترح.",
         "أهميتها للمعلم: تمثّل انتقالاً من «أداة أسألها» إلى «زميل رقمي يعمل في الخلفية»: يتابع مستجدات مادتك، ويجهّز مسودات الأسبوع القادم، ويذكّرك بالمواعيد، ويحضّر ملخصاً لما فاتك. وهذا يغيّر طريقة تخطيط العمل نفسها.",
