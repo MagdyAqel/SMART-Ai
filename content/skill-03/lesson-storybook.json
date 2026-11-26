@@ -97,8 +97,23 @@
       "tip": "Storybook ← الأمر ← القصة",
       "icon": "book-open",
       "window": "Gemini · Storybook",
-      "shot": "gemini-storybook.png",
-      "caption": "القصة الناتجة في Storybook",
+      "shots": [
+        {
+          "shot": "storybook-1-open.png",
+          "at": "نفتح",
+          "caption": "افتح Storybook من قائمة المهارات في Gemini"
+        },
+        {
+          "shot": "storybook-2-prompt.png",
+          "at": "ونكتب الأمر",
+          "caption": "اكتب أمر القصة كاملاً"
+        },
+        {
+          "shot": "storybook-3-result.png",
+          "at": "فتأتي القصة",
+          "caption": "القصة الناتجة: صفحات ورسوم وصوت"
+        }
+      ],
       "prompt": "قصة مصوّرة لأطفال الصف الثاني عن قطرة ماء اسمها نُقطة تشرح دورة الماء، بأسلوب الرسم المائي، في بيئة عربية",
       "typeAt": "ونكتب الأمر",
       "outputAt": "فتأتي القصة",

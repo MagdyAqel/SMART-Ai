@@ -104,11 +104,12 @@ const icon = (name) =>
 const img = (f) => `file://${join(SKILL_DIR, "raw", f)}`;
 // لقطات الشاشة الحقيقية: raw/shots/<اسم>؛ إن لم تُرفع بعد يُرسم المشهد التوضيحي المعتاد
 // تُحسَّن اللقطة قبل الإدراج: دقة مضاعفة بخوارزمية lanczos وزيادة حدة الحروف، فتبقى النصوص واضحة عند التكبير
-const shotFile = (s) => {
-  const src = s.shot && join(SKILL_DIR, "raw", "shots", s.shot);
+const shotFile = (s) => shotSrc(s.shot);
+const shotSrc = (name) => {
+  const src = name && join(SKILL_DIR, "raw", "shots", name);
   if (!src || !existsSync(src)) return "";
   const dir = join(SKILL_DIR, "raw", "_build", "shots");
-  const out = join(dir, s.shot.replace(/\.\w+$/, "") + "@2x.png");
+  const out = join(dir, name.replace(/\.\w+$/, "") + "@2x.png");
   if (!existsSync(out)) {
     mkdirSync(dir, { recursive: true });
     execFileSync("ffmpeg", ["-v", "error", "-y", "-i", src, "-vf", "scale=iw*2:ih*2:flags=lanczos,unsharp=5:5:0.9:5:5:0", out]);
@@ -116,10 +117,19 @@ const shotFile = (s) => {
   return `file://${out}`;
 };
 // نسبة عرض اللقطة إلى ارتفاعها، لتُعرض كاملة دون قص ويقع إطار الإبراز على موضعه بدقة
-const shotRatio = (s) => {
+const shotRatio = (name) => {
   const out = execFileSync("ffprobe", ["-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "csv=p=0",
-    join(SKILL_DIR, "raw", "shots", s.shot)], { encoding: "utf8" }).trim().split(",").map(Number);
+    join(SKILL_DIR, "raw", "shots", name)], { encoding: "utf8" }).trim().split(",").map(Number);
   return (out[0] / out[1]).toFixed(4);
+};
+// طبقات اللقطات في مشهد: shots[] (متتالية، لكل لقطة at توقيتها) أو shot واحدة. المفقود منها يُتجاوز.
+const shotLayers = (s) => {
+  const list = (s.shots || (s.shot ? [{ shot: s.shot, focus: s.focus, focusAt: s.focusAt, caption: s.caption }] : []))
+    .filter((L) => shotSrc(L.shot));
+  const layers = list.map((L, i) => ({ ...L, src: shotSrc(L.shot), ratio: shotRatio(L.shot),
+    t0: i === 0 ? s.start + 0.35 : cue(s, L.at ?? (i / list.length), i / list.length) }));
+  layers.forEach((L, i) => (L.t1 = layers[i + 1] ? layers[i + 1].t0 : s.end));
+  return layers;
 };
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const at = (t) => `style="--d:${t.toFixed(2)}s"`;
@@ -264,7 +274,7 @@ const templates = {
     const outs = s.output || [];
     const outStep = outs.length ? Math.min(1.6, Math.max(0.5, (s.end - outAt - 1.5) / outs.length)) : 0;
     return `
-      <div class="tut${shotFile(s) ? " has-shot" : ""}">
+      <div class="tut${shotLayers(s).length ? " has-shot" : ""}">
         <aside class="tut-side">
           <div class="tut-num pop" ${at(s.start + 0.2)}>${esc(s.stepLabel || s.step)}</div>
           <div class="tut-icon pop" ${at(s.start + 0.5)}>${icon(s.icon || "sparkles")}</div>
@@ -274,17 +284,22 @@ const templates = {
         <div class="win in" ${at(s.start + 0.35)}>
           <div class="win-bar"><span></span><span></span><span></span><em>${esc(s.window || "مساعد الذكاء الاصطناعي")}</em></div>
           ${
-            shotFile(s)
-              ? // لقطة شاشة حقيقية من الأداة: تقريب بطيء، وإطار يبرز الجزء المهم عند ذكره
-                `<div class="shot"><div class="shot-inner" style="--z:${s.focus ? Math.max(1.06, Math.min(1.6, 80 / s.focus.w)).toFixed(2) : 1.12};--ar:${shotRatio(s)};--d:${(s.start + 0.35).toFixed(2)}s;--len:${(s.end - s.start).toFixed(2)}s;--fx:${((s.focus ? s.focus.x + s.focus.w / 2 : 50) / 100).toFixed(3)};--fy:${((s.focus ? s.focus.y + s.focus.h / 2 : 50) / 100).toFixed(3)}"><img class="shot-img" src="${shotFile(s)}" />${
-                  s.focus
-                    ? `<div class="shot-focus" style="--d:${cue(s, s.focusAt ?? 0.4, 0.4).toFixed(2)}s;left:${s.focus.x}%;top:${s.focus.y}%;width:${s.focus.w}%;height:${s.focus.h}%"></div>`
-                    : ""
-                }</div>${s.caption ? `<div class="shot-cap in" ${at(cue(s, s.focusAt ?? 0.4, 0.4) + 0.3)}>${esc(s.caption)}</div>` : ""}</div>
+            shotLayers(s).length
+              ? // لقطات شاشة حقيقية متتالية: كل لقطة تظهر عند ذكر خطوتها، مع تقريب بطيء وإطار يبرز الجزء المهم
+                `<div class="shot">${shotLayers(s)
+                  .map((L) => {
+                    const fz = L.focus;
+                    const zoom = fz ? Math.max(1.06, Math.min(1.6, 80 / fz.w)).toFixed(2) : 1.1;
+                    const fAt = L.focusAt ? cue(s, L.focusAt, 0.4) : L.t0 + 1;
+                    return `<div class="shot-layer fade" style="--d:${L.t0.toFixed(2)}s"><div class="shot-inner" style="--z:${zoom};--ar:${L.ratio};--d:${L.t0.toFixed(2)}s;--len:${(L.t1 - L.t0).toFixed(2)}s;--fx:${((fz ? fz.x + fz.w / 2 : 50) / 100).toFixed(3)};--fy:${((fz ? fz.y + fz.h / 2 : 50) / 100).toFixed(3)}"><img class="shot-img" src="${L.src}" />${
+                      fz ? `<div class="shot-focus" style="--d:${fAt.toFixed(2)}s;left:${fz.x}%;top:${fz.y}%;width:${fz.w}%;height:${fz.h}%"></div>` : ""
+                    }</div>${L.caption ? `<div class="shot-cap in" ${at(Math.max(L.t0 + 0.3, fAt + 0.3))}>${esc(L.caption)}</div>` : ""}</div>`;
+                  })
+                  .join("")}</div>
         </div>
       </div>`
               : ""
-          }${shotFile(s) ? "" : `
+          }${shotLayers(s).length ? "" : `
           <div class="win-body">
             ${
               s.prompt
@@ -498,6 +513,7 @@ svg{display:block}
 .shot{position:relative;flex:1;overflow:hidden;background:#e9eeec;container-type:size}
 /* تكبير حقيقي (لا تحجيم صورة مسطّحة): يتغير حجم اللقطة فعلاً في كل إطار، مع بقاء الجزء المُبرز في مكانه */
 @property --zz{syntax:"<number>";inherits:false;initial-value:1}
+.shot-layer{position:absolute;inset:0;background:#e9eeec}
 .shot-inner{position:absolute;--w0:min(100cqw,calc(100cqh * var(--ar)));--h0:calc(var(--w0) / var(--ar));
   width:calc(var(--w0) * var(--zz));height:calc(var(--h0) * var(--zz));
   left:calc((100cqw - var(--w0)) / 2 + var(--fx) * var(--w0) * (1 - var(--zz)));
