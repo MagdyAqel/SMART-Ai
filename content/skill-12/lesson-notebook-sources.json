@@ -16,44 +16,48 @@
     {
       "id": "l2",
       "text": "تضيف إلى الدفتر مصادرك:",
-      "type": "cards",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "إضافة المصادر",
       "title": "مصادر الدفتر",
+      "tip": "دفتر جديد ← Sources ← نوع المصدر",
       "icon": "folder-open",
-      "cards": [
+      "window": "Gemini Notebook",
+      "shots": [
         {
-          "title": "ملفات PDF",
-          "text": "كتب وفصول وأبحاث.",
-          "icon": "file-text",
-          "at": "ملفات",
-          "tone": "teal"
+          "shot": "notebooklm-1-new.png",
+          "caption": "دفتر ملاحظات جديد"
         },
         {
-          "title": "مستندات Google",
-          "text": "من Drive مباشرة.",
-          "icon": "file",
-          "at": "ومستندات",
-          "tone": "teal"
+          "shot": "notebooklm-2-add-sources.png",
+          "at": "ملفات PDF",
+          "focus": {
+            "x": 17,
+            "y": 48,
+            "w": 66,
+            "h": 13
+          },
+          "focusAt": "ومستندات",
+          "caption": "اختر نوع المصدر: ملفات، مواقع، يوتيوب، Drive، نص منسوخ"
         },
         {
-          "title": "روابط المواقع",
-          "text": "صفحات موثوقة.",
-          "icon": "link",
-          "at": "وروابط",
-          "tone": "amber"
-        },
+          "shot": "notebooklm-3-paste.png",
+          "at": "ونصوصاً",
+          "caption": "لصق نص منسوخ مصدراً للدفتر"
+        }
+      ],
+      "outputAt": "ملفات",
+      "output": [
         {
-          "title": "مقاطع يوتيوب",
-          "text": "محاضرات وشروح.",
-          "icon": "clapperboard",
-          "at": "ومقاطع",
-          "tone": "amber"
+          "text": "مصادر الدفتر",
+          "head": true
         },
+        "ملفات PDF · مستندات Google",
+        "روابط المواقع · مقاطع يوتيوب",
         {
-          "title": "نصوص منسوخة",
-          "text": "ملاحظاتك أنت.",
-          "icon": "pencil",
-          "at": "ونصوصا",
-          "tone": ""
+          "text": "نصوص منسوخة",
+          "mark": "ok",
+          "markAt": "ونصوصا"
         }
       ]
     },
@@ -69,7 +73,14 @@
       "window": "Gemini Notebook",
       "shot": "notebook-sources.png",
       "caption": "الإجابة مع أرقام تحيل إلى المصدر",
-      "prompt": "ما الفرق بين الخلية النباتية والخلية الحيوانية؟",
+      "focus": {
+        "x": 8,
+        "y": 44,
+        "w": 86,
+        "h": 42
+      },
+      "focusAt": "فتأتي الإجابة",
+      "prompt": "اشرح لطلاب الصف السادس الفرق بين التبخر والتكاثف بمثال من الحياة اليومية",
       "typeAt": "ثم تسأل",
       "outputAt": "فتأتي الإجابة",
       "output": [
@@ -77,8 +88,8 @@
           "text": "من مصادرك",
           "head": true
         },
-        "للخلية النباتية جدار خلوي [١]",
-        "وفيها بلاستيدات خضراء [٢]",
+        "التبخر: تحوّل الماء إلى بخار [١]",
+        "التكاثف: تحوّل البخار إلى قطرات [١]",
         {
           "text": "اضغط الرقم لترى النص الأصلي",
           "mark": "ok",
