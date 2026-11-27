@@ -101,11 +101,25 @@
         {
           "shot": "storybook-1-open.png",
           "at": "نفتح",
+          "focus": {
+            "x": 74.5,
+            "y": 57,
+            "w": 25,
+            "h": 42
+          },
+          "focusAt": "نفتح",
           "caption": "افتح Storybook من قائمة المهارات في Gemini"
         },
         {
           "shot": "storybook-2-prompt.png",
           "at": "ونكتب الأمر",
+          "focus": {
+            "x": 13.5,
+            "y": 82,
+            "w": 73,
+            "h": 15
+          },
+          "focusAt": "ونكتب الأمر",
           "caption": "اكتب أمر القصة كاملاً"
         },
         {
