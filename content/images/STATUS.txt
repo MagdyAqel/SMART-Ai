@@ -1,0 +1,16 @@
+قائمة الإنجاز — لقطات أدوات الذكاء الاصطناعي
+=============================================
+المهمة ١ – ChatGPT (تمّت كلها):
+  chatgpt-0-login.png, chatgpt-1-home.png, chatgpt-card-1-prompt.png, chatgpt-card-2-result.png, chatgpt-card-3-edit.png
+المهمة ٢ – موسيقى Gemini (تمّت):
+  music-2-prompt.png, music-3-result.png
+المهمة ٣ – صورة Gemini (تمّت):
+  gemini-image-result.png
+المهمة ٤ – Storybook (تمّت):
+  storybook-1-open.png, storybook-2-prompt.png, storybook-3-result.png
+المهمة ٥ – فيديو Gemini: غير متاح
+  السبب: لا يظهر خيار «إنشاء فيديو» في قائمة «+» ولا «المزيد من الأدوات»، وعند طلب الفيديو مباشرة ردّ Gemini بأن إنشاء الفيديو يتطلب ترقية الاشتراك.
+  الدليل: gemini-video-NOT-AVAILABLE.png (لقطة حقيقية للطلب والرد). لم يُصنع بديل.
+المهارة الفرعية الجديدة – NotebookLM (Gemini Notebook):
+  notebooklm-0 … notebooklm-11 + notebooklm-12-video-result.png (فيديو حقيقي أُنشئ بأداة «ملخص بالفيديو»)
+الخصوصية: طُمست الصورة الشخصية والأحرف الأولى للحساب واسم المؤلف في صفحة القصة، وأُخفيت قوائم المحادثات والدفاتر السابقة.
