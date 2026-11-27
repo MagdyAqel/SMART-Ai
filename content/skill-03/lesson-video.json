@@ -83,8 +83,8 @@
       "tip": "دقيقتان · ثلاثة مشاهد",
       "icon": "clapperboard",
       "window": "خطة الفيديو",
-      "shot": "gemini-video.png",
-      "caption": "إنشاء مقطع فيديو في Gemini",
+      "shot": "gemini-video-NOT-AVAILABLE.png",
+      "caption": "إنشاء الفيديو في Gemini يتطلب اشتراكاً مدفوعاً",
       "outputAt": "ويساعدك",
       "output": [
         {

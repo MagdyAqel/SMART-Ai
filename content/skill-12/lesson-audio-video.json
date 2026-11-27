@@ -16,23 +16,42 @@
     {
       "id": "l2",
       "text": "الملخص الصوتي حوار بين",
-      "type": "cards",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "من داخل Gemini Notebook",
       "title": "ملخصان من مصادرك",
+      "tip": "Studio ← ملخص صوتي · ملخص بالفيديو",
       "icon": "audio-lines",
-      "cards": [
+      "window": "Gemini Notebook · Studio",
+      "shots": [
         {
-          "title": "الملخص الصوتي",
-          "text": "حوار بين مقدّمَين، كالبودكاست.",
-          "icon": "audio-lines",
-          "at": "الملخص الصوتي",
-          "tone": "teal"
+          "shot": "notebooklm-11-audio-result.png",
+          "focus": {
+            "x": 2,
+            "y": 74,
+            "w": 96,
+            "h": 25
+          },
+          "focusAt": "كحلقة بودكاست",
+          "caption": "الملخص الصوتي الناتج ومشغّله"
         },
         {
-          "title": "الملخص المرئي",
-          "text": "فيديو بشرائح وصور وتعليق.",
-          "icon": "clapperboard",
+          "shot": "notebooklm-12-video-result.png",
           "at": "والملخص المرئي",
-          "tone": "amber"
+          "caption": "الملخص بالفيديو: «كيف تقود الشمس دورة الماء»"
+        }
+      ],
+      "outputAt": "الملخص الصوتي",
+      "output": [
+        {
+          "text": "من مصادرك",
+          "head": true
+        },
+        "ملخص صوتي: حوار بين مقدّمَين",
+        {
+          "text": "ملخص مرئي: شرائح وصور وتعليق",
+          "markAt": "والملخص المرئي",
+          "mark": "ok"
         }
       ]
     },
@@ -46,8 +65,15 @@
       "tip": "التنسيق · اللغة · المدة · التركيز",
       "icon": "sliders-horizontal",
       "window": "تخصيص الملخّص الصوتي",
-      "shot": "notebook-audio.png",
+      "shot": "notebooklm-8-audio-settings.png",
       "caption": "نافذة تخصيص الملخص الصوتي",
+      "focus": {
+        "x": 8,
+        "y": 58,
+        "w": 85,
+        "h": 26
+      },
+      "focusAt": "وتكتب ما",
       "outputAt": "تختار التنسيق",
       "output": [
         {
@@ -55,7 +81,7 @@
           "head": true
         },
         "اللغة: العربية · المدة: قصيرة",
-        "التركيز: «المفاهيم التي يخطئ فيها الطلاب»",
+        "التركيز: «مراحل دورة الماء بلغة بسيطة»",
         {
           "text": "الإنشاء الآن",
           "mark": "ok",

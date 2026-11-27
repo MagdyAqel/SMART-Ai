@@ -16,23 +16,54 @@
     {
       "id": "l2",
       "text": "البطاقات التعليمية: وجهها سؤال",
-      "type": "cards",
+      "type": "screen",
+      "step": 0,
+      "stepLabel": "من داخل Gemini Notebook",
       "title": "اختبر نفسك",
+      "tip": "Studio ← بطاقات تعليمية · اختبار",
       "icon": "layers",
-      "cards": [
+      "window": "Gemini Notebook",
+      "shots": [
         {
-          "title": "البطاقات التعليمية",
-          "text": "سؤال ← إجابة، وزر «اشرح» للخطأ.",
-          "icon": "layers",
-          "at": "البطاقات التعليمية",
-          "tone": "teal"
+          "shot": "notebooklm-5-studio.png",
+          "focus": {
+            "x": 26,
+            "y": 27,
+            "w": 49,
+            "h": 8.5
+          },
+          "focusAt": "البطاقات التعليمية",
+          "caption": "لوحة Studio: بطاقات تعليمية واختبار"
         },
         {
-          "title": "الاختبارات القصيرة",
-          "text": "اختيار من متعدد، مع تلميحات وشرح.",
-          "icon": "clipboard-check",
+          "shot": "notebooklm-7-quiz-settings.png",
           "at": "والاختبارات القصيرة",
-          "tone": "amber"
+          "caption": "إعداد الاختبار: العدد، والصعوبة، والنوع، والموضوع"
+        },
+        {
+          "shot": "notebooklm-9-quiz.png",
+          "at": "مع تلميحات",
+          "focus": {
+            "x": 22,
+            "y": 22,
+            "w": 71,
+            "h": 28
+          },
+          "focusAt": "مع تلميحات",
+          "caption": "سؤال من الاختبار مع شرح الإجابة"
+        }
+      ],
+      "outputAt": "البطاقات التعليمية",
+      "output": [
+        {
+          "text": "اختبر نفسك",
+          "head": true
+        },
+        "بطاقات: سؤال ← إجابة، وزر «اشرح»",
+        {
+          "text": "اختبار: اختيار من متعدد مع شرح",
+          "markAt": "والاختبارات القصيرة",
+          "mark": "ok"
         }
       ]
     },
