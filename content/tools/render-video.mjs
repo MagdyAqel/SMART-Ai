@@ -12,7 +12,7 @@
 // الرسم حتمي: نوقف كل الحركات ونضبط زمنها إطاراً إطاراً، فلا تتأثر الجودة بسرعة الجهاز.
 
 import { spawn, execFileSync } from "node:child_process";
-import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
+import { statSync, mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
@@ -110,9 +110,12 @@ const shotSrc = (name) => {
   if (!src || !existsSync(src)) return "";
   const dir = join(SKILL_DIR, "raw", "_build", "shots");
   const out = join(dir, name.replace(/\.\w+$/, "") + "@2x.png");
-  if (!existsSync(out)) {
+  // تُعاد المعالجة إذا استُبدلت اللقطة الأصلية (نسخة أحدث بدقة أعلى مثلاً)
+  if (!existsSync(out) || statSync(out).mtimeMs < statSync(src).mtimeMs) {
     mkdirSync(dir, { recursive: true });
-    execFileSync("ffmpeg", ["-v", "error", "-y", "-i", src, "-vf", "scale=iw*2:ih*2:flags=lanczos,unsharp=5:5:0.9:5:5:0", out]);
+    // اللقطة الصغيرة تُضاعف، والكبيرة (1200 بكسل فأكثر) تُزاد حدّتها فقط
+    execFileSync("ffmpeg", ["-v", "error", "-y", "-i", src, "-vf",
+      "scale='if(lt(iw,1200),iw*2,iw)':-1:flags=lanczos,unsharp=5:5:0.6:5:5:0", out]);
   }
   return `file://${out}`;
 };
