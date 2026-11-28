@@ -105,8 +105,8 @@
 
 | الملف | الخطوات | ما يجب أن يظهر | الحالة |
 |---|---|---|---|
-| `google-forms-gemini.png` | forms.google.com ← نموذج جديد ← زر Gemini «ساعدني في إنشاء نموذج» ← «اختبار قصير من خمسة أسئلة عن الخلية للصف السابع» | لوحة Gemini والأسئلة المقترحة | مطلوب |
-| `classroom-gemini.png` | classroom.google.com ← تبويب Gemini (إن كان متاحاً في الحساب) | أدوات Gemini للمعلم داخل Classroom | مطلوب |
+| `google-forms-gemini.png` | forms.google.com ← نموذج جديد ← زر Gemini «ساعدني في إنشاء نموذج» ← «اختبار قصير من خمسة أسئلة عن الخلية للصف السابع» | لوحة Gemini والأسئلة المقترحة | مُلغى بطلب صاحب المشروع |
+| `classroom-gemini.png` | classroom.google.com ← تبويب Gemini (إن كان متاحاً في الحساب) | أدوات Gemini للمعلم داخل Classroom | مُلغى بطلب صاحب المشروع |
 
 ### المهارة الظاهرة 6 «أدوات Microsoft» ← `content/skill-05/raw/shots/`
 

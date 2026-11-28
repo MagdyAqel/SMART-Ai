@@ -1,4 +1,4 @@
-# طلب جاهز لـ Claude (الجولة الثانية): لقطات الأدوات الباقية وإعادة التصوير بدقة أعلى
+# طلب جاهز لـ Claude (الجولة الثانية): 9 لقطات جديدة، وإعادة تصوير 16 لقطة بدقة أعلى
 
 يعمل هذا الطلب في Claude على جهازك: تطبيق Claude لسطح المكتب مع Claude in Chrome أو التحكم بالحاسوب، أو Claude Code. انسخ ما تحت الخط كاملاً والصقه هناك.
 
@@ -18,26 +18,19 @@
 6. **الانتظار:** انتظر اكتمال النتيجة قبل التصوير، وأبعد مؤشر الفأرة عن النص.
 7. **الأداة غير المتاحة:** إن لم تكن الأداة متاحة في الحساب، فصوّر رسالة عدم الإتاحة باسم `<الاسم>-NOT-AVAILABLE.png`، ولا تصنع بديلاً.
 
-## الجزء الأول: لقطات جديدة (11 لقطة)
+## الجزء الأول: لقطات جديدة (9 لقطات)
 
-**أ) `content/skill-13/raw/shots/` (الوكيل الذكي)**
-- `gemini-skills-manage.png`: في gemini.google.com افتح القائمة الجانبية ثم «إدارة Gem» (أو «المهارات»). يجب أن تظهر رسالة «أصبحت Gems الآن مهارات» والمهارات الجاهزة من Google. أخفِ قائمة «Gems التي أنشأتها».
-- `claude-skills-list.png`: في claude.ai افتح Settings ثم Capabilities أو Skills. يجب أن تظهر قائمة Skills النشطة.
-- `openai-dots.png`: ميزة Dots في chatgpt.com إن كانت متاحة، ويظهر فيها إعداد Dot لمهمة «ورقة عمل العلوم».
-
-**ب) `content/skill-04/raw/shots/` (أدوات Google)**
-- `google-forms-gemini.png`: في forms.google.com أنشئ نموذجاً جديداً، ثم اضغط زر Gemini «ساعدني في إنشاء نموذج»، واكتب: «اختبار قصير من خمسة أسئلة عن الخلية للصف السابع». صوّر لوحة Gemini والأسئلة المقترحة.
-- `classroom-gemini.png`: تبويب Gemini في classroom.google.com إن كان متاحاً، ويظهر فيه أدوات المعلم.
-- `notebook-sources.png`: في Gemini Notebook أنشئ دفتراً جديداً، والصق نصاً قصيراً عن الخلية النباتية والحيوانية مصدراً، ثم اسأل: «ما الفرق بين الخلية النباتية والحيوانية؟». صوّر الإجابة بأرقام الإحالة.
-
-**ج) `content/skill-05/raw/shots/` (أدوات Microsoft)**
-- `copilot-chat.png`: في copilot.microsoft.com اكتب: «اقترح ثلاثة أسئلة قصيرة لقياس فهم طلاب الصف السابع للخلية، مع الإجابة المتوقعة». صوّر الأمر والإجابة كاملة.
-- `powerpoint-copilot.png`: في PowerPoint على الويب افتح Copilot، وصوّر لوحته وخيار «إنشاء عرض تقديمي من ملف».
-- `reading-coach.png`: الشاشة الرئيسية لأداة Reading Coach أو Reading Progress، إن كانت متاحة.
-
-**د) `content/skill-06/raw/shots/` (البحث العلمي)**
-- `consensus-results.png`: في consensus.app ابحث عن: «Does flipped learning improve middle school science achievement?». صوّر الملخص ومقياس الاتفاق وقائمة الدراسات.
-- `elicit-table.png`: في elicit.com ابحث عن السؤال نفسه، وصوّر جدول الدراسات بأعمدته.
+| # | الملف | المجلد | الخطوات | ما يجب أن يظهر |
+|---|---|---|---|---|
+| 1 | `notebook-sources.png` | `content/skill-04/raw/shots/` | في Gemini Notebook أنشئ دفتراً جديداً، والصق نصاً قصيراً عن الخلية النباتية والحيوانية مصدراً، ثم اسأل: «ما الفرق بين الخلية النباتية والحيوانية؟» | الإجابة وفيها أرقام الإحالة إلى المصدر |
+| 2 | `copilot-chat.png` | `content/skill-05/raw/shots/` | في copilot.microsoft.com اكتب: «اقترح ثلاثة أسئلة قصيرة لقياس فهم طلاب الصف السابع للخلية، مع الإجابة المتوقعة» | الأمر والإجابة كاملة، دون نوافذ منبثقة |
+| 3 | `powerpoint-copilot.png` | `content/skill-05/raw/shots/` | افتح PowerPoint على الويب، ثم افتح Copilot | لوحة Copilot وخيار «إنشاء عرض تقديمي من ملف» |
+| 4 | `reading-coach.png` | `content/skill-05/raw/shots/` | افتح Reading Coach أو Reading Progress | الشاشة الرئيسية للأداة |
+| 5 | `consensus-results.png` | `content/skill-06/raw/shots/` | في consensus.app ابحث: «Does flipped learning improve middle school science achievement?» | الملخص، ومقياس الاتفاق، وقائمة الدراسات |
+| 6 | `elicit-table.png` | `content/skill-06/raw/shots/` | في elicit.com ابحث بالسؤال نفسه | جدول الدراسات بأعمدته |
+| 7 | `gemini-skills-manage.png` | `content/skill-13/raw/shots/` | في gemini.google.com افتح القائمة الجانبية، ثم «إدارة Gem» (أو «المهارات») | رسالة «أصبحت Gems الآن مهارات» والمهارات الجاهزة من Google، مع إخفاء «Gems التي أنشأتها» |
+| 8 | `claude-skills-list.png` | `content/skill-13/raw/shots/` | في claude.ai افتح Settings، ثم Capabilities أو Skills | قائمة Skills النشطة |
+| 9 | `openai-dots.png` | `content/skill-13/raw/shots/` | افتح ميزة Dots في chatgpt.com إن كانت متاحة | إعداد Dot لمهمة «ورقة عمل العلوم» |
 
 ## الجزء الثاني: إعادة تصوير اللقطات الحالية بدقة أعلى
 اللقطات الحالية عرضها نحو 600 بكسل، فيظهر النص فيها غير حاد. أعد تصويرها بالمواصفات أعلاه، بالأسماء نفسها، وفي مجلداتها نفسها، فتحلّ النسخ الجديدة محل القديمة. ابدأ بالأهم:
