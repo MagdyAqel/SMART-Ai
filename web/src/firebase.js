@@ -12,7 +12,7 @@ import { connectStorageEmulator, getStorage } from "firebase/storage";
 const env = import.meta.env;
 // الخطة المجانية: لا دوال سحابية ولا تخزين ملفات، فتُخفى ميزات الذكاء الاصطناعي والرفع.
 export const FREE_PLAN = env.VITE_FREE_PLAN === "true";
-const useEmulators = env.VITE_USE_EMULATORS === "true";
+export const useEmulators = env.VITE_USE_EMULATORS === "true";
 
 const config = {
   apiKey: env.VITE_FIREBASE_API_KEY || (useEmulators ? "demo-key" : undefined),

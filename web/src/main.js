@@ -4,6 +4,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { FREE_PLAN, auth, isConfigured } from "./firebase.js";
 import { dueReviews } from "./engine.js";
 import { loadProgress, state } from "./store.js";
+import { startActivity, stopActivity } from "./activity.js";
 import { errorMessage, esc, go } from "./ui.js";
 import * as authView from "./views/auth.js";
 import * as dashboard from "./views/dashboard.js";
@@ -20,6 +21,9 @@ import * as task from "./views/task.js";
 import * as performance from "./views/performance.js";
 import * as posttest from "./views/posttest.js";
 import * as themes from "./views/themes.js";
+import * as changePassword from "./views/change-password.js";
+import * as adminUsers from "./views/admin-users.js";
+import * as adminReports from "./views/admin-reports.js";
 
 const routes = [
   { re: /^\/$/, view: dashboard, nav: "home" },
@@ -35,6 +39,8 @@ const routes = [
   { re: /^\/posttest\/([\w-]+)$/, view: posttest, nav: "courses", keys: ["courseId"] },
   { re: /^\/themes$/, view: themes, nav: null },
   { re: /^\/admin$/, view: admin, nav: "admin", admin: true },
+  { re: /^\/admin\/users$/, view: adminUsers, nav: "admin", admin: true },
+  { re: /^\/admin\/reports$/, view: adminReports, nav: "admin", admin: true },
   { re: /^\/admin\/course\/([\w-]+)$/, view: adminCourse, nav: "admin", admin: true, keys: ["courseId"] },
 ];
 
@@ -143,6 +149,7 @@ if (!isConfigured) {
     state.quiz = null;
     state.settings = null;
     if (!user) {
+      stopActivity();
       state.isAdmin = false;
       cleanup = await authView.render(root);
       return;
@@ -155,10 +162,22 @@ if (!isConfigured) {
       // قالب العرض المحفوظ في الحساب يتبع المتدرب على كل أجهزته
       if (state.progress.theme) applyTheme(state.progress.theme);
     } catch (err) {
-      root.innerHTML = `<main class="center"><div class="card error">تعذّر تحميل حسابك: ${esc(errorMessage(err))}</div></main>`;
+      root.innerHTML = `<main class="center"><div class="card error narrow">${
+        err?.code === "app/not-invited" ? "" : "تعذّر تحميل حسابك: "
+      }${esc(errorMessage(err))}<p><button class="btn" id="out">خروج</button></p></div></main>`;
+      root.querySelector("#out").addEventListener("click", () => signOut(auth));
       return;
     }
-    shell();
-    route();
+    startActivity(user.uid);
+    const enter = () => {
+      shell();
+      route();
+    };
+    // حساب أنشأه المشرف بكلمة مرور مؤقتة: يغيّرها أولاً
+    if (state.progress.mustChangePassword && user.providerData.some((p) => p.providerId === "password")) {
+      changePassword.render(root, enter);
+      return;
+    }
+    enter();
   });
 }

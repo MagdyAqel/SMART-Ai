@@ -30,13 +30,35 @@ export const state = {
 export async function loadProgress(user) {
   const ref = doc(db, "users", user.uid);
   const snap = await getDoc(ref);
+  const email = (user.email || "").toLowerCase();
   if (snap.exists()) {
     state.progress = { ...emptyProgress(), ...snap.data() };
+    // البريد يُحفظ في الملف ليظهر في تقارير المشرف وملف Excel
+    if (email && state.progress.email !== email) {
+      state.progress.email = email;
+      setDoc(ref, { email }, { merge: true }).catch(() => {});
+    }
   } else {
+    const auth = (await loadPublicSettings()).auth;
+    // التسجيل الذاتي مغلق: الحساب لم ينشئه المشرف، فلا يُنشأ له ملف
+    if (auth.signup === false) throw { code: "app/not-invited" };
     state.progress = emptyProgress(state.pendingName || user.displayName || user.email?.split("@")[0] || "متدرب");
+    state.progress.email = email;
     await setDoc(ref, { ...state.progress, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
   }
   return state.progress;
+}
+
+/** إعدادات عامة يقرؤها حتى غير المسجّل (طرق الدخول المتاحة في صفحة الدخول). */
+export const AUTH_DEFAULTS = { email: true, google: true, signup: true };
+export async function loadPublicSettings() {
+  try {
+    const snap = await getDoc(doc(db, "settings", "public"));
+    const d = snap.exists() ? snap.data() : {};
+    return { ...d, auth: { ...AUTH_DEFAULTS, ...(d.auth || {}) } };
+  } catch {
+    return { auth: { ...AUTH_DEFAULTS } };
+  }
 }
 
 let saveChain = Promise.resolve();
@@ -46,7 +68,8 @@ export function saveProgress(progress) {
   window.dispatchEvent(new Event("progress-changed"));
   const uid = state.user.uid;
   // tasks وpostTests يكتبها الخادم فقط، فلا نرسلها من المتصفح.
-  const { createdAt, updatedAt, tasks, postTests, ...rest } = progress;
+  // stats يكتبها قياس النشاط بزيادات، وmustChangePassword تُغيَّر عند تغيير كلمة المرور فقط
+  const { createdAt, updatedAt, tasks, postTests, stats, mustChangePassword, ...rest } = progress;
   // في الخطة المجانية يحفظ المتصفح نتيجة الاختبار البعدي (لا خادم يصحّحها)
   const data = FREE_PLAN && postTests ? { ...rest, postTests } : rest;
   saveChain = saveChain

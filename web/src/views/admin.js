@@ -9,6 +9,10 @@ export async function render(el) {
   const [courses, settings] = await Promise.all([loadCourses(true), loadSettings(true)]);
   el.innerHTML = `
     <h1 class="page-title">🛠️ لوحة التحكم</h1>
+    <nav class="row wrap admin-links" aria-label="أقسام الإدارة">
+      <a class="btn primary" href="#/admin/users">👥 المستخدمون وخيارات الدخول</a>
+      <a class="btn" href="#/admin/reports">📊 التقارير</a>
+    </nav>
     <form class="card form" id="settings-form">
       <h2>⚙️ الانتقال بين المهارات</h2>
       <div class="grid-2 tight">

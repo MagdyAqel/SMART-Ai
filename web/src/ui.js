@@ -37,6 +37,9 @@ export function errorMessage(err) {
     "auth/network-request-failed": "تعذّر الاتصال بالشبكة.",
     "functions/deadline-exceeded": "استغرق الطلب وقتاً أطول من المتوقع، حاول مرة أخرى.",
     "permission-denied": "ليست لديك صلاحية لهذه العملية.",
+    "app/not-invited": "هذا الحساب غير مسجّل في المنصة. التسجيل يتم عن طريق المشرف؛ تواصل معه ليضيفك.",
+    "auth/requires-recent-login": "لأمان حسابك، سجّل الدخول من جديد ثم غيّر كلمة المرور.",
+    "auth/operation-not-allowed": "طريقة الدخول هذه غير مفعّلة في إعدادات Firebase.",
   };
   if (map[code]) return map[code];
   // أخطاء الدوال السحابية تحمل رسائل عربية جاهزة من الخادم.

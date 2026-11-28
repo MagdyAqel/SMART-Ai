@@ -7,11 +7,13 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { FREE_PLAN, auth } from "../firebase.js";
-import { state } from "../store.js";
+import { loadPublicSettings, state } from "../store.js";
 import { errorMessage, toast } from "../ui.js";
 
 export async function render(root) {
   let mode = "signin";
+  // طرق الدخول التي فعّلها المشرف من لوحة التحكم
+  const { auth: opts } = await loadPublicSettings();
   root.innerHTML = `
   <main class="auth">
     <section class="auth-hero">
@@ -29,11 +31,12 @@ export async function render(root) {
       </ul>
     </section>
     <section class="card auth-card">
-      <div class="tabs" role="tablist">
+      <div class="tabs" role="tablist" ${opts.signup && opts.email ? "" : "hidden"}>
         <button role="tab" data-mode="signin" aria-selected="true">تسجيل الدخول</button>
         <button role="tab" data-mode="signup" aria-selected="false">حساب جديد</button>
       </div>
-      <form id="auth-form" novalidate>
+      ${opts.signup ? "" : `<p class="muted small">الحسابات ينشئها مشرف المنصة. إن لم يكن لديك حساب فتواصل معه.</p>`}
+      <form id="auth-form" novalidate ${opts.email ? "" : "hidden"}>
         <label class="field signup-only" hidden>الاسم
           <input name="name" autocomplete="name" maxlength="60" />
         </label>
@@ -46,9 +49,10 @@ export async function render(root) {
         <p class="form-error" role="alert"></p>
         <button class="btn primary block" type="submit">دخول</button>
       </form>
-      <button class="link" id="reset">نسيت كلمة المرور؟</button>
-      <div class="divider"><span>أو</span></div>
-      <button class="btn block" id="google">المتابعة بحساب Google</button>
+      <button class="link" id="reset" ${opts.email ? "" : "hidden"}>نسيت كلمة المرور؟</button>
+      <div class="divider" ${opts.email && opts.google ? "" : "hidden"}><span>أو</span></div>
+      <button class="btn block" id="google" ${opts.google ? "" : "hidden"}>المتابعة بحساب Google</button>
+      ${opts.email || opts.google ? "" : `<p class="form-error">الدخول متوقف مؤقتاً. تواصل مع مشرف المنصة.</p>`}
     </section>
   </main>`;
 
