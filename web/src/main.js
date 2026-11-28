@@ -52,6 +52,14 @@ const root = document.getElementById("app");
 let cleanup = null;
 let currentNav = null;
 window.addEventListener("progress-changed", () => renderNav(currentNav));
+// وصلت نسخة أحدث من المهارات من الخادم: نعيد عرض صفحات التصفّح فقط (لا نقطع درساً أو اختباراً جارياً)
+window.addEventListener("courses-changed", () => {
+  const path = location.hash.slice(1).split("?")[0] || "/";
+  const browsing = path === "/" || path === "/courses" || path.startsWith("/course/");
+  // صفحة الدرس: نحدّثها (مثلاً فيديو أُعيد إنتاجه) ما لم يبدأ المتدرب المشاهدة
+  const idleLesson = path.startsWith("/lesson/") && ![...document.querySelectorAll("video")].some((v) => v.currentTime > 0);
+  if (browsing || idleLesson) route();
+});
 
 function shell() {
   root.innerHTML = `
@@ -116,6 +124,11 @@ function notConfigured() {
 }
 
 applyTheme(savedThemeId());
+
+// تطبيق قابل للتثبيت: عامل الخدمة يحفظ الواجهة والصور على الجهاز (في النسخة المنشورة فقط)
+if ("serviceWorker" in navigator && import.meta.env.PROD) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));
+}
 
 if (!isConfigured) {
   notConfigured();

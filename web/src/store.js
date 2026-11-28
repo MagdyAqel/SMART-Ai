@@ -5,6 +5,8 @@ import {
   doc,
   getDoc,
   getDocs,
+  getDocsFromCache,
+  getDocsFromServer,
   limit,
   orderBy,
   query,
@@ -70,10 +72,35 @@ export function logAttempt(attempt) {
   }).catch((err) => console.error("تعذّر حفظ المحاولة", err));
 }
 
+const coursesQuery = () => query(collection(db, "courses"), orderBy("order"));
+const toCourses = (snap) => snap.docs.map((d) => ({ ...d.data(), id: d.id }));
+let refreshing = null;
+/** يحدّث المهارات من الخادم في الخلفية، ويُعلم الواجهة إن تغيّرت. */
+function refreshCourses() {
+  refreshing ||= getDocsFromServer(coursesQuery())
+    .then((snap) => {
+      const fresh = toCourses(snap);
+      const changed = JSON.stringify(fresh) !== JSON.stringify(state.courses);
+      state.courses = fresh;
+      if (changed) window.dispatchEvent(new Event("courses-changed"));
+    })
+    .catch(() => {}) // دون اتصال: تبقى النسخة المحفوظة
+    .finally(() => (refreshing = null));
+  return refreshing;
+}
+
 export async function loadCourses(force = false) {
   if (state.courses && !force) return state.courses;
-  const snap = await getDocs(query(collection(db, "courses"), orderBy("order")));
-  state.courses = snap.docs.map((d) => ({ ...d.data(), id: d.id }));
+  if (!force) {
+    // النسخة المحفوظة على الجهاز أولاً (فورية)، ثم التحديث من الخادم في الخلفية
+    const cached = await getDocsFromCache(coursesQuery()).catch(() => null);
+    if (cached && !cached.empty) {
+      state.courses = toCourses(cached);
+      refreshCourses();
+      return state.courses;
+    }
+  }
+  state.courses = toCourses(await getDocs(coursesQuery()));
   return state.courses;
 }
 

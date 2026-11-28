@@ -1,6 +1,11 @@
 import { initializeApp } from "firebase/app";
 import { connectAuthEmulator, getAuth } from "firebase/auth";
-import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
+import {
+  connectFirestoreEmulator,
+  initializeFirestore,
+  persistentLocalCache,
+  persistentMultipleTabManager,
+} from "firebase/firestore";
 import { connectFunctionsEmulator, getFunctions, httpsCallable } from "firebase/functions";
 import { connectStorageEmulator, getStorage } from "firebase/storage";
 
@@ -22,7 +27,10 @@ export const isConfigured = Boolean(config.apiKey && config.projectId);
 
 export const app = isConfigured ? initializeApp(config) : null;
 export const auth = app ? getAuth(app) : null;
-export const db = app ? getFirestore(app) : null;
+// حفظ محلي للبيانات (IndexedDB): تظهر المهارات فوراً عند الفتح، وتعمل الصفحات المفتوحة سابقاً دون إنترنت
+export const db = app
+  ? initializeFirestore(app, { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }) })
+  : null;
 export const functions = app ? getFunctions(app, env.VITE_FUNCTIONS_REGION || "us-central1") : null;
 export const storage = app && !FREE_PLAN ? getStorage(app) : null;
 
