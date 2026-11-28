@@ -8,6 +8,7 @@
 //
 // مع المحاكي:   FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node scripts/seed.js --project demo-smart-ai
 // مع الإنتاج:   node scripts/seed.js --project <id>   (بعد gcloud auth application-default login)
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { initializeApp } from "firebase-admin/app";
 import { FieldValue, getFirestore } from "firebase-admin/firestore";
@@ -24,21 +25,38 @@ const db = getFirestore();
 const CONTENT = new URL("../../content/", import.meta.url);
 const PUBLIC = new URL("../../web/public/", import.meta.url);
 // الوسائط التي لم تُنتج بعد لا تُعرض (تظهر للمتدرب «سيُضاف قريباً»)
-const hasFile = (url) => typeof url === "string" && url.startsWith("/") && existsSync(new URL("." + url, PUBLIC));
+const bare = (url) => String(url || "").split("?")[0];
+const hasFile = (url) => typeof url === "string" && url.startsWith("/") && existsSync(new URL("." + bare(url), PUBLIC));
+// رقم إصدار من محتوى الملف: إذا أُعيد إنتاج فيديو تغيّر رابطه، فلا يعرض المتصفح نسخة قديمة محفوظة
+const hashes = new Map();
+const ver = (url) => {
+  if (!hasFile(url)) return url;
+  const path = bare(url);
+  if (!hashes.has(path)) hashes.set(path, createHash("md5").update(readFileSync(new URL("." + path, PUBLIC))).digest("hex").slice(0, 8));
+  return `${path}?v=${hashes.get(path)}`;
+};
+// الملف المحلي نفسه بإصدار مختلف (نحدّثه)، لا رابط وضعه المشرف بنفسه (نتركه)
+const sameFile = (a, b) => String(a || "").startsWith("/") && bare(a) === bare(b);
+const versioned = (m) => ({
+  ...m,
+  url: ver(m.url),
+  ...(m.poster !== undefined ? { poster: hasFile(m.poster) ? ver(m.poster) : "" } : {}),
+  ...(m.captions ? { captions: hasFile(m.captions) ? ver(m.captions) : "" } : {}),
+});
 function availableMedia(skill) {
-  const vid = (v) => (v && hasFile(v.url) ? { ...v, poster: hasFile(v.poster) ? v.poster : "" } : null);
+  const vid = (v) => (v && hasFile(v.url) ? versioned({ poster: "", ...v }) : null);
   const video = vid(skill.video);
   const tutorial = vid(skill.tutorial);
   const videos = (skill.videos || []).map(vid).filter(Boolean);
-  const infographic = skill.infographic && hasFile(skill.infographic.url) ? skill.infographic : null;
-  const examples = (skill.examples || []).filter((x) => hasFile(x.url));
-  const cover = hasFile(skill.cover) ? skill.cover : "";
+  const infographic = skill.infographic && hasFile(skill.infographic.url) ? versioned(skill.infographic) : null;
+  const examples = (skill.examples || []).filter((x) => hasFile(x.url)).map(versioned);
+  const cover = hasFile(skill.cover) ? ver(skill.cover) : "";
   // وسائط الدروس: نُخفي ملفات الموقع التي لم تُنتج بعد، ونُبقي الروابط الخارجية كما هي
   const lessons = (skill.lessons || []).map((L) => ({
     ...L,
     media: (L.media || [])
       .filter((m) => !String(m.url || "").startsWith("/") || hasFile(m.url))
-      .map((m) => (m.poster && !hasFile(m.poster) ? { ...m, poster: "" } : m)),
+      .map((m) => (String(m.url || "").startsWith("/") ? versioned(m) : m)),
   }));
   return { video, tutorial, videos, infographic, examples, cover, lessons };
 }
@@ -60,10 +78,13 @@ for (const entry of catalog) {
     if (hasContent) {
       const media = availableMedia(JSON.parse(readFileSync(file, "utf8")));
       const patch = {};
-      if (!prev.video?.url && media.video) patch.video = media.video;
-      if (!prev.tutorial?.url && media.tutorial) patch.tutorial = media.tutorial;
-      if ((prev.videos || []).length < media.videos.length) patch.videos = media.videos;
-      if (!prev.infographic?.url && media.infographic) patch.infographic = media.infographic;
+      // جديد، أو الملف نفسه بإصدار أحدث
+      const fresh = (old, cur) => cur && (!old?.url || (sameFile(old.url, cur.url) && JSON.stringify(old) !== JSON.stringify(cur)));
+      if (fresh(prev.video, media.video)) patch.video = media.video;
+      if (fresh(prev.tutorial, media.tutorial)) patch.tutorial = media.tutorial;
+      const pv = prev.videos || [];
+      if (pv.length < media.videos.length || pv.some((v, i) => fresh(v, media.videos[i]))) patch.videos = media.videos;
+      if (fresh(prev.infographic, media.infographic)) patch.infographic = media.infographic;
       if ((prev.examples || []).length < media.examples.length) patch.examples = media.examples;
       if (!prev.cover && media.cover) patch.cover = media.cover;
       // فيديوهات الدروس الجديدة: تُضاف إلى وسائط الدرس المطابق دون المساس بنصه أو أسئلته
@@ -71,11 +92,14 @@ for (const entry of catalog) {
         const repo = new Map(media.lessons.map((L) => [L.id, L.media || []]));
         let changed = false;
         const lessons = prev.lessons.map((L) => {
-          const have = new Set((L.media || []).map((m) => m.url));
-          const add = (repo.get(L.id) || []).filter((m) => !have.has(m.url));
-          if (!add.length) return L;
+          const cur = repo.get(L.id) || [];
+          const old = L.media || [];
+          // نحدّث إصدار الملفات الموجودة، ونضيف الجديدة في البداية
+          const updated = old.map((m) => cur.find((c) => sameFile(m.url, c.url)) || m);
+          const add = cur.filter((c) => !old.some((m) => sameFile(m.url, c.url) || m.url === c.url));
+          if (!add.length && JSON.stringify(updated) === JSON.stringify(old)) return L;
           changed = true;
-          return { ...L, media: [...add, ...(L.media || [])] };
+          return { ...L, media: [...add, ...updated] };
         });
         if (changed) patch.lessons = lessons;
       }
