@@ -112,10 +112,10 @@
 
 | الملف | الخطوات | ما يجب أن يظهر | الحالة |
 |---|---|---|---|
-| `copilot-chat.png` | copilot.microsoft.com ← «اقترح ثلاثة أسئلة قصيرة لقياس فهم طلاب الصف السابع للخلية، مع الإجابة المتوقعة» | الأمر والإجابة كاملة، دون النافذة المنبثقة | مطلوب |
-| `powerpoint-copilot.png` | PowerPoint على الويب ← Copilot ← «إنشاء عرض تقديمي من ملف» | لوحة Copilot وخيار الإنشاء من ملف | مطلوب |
-| `reading-coach.png` | Reading Coach أو Reading Progress (إن كان متاحاً) | الشاشة الرئيسية للأداة | مطلوب |
-| `ms-learn.png` | learn.microsoft.com ← ابحث: AI for educators | صفحة المسار: عنوانه ووحداته ومدته | مطلوب |
+| `copilot-chat.png` | copilot.microsoft.com ← «اقترح ثلاثة أسئلة قصيرة لقياس فهم طلاب الصف السابع للخلية، مع الإجابة المتوقعة» | الأمر والإجابة كاملة، دون النافذة المنبثقة | مُلغى: التركيز على Microsoft Learn |
+| `powerpoint-copilot.png` | PowerPoint على الويب ← Copilot ← «إنشاء عرض تقديمي من ملف» | لوحة Copilot وخيار الإنشاء من ملف | مُلغى: التركيز على Microsoft Learn |
+| `reading-coach.png` | Reading Coach أو Reading Progress (إن كان متاحاً) | الشاشة الرئيسية للأداة | مُلغى: التركيز على Microsoft Learn |
+| `ms-learn-1-search.png` و`-2-path` و`-3-module` | learn.microsoft.com ← ابحث: AI for educators ← المسار ← أول وحدة | نتائج البحث، وصفحة المسار، وصفحة الوحدة | مطلوب |
 
 ### المهارة الظاهرة 7 «البحث العلمي» ← `content/skill-06/raw/shots/`
 

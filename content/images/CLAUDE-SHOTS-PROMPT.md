@@ -23,9 +23,9 @@
 | # | الملف | المجلد | الخطوات | ما يجب أن يظهر |
 |---|---|---|---|---|
 | 1 | `notebook-sources.png` | `content/skill-04/raw/shots/` | في Gemini Notebook أنشئ دفتراً جديداً، والصق نصاً قصيراً عن الخلية النباتية والحيوانية مصدراً، ثم اسأل: «ما الفرق بين الخلية النباتية والحيوانية؟» | الإجابة وفيها أرقام الإحالة إلى المصدر |
-| 2 | `copilot-chat.png` | `content/skill-05/raw/shots/` | في copilot.microsoft.com اكتب: «اقترح ثلاثة أسئلة قصيرة لقياس فهم طلاب الصف السابع للخلية، مع الإجابة المتوقعة» | الأمر والإجابة كاملة، دون نوافذ منبثقة |
-| 3 | `powerpoint-copilot.png` | `content/skill-05/raw/shots/` | افتح PowerPoint على الويب، ثم افتح Copilot | لوحة Copilot وخيار «إنشاء عرض تقديمي من ملف» |
-| 4 | `reading-coach.png` | `content/skill-05/raw/shots/` | افتح Reading Coach أو Reading Progress | الشاشة الرئيسية للأداة |
+| 2 | `ms-learn-1-search.png` | `content/skill-05/raw/shots/` | في learn.microsoft.com/ar-sa/training اكتب في البحث: «AI for educators» | نتائج البحث ومسارات التعلّم الظاهرة |
+| 3 | `ms-learn-2-path.png` | `content/skill-05/raw/shots/` | افتح مسار «Microsoft Copilot for Education» أو «AI for educators» | صفحة المسار: عنوانه، ووحداته، ومدته، وزر «بدء» |
+| 4 | `ms-learn-3-module.png` | `content/skill-05/raw/shots/` | افتح أول وحدة في المسار | صفحة الوحدة: الوحدات الفرعية وزمن كل منها، وشريط التقدّم إن ظهر |
 | 5 | `consensus-results.png` | `content/skill-06/raw/shots/` | في consensus.app ابحث: «Does flipped learning improve middle school science achievement?» | الملخص، ومقياس الاتفاق، وقائمة الدراسات |
 | 6 | `elicit-table.png` | `content/skill-06/raw/shots/` | في elicit.com ابحث بالسؤال نفسه | جدول الدراسات بأعمدته |
 | 7 | `gemini-skills-manage.png` | `content/skill-13/raw/shots/` | في gemini.google.com افتح القائمة الجانبية، ثم «إدارة Gem» (أو «المهارات») | رسالة «أصبحت Gems الآن مهارات» والمهارات الجاهزة من Google، مع إخفاء «Gems التي أنشأتها» |
