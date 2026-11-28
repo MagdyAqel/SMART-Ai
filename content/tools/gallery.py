@@ -38,8 +38,26 @@ def webp(sid, name):
     return f"/media/{sid}/shots/{base}", int(w), int(h)
 
 
+# دروس بلا فيديو درس من lessons.py، لها لقطات حقيقية تُعرض في صفحة الدرس فقط
+EXTRA = {
+    "ms-learn": ("skill-05", [
+        ("ms-learn-1-search.png", "ابحث في Microsoft Learn عن «AI for educators»", "البحث"),
+        ("ms-learn-2-path.png", "صفحة المسار: الوحدات، والمدة، وزر «بدء»", "المسار"),
+        ("ms-learn-3-module.png", "داخل الوحدة: الدروس الفرعية وزمن كل منها", "الوحدة"),
+    ]),
+    "finding-sources": ("skill-06", [
+        ("consensus-results.png", "Consensus: الخلاصة، ومقياس الاتفاق بين الدراسات، وقائمة المراجع", "Consensus"),
+    ]),
+}
+
+
 def build(key):
-    sid, spec = SPECS[key]
+    if key in EXTRA:
+        sid, items = EXTRA[key]
+        scenes = [{"title": t, "shots": [{"shot": f, "caption": c}]} for f, c, t in items]
+        spec = {"scenes": scenes}
+    else:
+        sid, spec = SPECS[key]
     lesson_id = key.split("@")[0]
     steps = []
     for sc in spec["scenes"]:
@@ -64,5 +82,5 @@ def build(key):
 
 
 if __name__ == "__main__":
-    for k in sys.argv[1:] or list(SPECS):
+    for k in sys.argv[1:] or [*SPECS, *EXTRA]:
         build(k)

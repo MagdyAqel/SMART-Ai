@@ -42,8 +42,8 @@
       "id": "s3",
       "type": "cards",
       "icon": "layers",
-      "text": "وتبدأ رحلتك بثلاث أدوات: مساعد مخصص في Gemini بتعليماتك وملفاتك. وSkills في Claude تعلّمه طريقتك في العمل. وDots من OpenAI، وكلاء استباقيون يعملون في الخلفية.",
-      "title": "ثلاث أدوات لرحلة الوكيل",
+      "text": "وتبدأ رحلتك بأداتين: مساعد مخصص في Gemini بتعليماتك وملفاتك. وSkills في Claude تعلّمه طريقتك في العمل.",
+      "title": "أداتان لرحلة الوكيل",
       "cards": [
         {
           "title": "Gemini المخصص",
@@ -58,13 +58,6 @@
           "icon": "file-code-2",
           "at": "وSkills في Claude",
           "tone": "amber"
-        },
-        {
-          "title": "Dots",
-          "text": "وكيل استباقي في الخلفية",
-          "icon": "radar",
-          "at": "وDots من OpenAI",
-          "tone": ""
         }
       ]
     },

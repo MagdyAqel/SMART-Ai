@@ -158,7 +158,16 @@
         }
       ],
       "tasks": [],
-      "skill": "skill-06-finding-sources"
+      "skill": "skill-06-finding-sources",
+      "steps": [
+        {
+          "url": "/media/skill-06/shots/consensus-results.webp",
+          "width": 1310,
+          "height": 581,
+          "title": "Consensus",
+          "caption": "Consensus: الخلاصة، ومقياس الاتفاق بين الدراسات، وقائمة المراجع"
+        }
+      ]
     },
     {
       "id": "verification-integrity",

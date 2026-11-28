@@ -167,8 +167,8 @@
         },
         {
           "url": "/media/skill-03/shots/gemini-image-result.webp",
-          "width": 586,
-          "height": 586,
+          "width": 1310,
+          "height": 581,
           "title": "من المسودة إلى الصورة المناسبة",
           "caption": "الصورة الناتجة… ثم التحسين بالحوار"
         },
@@ -188,22 +188,22 @@
         },
         {
           "url": "/media/skill-03/shots/chatgpt-card-1-prompt.webp",
-          "width": 602,
-          "height": 426,
+          "width": 1048,
+          "height": 465,
           "title": "بطاقة تربوية بالأركان الخمسة",
           "caption": "الأمر: دور، وسياق، ومهمة، وصيغة، وقيود"
         },
         {
           "url": "/media/skill-03/shots/chatgpt-card-2-result.webp",
-          "width": 602,
-          "height": 426,
+          "width": 1048,
+          "height": 465,
           "title": "بطاقة تربوية بالأركان الخمسة",
           "caption": "البطاقة الناتجة"
         },
         {
           "url": "/media/skill-03/shots/chatgpt-card-3-edit.webp",
-          "width": 590,
-          "height": 438,
+          "width": 1048,
+          "height": 465,
           "title": "بطاقة تربوية بالأركان الخمسة",
           "caption": "طلب التحسين: صحّح الكلمات وكبّر الخط"
         }
@@ -391,15 +391,15 @@
         },
         {
           "url": "/media/skill-03/shots/storybook-2-prompt.webp",
-          "width": 586,
-          "height": 586,
+          "width": 1310,
+          "height": 581,
           "title": "قصة «رحلة نُقطة»",
           "caption": "اكتب أمر القصة كاملاً"
         },
         {
           "url": "/media/skill-03/shots/storybook-3-result.webp",
-          "width": 586,
-          "height": 586,
+          "width": 1310,
+          "height": 581,
           "title": "قصة «رحلة نُقطة»",
           "caption": "القصة الناتجة: صفحات ورسوم وصوت"
         }
@@ -509,15 +509,15 @@
         },
         {
           "url": "/media/skill-03/shots/music-2-prompt.webp",
-          "width": 602,
-          "height": 426,
+          "width": 1310,
+          "height": 581,
           "title": "أنشودة جدول السبعة",
           "caption": "اكتب وصف الأنشودة في مربع الأمر"
         },
         {
           "url": "/media/skill-03/shots/music-3-result.webp",
-          "width": 602,
-          "height": 426,
+          "width": 1310,
+          "height": 581,
           "title": "أنشودة جدول السبعة",
           "caption": "المقطع الناتج: استمع، ثم عدّل إن لزم"
         }

@@ -167,7 +167,16 @@
         }
       ],
       "tasks": [],
-      "skill": "skill-04-notebooklm"
+      "skill": "skill-04-notebooklm",
+      "steps": [
+        {
+          "url": "/media/skill-04/shots/notebook-sources.webp",
+          "width": 1310,
+          "height": 581,
+          "title": "اسأل فصل الخلية",
+          "caption": "الإجابة مع أرقام تحيل إلى المصدر"
+        }
+      ]
     },
     {
       "id": "forms-classroom",

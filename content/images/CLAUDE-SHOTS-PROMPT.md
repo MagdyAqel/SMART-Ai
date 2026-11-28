@@ -30,7 +30,6 @@
 | 6 | `elicit-table.png` | `content/skill-06/raw/shots/` | في elicit.com ابحث بالسؤال نفسه | جدول الدراسات بأعمدته |
 | 7 | `gemini-skills-manage.png` | `content/skill-13/raw/shots/` | في gemini.google.com افتح القائمة الجانبية، ثم «إدارة Gem» (أو «المهارات») | رسالة «أصبحت Gems الآن مهارات» والمهارات الجاهزة من Google، مع إخفاء «Gems التي أنشأتها» |
 | 8 | `claude-skills-list.png` | `content/skill-13/raw/shots/` | في claude.ai افتح Settings، ثم Capabilities أو Skills | قائمة Skills النشطة |
-| 9 | `openai-dots.png` | `content/skill-13/raw/shots/` | افتح ميزة Dots في chatgpt.com إن كانت متاحة | إعداد Dot لمهمة «ورقة عمل العلوم» |
 
 ## الجزء الثاني: إعادة تصوير اللقطات الحالية بدقة أعلى
 اللقطات الحالية عرضها نحو 600 بكسل، فيظهر النص فيها غير حاد. أعد تصويرها بالمواصفات أعلاه، بالأسماء نفسها، وفي مجلداتها نفسها، فتحلّ النسخ الجديدة محل القديمة. ابدأ بالأهم:

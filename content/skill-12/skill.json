@@ -120,8 +120,8 @@
         },
         {
           "url": "/media/skill-12/shots/notebooklm-2-add-sources.webp",
-          "width": 602,
-          "height": 412,
+          "width": 1310,
+          "height": 581,
           "title": "مصادر الدفتر",
           "caption": "اختر نوع المصدر: ملفات، مواقع، يوتيوب، Drive، نص منسوخ"
         },
@@ -134,8 +134,8 @@
         },
         {
           "url": "/media/skill-12/shots/notebook-sources.webp",
-          "width": 602,
-          "height": 412,
+          "width": 1310,
+          "height": 581,
           "title": "إجابة بإحالات",
           "caption": "الإجابة مع أرقام تحيل إلى المصدر"
         }
@@ -206,8 +206,8 @@
       "steps": [
         {
           "url": "/media/skill-12/shots/notebooklm-11-audio-result.webp",
-          "width": 602,
-          "height": 412,
+          "width": 1310,
+          "height": 581,
           "title": "ملخصان من مصادرك",
           "caption": "الملخص الصوتي الناتج ومشغّله"
         },
@@ -220,8 +220,8 @@
         },
         {
           "url": "/media/skill-12/shots/notebooklm-8-audio-settings.webp",
-          "width": 602,
-          "height": 412,
+          "width": 1310,
+          "height": 581,
           "title": "تخصيص الملخص الصوتي",
           "caption": "نافذة تخصيص الملخص الصوتي"
         }
@@ -279,8 +279,8 @@
       "steps": [
         {
           "url": "/media/skill-12/shots/notebooklm-6-mindmap.webp",
-          "width": 602,
-          "height": 412,
+          "width": 1310,
+          "height": 581,
           "title": "خريطة دورة الماء",
           "caption": "الخريطة الذهنية التفاعلية: دورة الماء"
         }
@@ -388,22 +388,22 @@
       "steps": [
         {
           "url": "/media/skill-12/shots/notebooklm-5-studio.webp",
-          "width": 602,
-          "height": 412,
+          "width": 1310,
+          "height": 581,
           "title": "اختبر نفسك",
           "caption": "لوحة Studio: بطاقات تعليمية واختبار"
         },
         {
           "url": "/media/skill-12/shots/notebooklm-7-quiz-settings.webp",
-          "width": 602,
-          "height": 412,
+          "width": 1310,
+          "height": 581,
           "title": "اختبر نفسك",
           "caption": "إعداد الاختبار: العدد، والصعوبة، والنوع، والموضوع"
         },
         {
           "url": "/media/skill-12/shots/notebooklm-9-quiz.webp",
-          "width": 602,
-          "height": 412,
+          "width": 1310,
+          "height": 581,
           "title": "اختبر نفسك",
           "caption": "سؤال من الاختبار مع شرح الإجابة"
         }

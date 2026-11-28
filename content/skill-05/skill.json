@@ -295,6 +295,29 @@
           "poster": "/media/skill-05/mslearn-poster.jpg",
           "captions": "/media/skill-05/mslearn-video.ar.vtt"
         }
+      ],
+      "steps": [
+        {
+          "url": "/media/skill-05/shots/ms-learn-1-search.webp",
+          "width": 1310,
+          "height": 581,
+          "title": "البحث",
+          "caption": "ابحث في Microsoft Learn عن «AI for educators»"
+        },
+        {
+          "url": "/media/skill-05/shots/ms-learn-2-path.webp",
+          "width": 1310,
+          "height": 581,
+          "title": "المسار",
+          "caption": "صفحة المسار: الوحدات، والمدة، وزر «بدء»"
+        },
+        {
+          "url": "/media/skill-05/shots/ms-learn-3-module.webp",
+          "width": 1310,
+          "height": 581,
+          "title": "الوحدة",
+          "caption": "داخل الوحدة: الدروس الفرعية وزمن كل منها"
+        }
       ]
     }
   ],

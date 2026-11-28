@@ -9,19 +9,19 @@ T12 = dict(
     shots={
         "أضف المصادر": {"window": "Gemini Notebook · المصادر", "shots": [
             {"shot": "notebooklm-1-new.png", "caption": "دفتر ملاحظات جديد"},
-            {"shot": "notebooklm-2-add-sources.png", "at": "ونضيف إليه", "focus": {"x": 17, "y": 48, "w": 66, "h": 13},
+            {"shot": "notebooklm-2-add-sources.png", "at": "ونضيف إليه", "focus": {"x": 19, "y": 48, "w": 62, "h": 18},
              "focusAt": "ونضيف إليه", "caption": "إضافة المصادر: ملفات، مواقع، Drive، نص منسوخ"}]},
-        "اسأل المصادر": {"shot": "notebook-sources.png", "focus": {"x": 8, "y": 44, "w": 86, "h": 42}, "focusAt": "فتأتي الإجابة",
+        "اسأل المصادر": {"shot": "notebook-sources.png", "focus": {"x": 30, "y": 39, "w": 41, "h": 36}, "focusAt": "فتأتي الإجابة",
                          "caption": "الإجابة بأرقام تحيل إلى المصدر"},
         "وجّه الملخص الصوتي": {"window": "الاستوديو · الملخص الصوتي", "shots": [
-            {"shot": "notebooklm-8-audio-settings.png", "focus": {"x": 8, "y": 58, "w": 85, "h": 26}, "focusAt": "نكتب: لطلاب",
+            {"shot": "notebooklm-8-audio-settings.png", "focus": {"x": 18, "y": 67, "w": 65, "h": 18}, "focusAt": "نكتب: لطلاب",
              "caption": "تخصيص الملخص الصوتي: التنسيق، واللغة، والمدة، والتركيز"},
             {"shot": "notebooklm-11-audio-result.png", "at": "ونستمع إليه", "caption": "الملخص الصوتي الناتج ومشغّله"}]},
-        "نظّم بالخريطة والتقرير": {"shot": "notebooklm-6-mindmap.png", "focus": {"x": 6, "y": 26, "w": 68, "h": 50},
+        "نظّم بالخريطة والتقرير": {"shot": "notebooklm-6-mindmap.png", "focus": {"x": 30, "y": 32, "w": 40, "h": 42},
                                    "focusAt": "لنرى الوحدة", "caption": "الخريطة الذهنية: اضغط أي فرع"},
         "راجع واختبر نفسك": {"window": "الاستوديو · الاختبار", "shots": [
             {"shot": "notebooklm-7-quiz-settings.png", "caption": "إعداد الاختبار: العدد والصعوبة والموضوع"},
-            {"shot": "notebooklm-9-quiz.png", "at": "وحين نخطئ", "focus": {"x": 22, "y": 22, "w": 71, "h": 28},
+            {"shot": "notebooklm-9-quiz.png", "at": "وحين نخطئ", "focus": {"x": 27, "y": 37, "w": 46, "h": 34},
              "focusAt": "وحين نخطئ", "caption": "سؤال مع شرح الإجابة"}]},
     },
     title="تعلّم وحدة كاملة مع Gemini Notebook",
@@ -130,11 +130,11 @@ T13 = dict(
 M3 = dict(
     shots={
         "اكتب أمر القصة": {"window": "Gemini · Storybook", "shots": [
-            {"shot": "storybook-2-prompt.png", "focus": {"x": 13.5, "y": 82, "w": 73, "h": 15}, "focusAt": "نكتب: قصة",
+            {"shot": "storybook-2-prompt.png", "focus": {"x": 16, "y": 61, "w": 63, "h": 28}, "focusAt": "نكتب: قصة",
              "caption": "أمر القصة في Storybook"},
             {"shot": "storybook-3-result.png", "at": "بلغة فصحى", "caption": "القصة الناتجة: «رحلة نُقطة»"}]},
         "اصنع الأنشودة": {"window": "Gemini · إنشاء موسيقى", "shots": [
-            {"shot": "music-2-prompt.png", "focus": {"x": 10, "y": 55, "w": 80, "h": 33}, "focusAt": "نكتب: أنشودة",
+            {"shot": "music-2-prompt.png", "focus": {"x": 16, "y": 51, "w": 63, "h": 36}, "focusAt": "نكتب: أنشودة",
              "caption": "مثال حقيقي من Gemini: أمر أنشودة بعد اختيار «إنشاء موسيقى»"},
             {"shot": "music-3-result.png", "at": "بهذه الكلمات", "caption": "الأنشودة الناتجة بغلافها وزر التشغيل"}]},
     },
