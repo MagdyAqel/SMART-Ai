@@ -60,7 +60,10 @@ jobs:
         timeout-minutes: 8
         run: |
           # تثبيت ffmpeg بحدّ زمني حتى لا يعلّق النشر إن تأخر مستودع الحزم
-          command -v ffmpeg > /dev/null || timeout 240 sudo apt-get install -y -qq ffmpeg > /dev/null 2>&1 || true
+          if ! command -v ffmpeg > /dev/null; then
+            sudo timeout 240 bash -ec 'apt-get update && apt-get install -y ffmpeg'
+          fi
+          ffmpeg -version
           node content/tools/sync-media.mjs
 
       - name: حفظ مفتاح Claude في خزنة الأسرار
