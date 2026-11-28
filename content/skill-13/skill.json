@@ -172,7 +172,23 @@
         }
       ],
       "tasks": [],
-      "skill": "skill-13-gemini-gems"
+      "skill": "skill-13-gemini-gems",
+      "steps": [
+        {
+          "url": "/media/skill-13/shots/gemini-instructions.webp",
+          "width": 1536,
+          "height": 864,
+          "title": "مساعد معلمي العلوم",
+          "caption": "التعليمات: الدور، والمهمة، والقيود"
+        },
+        {
+          "url": "/media/skill-13/shots/gemini-test.webp",
+          "width": 1162,
+          "height": 863,
+          "title": "تجربة المساعد",
+          "caption": "جرّب على طلب حقيقي، وراجع الناتج"
+        }
+      ]
     },
     {
       "id": "claude-skills",
@@ -235,7 +251,16 @@
         }
       ],
       "tasks": [],
-      "skill": "skill-13-claude-skills"
+      "skill": "skill-13-claude-skills",
+      "steps": [
+        {
+          "url": "/media/skill-13/shots/claude-skill.webp",
+          "width": 1022,
+          "height": 696,
+          "title": "إعدادات Claude",
+          "caption": "القدرات: فعّل «إنشاء الملفات» فالمهارات تحتاجه"
+        }
+      ]
     },
     {
       "id": "openai-dots",

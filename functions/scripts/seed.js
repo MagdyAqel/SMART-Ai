@@ -57,6 +57,8 @@ function availableMedia(skill) {
     media: (L.media || [])
       .filter((m) => !String(m.url || "").startsWith("/") || hasFile(m.url))
       .map((m) => (String(m.url || "").startsWith("/") ? versioned(m) : m)),
+    // خطوات العمل بلقطات حقيقية (تُعرض تحت فيديو الدرس)
+    ...(L.steps ? { steps: L.steps.filter((x) => hasFile(x.url)).map((x) => ({ ...x, url: ver(x.url) })) } : {}),
   }));
   return { video, tutorial, videos, infographic, examples, cover, lessons };
 }
@@ -90,6 +92,7 @@ for (const entry of catalog) {
       // فيديوهات الدروس الجديدة: تُضاف إلى وسائط الدرس المطابق دون المساس بنصه أو أسئلته
       if (Array.isArray(prev.lessons)) {
         const repo = new Map(media.lessons.map((L) => [L.id, L.media || []]));
+        const repoSteps = new Map(media.lessons.map((L) => [L.id, L.steps]));
         let changed = false;
         const lessons = prev.lessons.map((L) => {
           const cur = repo.get(L.id) || [];
@@ -97,9 +100,12 @@ for (const entry of catalog) {
           // نحدّث إصدار الملفات الموجودة، ونضيف الجديدة في البداية
           const updated = old.map((m) => cur.find((c) => sameFile(m.url, c.url)) || m);
           const add = cur.filter((c) => !old.some((m) => sameFile(m.url, c.url) || m.url === c.url));
-          if (!add.length && JSON.stringify(updated) === JSON.stringify(old)) return L;
+          // خطوات اللقطات: تُؤخذ من المستودع كما هي (لا يحرّرها المشرف)
+          const steps = repoSteps.get(L.id);
+          const stepsChanged = steps !== undefined && JSON.stringify(steps) !== JSON.stringify(L.steps);
+          if (!add.length && JSON.stringify(updated) === JSON.stringify(old) && !stepsChanged) return L;
           changed = true;
-          return { ...L, media: [...add, ...updated] };
+          return { ...L, media: [...add, ...updated], ...(stepsChanged ? { steps } : {}) };
         });
         if (changed) patch.lessons = lessons;
       }

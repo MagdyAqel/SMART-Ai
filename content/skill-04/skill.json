@@ -94,7 +94,16 @@
         }
       ],
       "tasks": [],
-      "skill": "skill-04-gemini"
+      "skill": "skill-04-gemini",
+      "steps": [
+        {
+          "url": "/media/skill-04/shots/gemini-chat.webp",
+          "width": 1162,
+          "height": 863,
+          "title": "نشاط صفي في دقائق",
+          "caption": "رد Gemini: نشاط من ثلاث خطوات قصيرة"
+        }
+      ]
     },
     {
       "id": "notebooklm",

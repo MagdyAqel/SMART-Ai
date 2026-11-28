@@ -156,7 +156,58 @@
           ]
         }
       ],
-      "skill": "skill-03-image-prompts"
+      "skill": "skill-03-image-prompts",
+      "steps": [
+        {
+          "url": "/media/skill-03/shots/gemini-image-menu.webp",
+          "width": 1536,
+          "height": 864,
+          "title": "إنشاء صورة",
+          "caption": "اختر «إنشاء صورة» ثم صِف الصورة بدقة"
+        },
+        {
+          "url": "/media/skill-03/shots/gemini-image-result.webp",
+          "width": 586,
+          "height": 586,
+          "title": "من المسودة إلى الصورة المناسبة",
+          "caption": "الصورة الناتجة… ثم التحسين بالحوار"
+        },
+        {
+          "url": "/media/skill-03/shots/chatgpt-0-login.webp",
+          "width": 800,
+          "height": 565,
+          "title": "بطاقة تربوية بالأركان الخمسة",
+          "caption": "سجّل الدخول إلى chatgpt.com"
+        },
+        {
+          "url": "/media/skill-03/shots/chatgpt-1-home.webp",
+          "width": 602,
+          "height": 426,
+          "title": "بطاقة تربوية بالأركان الخمسة",
+          "caption": "محادثة جديدة ومربع الأمر"
+        },
+        {
+          "url": "/media/skill-03/shots/chatgpt-card-1-prompt.webp",
+          "width": 602,
+          "height": 426,
+          "title": "بطاقة تربوية بالأركان الخمسة",
+          "caption": "الأمر: دور، وسياق، ومهمة، وصيغة، وقيود"
+        },
+        {
+          "url": "/media/skill-03/shots/chatgpt-card-2-result.webp",
+          "width": 602,
+          "height": 426,
+          "title": "بطاقة تربوية بالأركان الخمسة",
+          "caption": "البطاقة الناتجة"
+        },
+        {
+          "url": "/media/skill-03/shots/chatgpt-card-3-edit.webp",
+          "width": 590,
+          "height": 438,
+          "title": "بطاقة تربوية بالأركان الخمسة",
+          "caption": "طلب التحسين: صحّح الكلمات وكبّر الخط"
+        }
+      ]
     },
     {
       "id": "design-principles",
@@ -257,7 +308,16 @@
         }
       ],
       "tasks": [],
-      "skill": "skill-03-video"
+      "skill": "skill-03-video",
+      "steps": [
+        {
+          "url": "/media/skill-03/shots/gemini-video-NOT-AVAILABLE.webp",
+          "width": 586,
+          "height": 200,
+          "title": "خطة فيديو: دورة الماء",
+          "caption": "إنشاء الفيديو في Gemini يتطلب اشتراكاً مدفوعاً"
+        }
+      ]
     },
     {
       "id": "storybook",
@@ -320,7 +380,30 @@
         }
       ],
       "tasks": [],
-      "skill": "skill-03-storybook"
+      "skill": "skill-03-storybook",
+      "steps": [
+        {
+          "url": "/media/skill-03/shots/storybook-1-open.webp",
+          "width": 586,
+          "height": 392,
+          "title": "قصة «رحلة نُقطة»",
+          "caption": "افتح Storybook من قائمة المهارات في Gemini"
+        },
+        {
+          "url": "/media/skill-03/shots/storybook-2-prompt.webp",
+          "width": 586,
+          "height": 586,
+          "title": "قصة «رحلة نُقطة»",
+          "caption": "اكتب أمر القصة كاملاً"
+        },
+        {
+          "url": "/media/skill-03/shots/storybook-3-result.webp",
+          "width": 586,
+          "height": 586,
+          "title": "قصة «رحلة نُقطة»",
+          "caption": "القصة الناتجة: صفحات ورسوم وصوت"
+        }
+      ]
     },
     {
       "id": "music-lyria",
@@ -415,7 +498,30 @@
           ]
         }
       ],
-      "skill": "skill-03-music-lyria"
+      "skill": "skill-03-music-lyria",
+      "steps": [
+        {
+          "url": "/media/skill-03/shots/gemini-music-menu.webp",
+          "width": 988,
+          "height": 627,
+          "title": "إنشاء الموسيقى",
+          "caption": "اختر «إنشاء موسيقى» ثم صِف المقطع: بالنص أو بصورة"
+        },
+        {
+          "url": "/media/skill-03/shots/music-2-prompt.webp",
+          "width": 602,
+          "height": 426,
+          "title": "أنشودة جدول السبعة",
+          "caption": "اكتب وصف الأنشودة في مربع الأمر"
+        },
+        {
+          "url": "/media/skill-03/shots/music-3-result.webp",
+          "width": 602,
+          "height": 426,
+          "title": "أنشودة جدول السبعة",
+          "caption": "المقطع الناتج: استمع، ثم عدّل إن لزم"
+        }
+      ]
     }
   ],
   "postTest": {

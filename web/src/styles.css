@@ -851,3 +851,24 @@ a.skill-card:hover { border-color: var(--primary); transform: translateY(-2px); 
 .drop-text { font-weight: 700; }
 .file-chip { padding: 0.5rem 0.8rem; border-radius: 10px; background: var(--primary-soft); font-size: 0.9rem; word-break: break-all; }
 .up-progress { width: 100%; height: 8px; accent-color: var(--primary); }
+
+/* معرض خطوات العمل بلقطات حقيقية */
+.steps-gallery { margin: 1.25rem 0; }
+.steps-gallery h2 { font-size: 1.15rem; margin-bottom: 0.25rem; }
+.steps-gallery ol { list-style: none; padding: 0; margin: 0.75rem 0 0; display: grid; gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
+.steps-gallery li { margin: 0; }
+.steps-gallery .step-shot { display: block; width: 100%; padding: 0; border: 1px solid var(--border, #d9e2df);
+  border-radius: 10px; overflow: hidden; background: #fff; cursor: zoom-in; }
+.steps-gallery .step-shot:focus-visible { outline: 3px solid var(--primary, #0f766e); outline-offset: 2px; }
+.steps-gallery img { display: block; width: 100%; height: auto; aspect-ratio: auto; }
+.steps-gallery p { margin: 0.4rem 0 0; font-size: 0.92rem; line-height: 1.6; }
+.steps-gallery .step-num { display: inline-grid; place-items: center; min-width: 1.6em; height: 1.6em; border-radius: 50%;
+  background: var(--primary, #0f766e); color: #fff; font-size: 0.85em; margin-inline-end: 0.25rem; }
+.shot-viewer { border: 0; padding: 0.75rem; border-radius: 12px; max-width: min(96vw, 1400px); max-height: 94vh;
+  background: #111; color: #fff; }
+.shot-viewer::backdrop { background: rgb(0 0 0 / 0.75); }
+.shot-viewer img { display: block; width: min(92vw, 1100px); max-height: 80vh; height: auto; object-fit: contain; margin: 0 auto;
+  image-rendering: auto; }
+.shot-viewer .cap { margin: 0.5rem 0 0; text-align: center; }
+.shot-viewer .close { position: absolute; inset-inline-start: 0.5rem; top: 0.5rem; color: #fff; }

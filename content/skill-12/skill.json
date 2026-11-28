@@ -109,7 +109,37 @@
         }
       ],
       "tasks": [],
-      "skill": "skill-12-notebook-sources"
+      "skill": "skill-12-notebook-sources",
+      "steps": [
+        {
+          "url": "/media/skill-12/shots/notebooklm-1-new.webp",
+          "width": 800,
+          "height": 546,
+          "title": "مصادر الدفتر",
+          "caption": "دفتر ملاحظات جديد"
+        },
+        {
+          "url": "/media/skill-12/shots/notebooklm-2-add-sources.webp",
+          "width": 602,
+          "height": 412,
+          "title": "مصادر الدفتر",
+          "caption": "اختر نوع المصدر: ملفات، مواقع، يوتيوب، Drive، نص منسوخ"
+        },
+        {
+          "url": "/media/skill-12/shots/notebooklm-3-paste.webp",
+          "width": 602,
+          "height": 412,
+          "title": "مصادر الدفتر",
+          "caption": "لصق نص منسوخ مصدراً للدفتر"
+        },
+        {
+          "url": "/media/skill-12/shots/notebook-sources.webp",
+          "width": 602,
+          "height": 412,
+          "title": "إجابة بإحالات",
+          "caption": "الإجابة مع أرقام تحيل إلى المصدر"
+        }
+      ]
     },
     {
       "id": "audio-video",
@@ -172,7 +202,30 @@
         }
       ],
       "tasks": [],
-      "skill": "skill-12-audio-video"
+      "skill": "skill-12-audio-video",
+      "steps": [
+        {
+          "url": "/media/skill-12/shots/notebooklm-11-audio-result.webp",
+          "width": 602,
+          "height": 412,
+          "title": "ملخصان من مصادرك",
+          "caption": "الملخص الصوتي الناتج ومشغّله"
+        },
+        {
+          "url": "/media/skill-12/shots/notebooklm-12-video-result.webp",
+          "width": 602,
+          "height": 412,
+          "title": "ملخصان من مصادرك",
+          "caption": "الملخص بالفيديو: «كيف تقود الشمس دورة الماء»"
+        },
+        {
+          "url": "/media/skill-12/shots/notebooklm-8-audio-settings.webp",
+          "width": 602,
+          "height": 412,
+          "title": "تخصيص الملخص الصوتي",
+          "caption": "نافذة تخصيص الملخص الصوتي"
+        }
+      ]
     },
     {
       "id": "mindmap-reports",
@@ -222,7 +275,16 @@
         }
       ],
       "tasks": [],
-      "skill": "skill-12-mindmap-reports"
+      "skill": "skill-12-mindmap-reports",
+      "steps": [
+        {
+          "url": "/media/skill-12/shots/notebooklm-6-mindmap.webp",
+          "width": 602,
+          "height": 412,
+          "title": "خريطة دورة الماء",
+          "caption": "الخريطة الذهنية التفاعلية: دورة الماء"
+        }
+      ]
     },
     {
       "id": "flashcards-quizzes",
@@ -322,7 +384,30 @@
           ]
         }
       ],
-      "skill": "skill-12-flashcards-quizzes"
+      "skill": "skill-12-flashcards-quizzes",
+      "steps": [
+        {
+          "url": "/media/skill-12/shots/notebooklm-5-studio.webp",
+          "width": 602,
+          "height": 412,
+          "title": "اختبر نفسك",
+          "caption": "لوحة Studio: بطاقات تعليمية واختبار"
+        },
+        {
+          "url": "/media/skill-12/shots/notebooklm-7-quiz-settings.webp",
+          "width": 602,
+          "height": 412,
+          "title": "اختبر نفسك",
+          "caption": "إعداد الاختبار: العدد، والصعوبة، والنوع، والموضوع"
+        },
+        {
+          "url": "/media/skill-12/shots/notebooklm-9-quiz.webp",
+          "width": 602,
+          "height": 412,
+          "title": "اختبر نفسك",
+          "caption": "سؤال من الاختبار مع شرح الإجابة"
+        }
+      ]
     }
   ],
   "postTest": {
